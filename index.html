@@ -1,13 +1,134 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh-CN">
   <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vite App</title>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LeeLaa-Admin</title>
   </head>
   <body>
-    <div id="app"></div>
+    <noscript>
+      <!-- <strong
+        >We're sorry but <%=APP_NAME%> doesn't work properly without JavaScript enabled.
+        Please enable it to continue.</strong
+      > -->
+    </noscript>
+    <div id="app">
+      <div class="loading">
+        <div class="orbit-spinner">
+          <div class="orbit"></div>
+          <div class="orbit"></div>
+          <div class="orbit"></div>
+        </div>
+        <span class="loading-text">Loading...</span>
+      </div>
+    </div>
+    <style type="text/css">
+      body .loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: calc(100vh - 90px);
+      }
+
+      .orbit-spinner,
+      .orbit-spinner * {
+        box-sizing: border-box;
+      }
+
+      .orbit-spinner {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        perspective: 800px;
+      }
+
+      .orbit-spinner .orbit {
+        position: absolute;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+
+      .orbit-spinner .orbit:nth-child(1) {
+        top: 0%;
+        left: 0%;
+        border-bottom: 3px solid #01befd;
+        animation: orbit-spinner-orbit-one-animation 1200ms linear infinite;
+      }
+
+      .orbit-spinner .orbit:nth-child(2) {
+        top: 0%;
+        right: 0%;
+        border-right: 3px solid #4c0faf;
+        animation: orbit-spinner-orbit-two-animation 1200ms linear infinite;
+      }
+
+      .orbit-spinner .orbit:nth-child(3) {
+        right: 0%;
+        bottom: 0%;
+        border-top: 3px solid #0faf0f;
+        animation: orbit-spinner-orbit-three-animation 1200ms linear infinite;
+      }
+
+      @keyframes orbit-spinner-orbit-one-animation {
+        0% {
+          transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+        }
+
+        100% {
+          transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+        }
+      }
+
+      @keyframes orbit-spinner-orbit-two-animation {
+        0% {
+          transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+        }
+
+        100% {
+          transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+        }
+      }
+
+      @keyframes orbit-spinner-orbit-three-animation {
+        0% {
+          transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+        }
+
+        100% {
+          transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+        }
+      }
+
+      @keyframes breathing {
+        0% {
+          opacity: 0.4;
+        }
+
+        50% {
+          opacity: 1;
+        }
+
+        100% {
+          opacity: 0.4;
+        }
+      }
+
+      .loading-text {
+        margin-top: 1rem;
+        animation: breathing 2s infinite;
+      }
+
+      input:-internal-autofill-previewed,
+      input:-internal-autofill-selected {
+        -webkit-text-fill-color: #807c7c;
+        transition: background-color 5000s ease-out 0.5s;
+      }
+    </style>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
