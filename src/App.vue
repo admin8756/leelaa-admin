@@ -1,22 +1,26 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
+  <!-- 登录页 -->
+  <router-view v-if="!$route.meta.requiresAuth" />
+  <!-- 主页 -->
+  <div v-else>
+    <header>
+      <div class="wrapper">
+        <router-link to="/" class="logo">
+          <img src="/logo.png" alt="logo" />
+        </router-link>
+        <nav>
+          <router-link to="/" exact>首页</router-link>
+          <router-link to="/about">关于</router-link>
+          <router-link to="/login">登录</router-link>
+        </nav>
+      </div>
+    </header>
+    <!-- <router-view /> -->
+    <RouterView />
+  </div>
   <RouterView />
 </template>
 

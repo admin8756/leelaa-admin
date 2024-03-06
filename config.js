@@ -1,5 +1,5 @@
 export default {
     APP_NAME: "LeeLaa-Admin",
-    description: 'Vue 3 + TypeScript + Vite',
-    siteLanguage: 'en',
+    description: 'LeeLaa-Admin is a modern admin dashboard for Vue 3.',
+    siteLanguage: 'zh-CN',
 }
