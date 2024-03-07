@@ -20,6 +20,7 @@
   "devDependencies": {
     "vite-plugin-pwa": "^0.19.2",
     "@rushstack/eslint-patch": "^1.3.3",
+    "@intlify/unplugin-vue-i18n": "^2.0.0",
     "@vitejs/plugin-vue": "^5.0.3",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "@vue/eslint-config-prettier": "^8.0.0",
