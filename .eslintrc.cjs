@@ -10,8 +10,5 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 'latest'
-  },
-  rules: {
-    'vue/component-name-in-template-casing': 'off',
-  },
+  }
 }

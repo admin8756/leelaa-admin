@@ -40,6 +40,8 @@ pnpm test:unit
 pnpm lint
 ```
 
+# 依赖列表
+vue3 + vite + i18n + pwa + pinia
 
 # 开发规划
 
