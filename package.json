@@ -1,6 +1,6 @@
 {
   "name": "leelaa-admin",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,20 +11,22 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "vue": "^3.4.21",
     "pinia": "^2.1.7",
-    "vue": "^3.4.15",
-    "vue-router": "^4.2.5"
+    "nprogress": "^0.2.0",
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.3.3",
-    "@vitejs/plugin-vue": "^5.0.3",
+    "@rushstack/eslint-patch": "^1.7.2",
+    "@vitejs/plugin-vue": "^5.0.4",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "@vue/eslint-config-prettier": "^8.0.0",
-    "eslint": "^8.49.0",
-    "eslint-plugin-vue": "^9.17.0",
-    "prettier": "^3.0.3",
+    "@vueuse/core": "^10.9.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.22.0",
+    "prettier": "^3.2.5",
     "unplugin-auto-import": "^0.17.5",
     "unplugin-vue-components": "^0.26.0",
-    "vite": "^5.0.11"
+    "vite": "^5.1.5"
   }
 }
