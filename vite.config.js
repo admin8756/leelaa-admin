@@ -95,9 +95,6 @@ export default defineConfig({
       // files to exclude from the scan
       exclude: [],
 
-      // where to generate the types
-      dts: './typed-router.d.ts',
-
       // default language for <route> custom blocks
       routeBlockLang: 'json5',
 
