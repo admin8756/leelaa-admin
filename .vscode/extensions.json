@@ -5,6 +5,11 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "bradlc.vscode-tailwindcss",
-    "zarifprogrammer.tailwind-snippets"
+    "zarifprogrammer.tailwind-snippets",
+    "pkief.material-icon-theme",
+    "equinusocio.vsc-material-theme",
+    "streetsidesoftware.code-spell-checker",
+    "naumovs.color-highlight",
+    "antfu.vite"
   ]
 }
