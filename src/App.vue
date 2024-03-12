@@ -5,7 +5,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header>
     <h1>测了个试</h1>
-    <div class="wrapper">
+    <div>
       <nav>
         <RouterLink to="/">主页</RouterLink>
         <RouterLink to="/about">关于</RouterLink>

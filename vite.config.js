@@ -1,5 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
-
+import tailwindcss from 'tailwindcss'
+import autoprefixer from 'autoprefixer'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -34,17 +35,11 @@ export default defineConfig({
     open: true, // 自动打开浏览器
     cors: true, // 跨域设置允许
     strictPort: true, // 如果端口已占用直接退出
-    // 接口代理
-    // proxy: {
-    //   '/api': {
-    //     // 本地 8000 前端代码的接口 代理到 8888 的服务端口
-    //     target: 'http://localhost:8888/',
-    //     changeOrigin: true, // 允许跨域
-    //     rewrite: (path) => path.replace('/api/', '/'),
-    //   },
-    // },
+    proxy: {}, // 接口代理
   },
   build: {
+    target: 'esnext',
+    // 启用/禁用 gzip 压缩大小报告
     reportCompressedSize: false,
     // 消除打包大小超过500kb警告
     chunkSizeWarningLimit: 2000,
@@ -60,15 +55,10 @@ export default defineConfig({
     },
   },
   css: {
-    preprocessorOptions: {
-      // 全局引入了 scss 的文件
-      scss: {
-        additionalData: `
-        @import "@/assets/styles/variables.scss";
-      `,
-        javascriptEnabled: true,
-      },
-    },
+    preprocessorOptions: {},
+    postcss: {
+      plugins: [tailwindcss, autoprefixer]
+    }
   },
   resolve: {
     alias: {
