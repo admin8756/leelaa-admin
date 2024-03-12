@@ -1,7 +1,6 @@
 import '@/assets/main.css';
 import '@/assets/nprogress.css';
 import 'tailwindcss/tailwind.css';
-import 'daisyui/dist/full.css';
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
