@@ -1,5 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
-import tailwindcss from 'tailwindcss'
+import tailwind from 'tailwindcss'
+import tailwindTypography from '@tailwindcss/typography'
+import daisyui from 'daisyui'
 import autoprefixer from 'autoprefixer'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -57,7 +59,24 @@ export default defineConfig({
   css: {
     preprocessorOptions: {},
     postcss: {
-      plugins: [tailwindcss, autoprefixer]
+      plugins: [tailwind({
+        daisyui: {
+          logs: true,
+          themes: [
+            "light",
+            "dark",
+            "cupcake",
+            "retro",
+            "dim",
+            "lemonade"
+          ],
+        },
+        content: [
+          "./index.html",
+          "./src/**/*.{vue,js,jsx}",
+        ],
+        plugins: [tailwindTypography, daisyui],
+      }), autoprefixer]
     }
   },
   resolve: {
