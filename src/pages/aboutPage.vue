@@ -1,5 +1,12 @@
-<script setup></script>
 <template>
-  <h1>About</h1>
-  <button class="btn">Button</button>
+  <div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">参与活动的用户列表</h1>
+  </div>
 </template>
+
+<script setup>
+</script>
+
+<style>
+/* 在这里添加 Tailwind CSS 样式 */
+</style>

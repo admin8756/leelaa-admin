@@ -1,14 +1,18 @@
+// import path from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
 import tailwind from 'tailwindcss'
 import tailwindTypography from '@tailwindcss/typography'
 import daisyui from 'daisyui'
 import autoprefixer from 'autoprefixer'
+// import VueI18n from '@intlify/unplugin-vue-i18n/vite'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import { VitePWA } from 'vite-plugin-pwa'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite';
 // https://vitejs.dev/config/
+// const __dirname = path.dirname(fileURLToPath(import.meta.url))
 export default defineConfig({
   plugins: [
     vue(),
@@ -28,6 +32,61 @@ export default defineConfig({
         filepath: './.eslintrc-auto-import.json', // Default `./.eslintrc-auto-import.json`
         globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
       }
+    }),
+    // VueI18n({
+    //   runtimeOnly: true,
+    //   compositionOnly: true,
+    //   fullInstall: true,
+    //   include: [path.resolve(__dirname, 'locales/**')],
+    // }),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.ico', 'safari-pinned-tab.svg'],
+      manifest: {
+        name: 'leelaa-admin',
+        short_name: 'Leelaa-admin',
+        theme_color: '#3367D6',
+        start_url: "/",
+        display: "standalone",
+        background_color: "#ffffff",
+        lang: "zh-CN",
+        scope: "/",
+        icons: [{
+          src: '/pwa-128x128.png',
+          sizes: '128x128',
+          type: 'image/png',
+        },
+        {
+          src: '/pwa-144x144.png',
+          sizes: '144x144',
+          type: 'image/png',
+        },
+        {
+          src: '/pwa-192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
+        }, {
+          src: '/pwa-256x256.png',
+          sizes: '256x256',
+          type: 'image/png',
+        },
+        {
+          src: '/pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+        },
+        {
+          src: '/pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+        }, {
+          src: '/pwa-1024x1024.png',
+          sizes: '1024x1024',
+          type: 'image/png',
+          purpose: 'any maskable',
+        },
+        ],
+      },
     }),
   ],
   // 服务设置
