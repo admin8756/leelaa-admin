@@ -3,11 +3,11 @@
     <h1>登录页</h1>
     <form @submit.prevent="login">
       <label for="username">用户名：</label>
-      <input type="text" id="username" v-model="username" required>
-      <br>
+      <input type="text" id="username" v-model="username" required />
+      <br />
       <label for="password">密码：</label>
-      <input type="password" id="password" v-model="password" required>
-      <br>
+      <input type="password" id="password" v-model="password" required />
+      <br />
       <button type="submit">登录</button>
     </form>
   </div>

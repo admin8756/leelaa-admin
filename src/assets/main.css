@@ -1,6 +1,5 @@
 @import './base.css';
 
-
 a,
 .green {
   text-decoration: none;
@@ -16,5 +15,4 @@ a,
 }
 
 @media (min-width: 1024px) {
-  
 }

@@ -4,8 +4,7 @@
   </div>
 </template>
 
-<script setup>
-</script>
+<script setup></script>
 
 <style>
 /* 在这里添加 Tailwind CSS 样式 */
