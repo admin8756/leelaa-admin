@@ -11,6 +11,8 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import { VitePWA } from 'vite-plugin-pwa'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite';
+
+import { createHtmlPlugin } from 'vite-plugin-html'
 // https://vitejs.dev/config/
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 export default defineConfig({
@@ -88,7 +90,15 @@ export default defineConfig({
         ],
       },
     }),
+    createHtmlPlugin({
+      minify: true,
+    })
   ],
+  // 全局变量
+  define: {
+    __APP_NAME__: JSON.stringify('leelaa admin'),
+    __APP_VERSION__: JSON.stringify('v1.0.0')
+  },
   // 服务设置
   server: {
     host: true, // host设置为true才可以使用network的形式，以ip访问项目

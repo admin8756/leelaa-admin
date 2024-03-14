@@ -10,6 +10,7 @@
     "equinusocio.vsc-material-theme",
     "streetsidesoftware.code-spell-checker",
     "naumovs.color-highlight",
-    "antfu.vite"
+    "antfu.vite",
+    "digitalbrainstem.javascript-ejs-support"
   ]
 }
