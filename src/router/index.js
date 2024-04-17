@@ -1,43 +1,63 @@
-import { createRouter, createWebHistory } from 'vue-router/auto';
+import { createRouter, createWebHistory } from 'vue-router';
 
-import { name } from '../../package.json';
-
+const DefaultLayout = () => import('../layouts/DefaultLayout.vue');
+const ReadLayout = () => import('../layouts/ReadLayout.vue');
+const CleanLayout = () => import('../layouts/CleanLayout.vue');
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      meta: {
-        title: '首页',
-      },
-      component: () => import('../pages/indexPage.vue'),
-    },
-    {
-      path: '/about',
-      name: 'about',
-      meta: {
-        title: '关于',
-      },
-      component: () => import('../pages/aboutPage.vue'),
-    },
-    {
       path: '/login',
-      name: 'login',
       meta: {
         title: '登录',
       },
-      component: () => import('../pages/loginPage.vue'),
+      component: CleanLayout,
+      children: [
+        {
+          path: '',
+          name: 'login',
+          meta: {
+            title: '登录',
+          },
+          component: () => () => import('../pages/loginPage.vue'),
+        },
+      ],
+    },
+    {
+      path: '/',
+      meta: {
+        title: '首页',
+      },
+      component: DefaultLayout,
+      children: [
+        {
+          path: '',
+          name: 'home',
+          meta: {
+            title: '首页',
+          },
+          component: () => import('../pages/indexPage.vue'),
+        },
+      ],
+    },
+    {
+      path: '/about',
+      meta: {
+        title: '关于',
+      },
+      component: ReadLayout,
+      children: [
+        {
+          path: '',
+          name: 'about',
+          meta: {
+            title: '关于',
+          },
+          component: () => import('../pages/aboutPage.vue'),
+        },
+      ],
     },
   ],
-});
-// 设置路由守卫，在页面加载完成的时候，切换标题
-router.beforeEach((to, from, next) => {
-  if(!to.meta?.title){
-    console.error(`${to.name}页，标题未定义`)
-  }
-  document.title = `${to.meta.title} - ${name}`;
-  next();
 });
 
 export default router;

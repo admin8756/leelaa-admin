@@ -1,17 +1,9 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
-  <header>
-    <h1>测了个试</h1>
-    <div>
-      <nav>
-        <RouterLink to="/">主页</RouterLink>
-        <RouterLink to="/about">关于</RouterLink>
-        <RouterLink to="/login">登录</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <RouterView v-slot="{ Component, route }">
+    <transition :name="route.meta.transition || 'fade'">
+      <component :is="Component" />
+    </transition>
+  </RouterView>
 </template>

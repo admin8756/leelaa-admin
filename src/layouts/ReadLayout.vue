@@ -1,7 +1,7 @@
 <template>
   <div class="read-layout">
     <div class="read-layout__content">
-      <slot />
+      <RouterView></RouterView>
     </div>
   </div>
 </template>
