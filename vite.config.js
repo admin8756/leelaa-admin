@@ -12,13 +12,14 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import { VitePWA } from 'vite-plugin-pwa';
 import Components from 'unplugin-vue-components/vite';
 import AutoImport from 'unplugin-auto-import/vite';
+import { VueRouterAutoImports } from 'unplugin-vue-router'
 
 // https://vitejs.dev/config/
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 export default defineConfig({
   plugins: [
-    vue(),
     VueRouter({}),
+    vue(),
     vueJsx(),
     Components({
       dts: './src/components.d.ts',
@@ -27,7 +28,7 @@ export default defineConfig({
     }),
     AutoImport({
       dts: './src/auto-imports.d.ts',
-      imports: ['vue', 'pinia', 'vue-router'],
+      imports: ['vue', 'pinia', VueRouterAutoImports],
       // Generate corresponding .eslintrc-auto-import.json file.
       // eslint globals Docs - https://eslint.org/docs/user-guide/configuring/language-options#specifying-globals
       eslintrc: {

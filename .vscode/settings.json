@@ -1,0 +1,15 @@
+{
+  "i18n-ally.localesPaths": ["locales"],
+  "typescript.preferences.autoImportFileExcludePatterns": ["vue-router"],
+  "cSpell.words": [
+    "daisyui",
+    "intlify",
+    "leelaa",
+    "nprogress",
+    "pinia",
+    "rushstack",
+    "tailwindcss",
+    "unplugin",
+    "vueuse"
+  ]
+}

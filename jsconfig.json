@@ -1,9 +1,6 @@
 {
-  "include": ["./typed-router.d.ts"],
   "compilerOptions": {
     "module": "preserve",
-    "moduleResolution": "Bundler",
-    "types": ["unplugin-vue-router/client"],
     "paths": {
       "@/*": ["./src/*"]
     }
