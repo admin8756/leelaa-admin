@@ -1,10 +1,12 @@
 <template>
-  <div class="m-4">
-    <nav-bar></nav-bar>
-  </div>
-  <div class="container">
-    <RouterView></RouterView>
-  </div>
+  <main>
+    <nav class="m-4">
+      <nav-bar></nav-bar>
+    </nav>
+    <section class="container">
+      <RouterView></RouterView>
+    </section>
+  </main>
 </template>
 
 <script setup>

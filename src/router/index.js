@@ -19,7 +19,7 @@ const router = createRouter({
           meta: {
             title: '登录',
           },
-          component: () => () => import('../pages/loginPage.vue'),
+          component: () => import('../pages/loginPage.vue'),
         },
       ],
     },
