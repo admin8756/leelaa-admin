@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
+import VueRouter from 'unplugin-vue-router/vite';
 import tailwind from 'tailwindcss';
 import tailwindTypography from '@tailwindcss/typography';
 import daisyui from 'daisyui';
@@ -17,6 +18,7 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 export default defineConfig({
   plugins: [
     vue(),
+    VueRouter({}),
     vueJsx(),
     Components({
       dts: './src/components.d.ts',
