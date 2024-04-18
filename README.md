@@ -30,11 +30,19 @@ pnpm build
 pnpm lint
 ```
 
-# 依赖列表
+### 依赖列表
 
 vue3 + vite + i18n + pwa + pinia
 
-# 开发规划
+### 其他
+
+[daisyUI](https://daisyui.com/)
+
+[vue-i18n](https://vue-i18n.intlify.dev/)
+
+[vue-router](https://router.vuejs.org/)
+
+### 开发规划
 
 登录页
 
