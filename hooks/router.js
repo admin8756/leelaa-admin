@@ -13,7 +13,8 @@ router.beforeEach((to, _, next) => {
 
 // 设置路由切换动画
 router.afterEach((to, from) => {
-  const toDepth = to.path.split('/').length;
-  const fromDepth = from.path.split('/').length;
-  to.meta.transition = toDepth < fromDepth ? 'slide-right' : 'slide-left';
+  const getLength = (url) => url.path.split('/').length;
+  const [toDepth, fromDepth] = [getLength(to), getLength(from)];
+  const isBack = toDepth < fromDepth;
+  to.meta.transition = `slide-${isBack ? 'right' : 'left'}`;
 });
