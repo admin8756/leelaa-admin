@@ -31,7 +31,7 @@
         <li>
           <details>
             <summary>关于</summary>
-            <ul class="p-2">
+            <ul class="p-2 w-40">
               <li><a href="/about">关于我们</a></li>
               <li><a href="/about">关于后台</a></li>
             </ul>

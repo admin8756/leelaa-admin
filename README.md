@@ -3,7 +3,7 @@
 更适合中国人体质的后台管理系统,从用户体验出发，并且努力提高开发体验。
 
 ## 前置条件
-请确定你的nodejs版本大于v18.12
+
 请使用pnpm作为包管理器
 
 ## 启动项目
@@ -30,11 +30,19 @@ pnpm build
 pnpm lint
 ```
 
-# 依赖列表
+### 依赖列表
 
 vue3 + vite + i18n + pwa + pinia
 
-# 开发规划
+### 其他
+
+[daisyUI](https://daisyui.com/)
+
+[vue-i18n](https://vue-i18n.intlify.dev/)
+
+[vue-router](https://router.vuejs.org/)
+
+### 开发规划
 
 登录页
 
