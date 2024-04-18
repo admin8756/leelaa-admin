@@ -1,26 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
+import error from './modules/error';
+// 默认布局
 const DefaultLayout = () => import('../layouts/DefaultLayout.vue');
-const ReadLayout = () => import('../layouts/ReadLayout.vue');
-const CleanLayout = () => import('../layouts/CleanLayout.vue');
+// 阅读布局
+// const ReadLayout = () => import('../layouts/ReadLayout.vue');
+// 干净的布局
+// const CleanLayout = () => import('../layouts/CleanLayout.vue');
 
 const routes = [
+  ...error,
   {
     path: '/login',
+    name: 'login',
     meta: {
       title: '登录',
     },
-    component: CleanLayout,
-    children: [
-      {
-        path: '',
-        name: 'login',
-        meta: {
-          title: '登录',
-        },
-        component: () => import('../pages/loginPage.vue'),
-      },
-    ],
+    component: import('../pages/loginPage.vue'),
   },
   {
     path: '/',
@@ -44,7 +39,7 @@ const routes = [
     meta: {
       title: '关于',
     },
-    component: ReadLayout,
+    component: DefaultLayout,
     children: [
       {
         path: '',
