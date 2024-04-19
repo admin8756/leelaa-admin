@@ -10,5 +10,6 @@
     "tailwindcss",
     "unplugin",
     "vueuse"
-  ]
+  ],
+  "i18n-ally.keystyle": "nested"
 }

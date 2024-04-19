@@ -1,4 +1,6 @@
 <script setup>
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 import router from '@/router/index.js';
 const goHome = () => {
   router.push('/');
@@ -9,9 +11,9 @@ const goHome = () => {
     <div class="hero-overlay bg-opacity-60"></div>
     <div class="hero-content text-center text-neutral-content">
       <div class="max-w-md">
-        <h1 class="mb-5 text-5xl font-bold">404 页面未找到</h1>
-        <p class="mb-5">您流浪到了未知的页面，请检查您输入的网址是否正确。</p>
-        <button class="btn btn-primary" @click="goHome">回到首页</button>
+        <h1 class="mb-5 text-5xl font-bold">404  {{ t('not-found.title') }}</h1>
+        <p class="mb-5">{{ t('not-found.description') }}</p>
+        <button class="btn btn-primary" @click="goHome">{{ t('not-found.button') }}</button>
       </div>
     </div>
   </div>

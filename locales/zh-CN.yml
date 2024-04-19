@@ -1,1 +1,17 @@
-not-found: 未找到页面
+
+not-found:
+  title: 未找到页面
+  description: 您流浪到了未知的页面，请检查您输入的网址是否正确。
+  button: 返回主页
+not-accessed:
+  title: 未授权访问
+  description: 不是所有门都向您打开，请联系您的管理员。
+  button: 返回主页
+internal-error:
+  title: 服务器错误
+  description: 糟糕的事时有发生，服务器发生了错误。
+  button: 返回主页
+internal-overload:
+  title: 服务不可用
+  description: 我想我现在太累了，没有办法提供服务。
+  button: 返回主页

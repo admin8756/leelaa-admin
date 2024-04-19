@@ -1,1 +1,18 @@
-not-found: Not found
+internal-error:
+  button: Return to Home
+  description: Bad things happen from time to time, and the server experiences errors.
+  title: Server error
+internal-overload:
+  button: Return to Home
+  description: I think I am too tired now to provide service.
+  title: Service unavailable
+not-accessed:
+  button: Return to Home
+  description: Not all doors are open to you, please contact your administrator.
+  title: Unauthorized access
+not-found:
+  button: Return to Home
+  description: >-
+    You have wandered to an unknown page. Please check if the URL you entered is
+    correct.
+  title: Page not found
