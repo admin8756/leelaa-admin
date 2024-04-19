@@ -2,6 +2,8 @@
 
 更适合中国人体质的后台管理系统,从用户体验出发，并且努力提高开发体验。
 
+线上地址:[https://leelaa-admin.vercel.app/](https://leelaa-admin.vercel.app/)
+
 ## 前置条件
 
 请使用pnpm作为包管理器
