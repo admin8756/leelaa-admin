@@ -1,6 +1,6 @@
 <template>
   <main>
-    <nav class="my-4">
+    <nav class="p-4">
       <nav-bar></nav-bar>
     </nav>
     <section class="container">
