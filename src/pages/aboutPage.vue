@@ -1,10 +1,52 @@
+<script setup>
+import { dependencies, devDependencies } from '../../package.json';
+console.log(dependencies);
+console.log(devDependencies);
+</script>
+
 <template>
-  <div class="container mx-auto p-4 w-full h-full bg-red-500">
-    <h1 class="text-2xl font-bold mb-4">参与活动的用户列表</h1>
+  <div class="overflow-x-auto p-4 flex">
+    <div class="card w-96 bg-base-100 shadow-xl mr-4">
+    <h1 class="m-2">运行依赖</h1>
+      <table class="table">
+        <!-- head -->
+        <thead>
+          <tr>
+            <th>依赖库</th>
+            <th>版本</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- row 1 -->
+          <tr v-for="(item, index) in dependencies" :key="index">
+            <th>{{ index }}</th>
+            <td>{{ item }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card w-96 bg-base-100 shadow-xl">
+    <h1 class="m-2">开发依赖</h1>
+      <table class="table">
+        <!-- head -->
+        <thead>
+          <tr>
+            <th>依赖库</th>
+            <th>版本</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- row 1 -->
+          <tr v-for="(item, index) in devDependencies" :key="index">
+            <th>{{ index }}</th>
+            <td>{{ item }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
-
-<script setup></script>
 
 <style>
 /* 在这里添加 Tailwind CSS 样式 */
