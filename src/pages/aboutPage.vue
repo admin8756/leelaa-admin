@@ -1,11 +1,9 @@
 <script setup>
 import { dependencies, devDependencies } from '../../package.json';
-console.log(dependencies);
-console.log(devDependencies);
 </script>
 
 <template>
-  <div class="overflow-x-auto p-4 flex">
+  <div class="overflow-x-auto p-4 flex mt-4">
     <div class="card w-96 bg-base-100 shadow-xl mr-4">
     <h1 class="m-2">运行依赖</h1>
       <table class="table">
