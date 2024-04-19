@@ -1,4 +1,10 @@
-<script setup></script>
+<script setup>
+import router, { routesList } from '@/router/index.js';
+
+const pageTo = (to) => {
+  router.push({ path: to });
+};
+</script>
 
 <template>
   <div class="navbar bg-base-300 rounded-box">
@@ -11,15 +17,14 @@
           </svg>
         </div>
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-          <li><a>首页</a></li>
-          <li>
-            <a href="/about">关于</a>
+          <li v-for="(item, index) in routesList" :key="index">
+            <a @click="pageTo(item.path || '/')">{{ item.meta.title }}</a>
             <ul class="p-2">
-              <li><a href="/about">关于我们</a></li>
-              <li><a href="/about">关于后台</a></li>
+              <li v-for="(subItem, subIndex) in item.children" :key="subIndex">
+                <a @click="pageTo(subItem.path || '/')">{{ subItem.meta.title }}</a>
+              </li>
             </ul>
           </li>
-          <li><a href="/login">登录</a></li>
         </ul>
       </div>
       <a class="btn btn-ghost text-xl">Leelaa-admin</a>
@@ -27,17 +32,17 @@
     <!-- pc端布局 -->
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal px-1">
-        <li><a>首页</a></li>
-        <li>
-          <details>
-            <summary>关于</summary>
+        <li v-for="(item, index) in routesList" :key="index">
+          <a @click="pageTo(item.path || '/')" v-if="!item.children">{{ item.meta.title }}</a>
+          <details v-else>
+            <summary>{{ item.meta.title }}</summary>
             <ul class="p-2 w-40">
-              <li><a href="/about">关于我们</a></li>
-              <li><a href="/about">关于后台</a></li>
+              <li v-for="(subItem, subIndex) in item.children" :key="subIndex">
+                <a @click="pageTo(subItem.path || '/')">{{ subItem.meta.title }}</a>
+              </li>
             </ul>
           </details>
         </li>
-        <li><a href="/login">登录</a></li>
       </ul>
     </div>
     <div class="navbar-end">

@@ -1,7 +1,7 @@
 <script setup>
-import { useRouter } from 'vue-router';
+import router from '@/router/index.js';
 const goHome = () => {
-  useRouter().push('/');
+  router.push('/');
 };
 </script>
 <template>

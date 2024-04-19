@@ -5,6 +5,7 @@ export default [
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     meta: {
+      show: false,
       title: '页面未找到',
     },
     component: () => import('@/pages/error/404Page.vue'),
