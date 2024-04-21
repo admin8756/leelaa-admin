@@ -39,7 +39,7 @@ const logout = () => {
           </li>
         </ul>
       </div>
-      <a class="btn btn-ghost text-xl normal-case font-bold">{{ name }}</a>
+      <a class="btn btn-ghost text-xl normal-case font-bold">{{ name.toUpperCase() }}</a>
     </div>
     <!-- pc端布局 -->
     <div class="navbar-center hidden lg:flex">

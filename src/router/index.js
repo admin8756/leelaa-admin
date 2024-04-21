@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import error from './modules/error';
+import results from './modules/results';
 import { name } from '../../package.json';
 // 默认布局
 const DefaultLayout = () => import('../layouts/DefaultLayout.vue');
@@ -35,7 +36,8 @@ const routes = [
     },
     component: import('../pages/loginPage.vue'),
   },
-
+  ...results,
+  ...error,
   {
     path: '/about',
     meta: {
@@ -53,7 +55,6 @@ const routes = [
       },
     ],
   },
-  ...error,
 ];
 
 const router = createRouter({
