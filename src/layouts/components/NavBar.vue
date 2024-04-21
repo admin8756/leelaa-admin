@@ -1,14 +1,25 @@
 <script setup>
 import router, { routesList } from '@/router/index.js';
-
+import { name } from '../../../package.json';
+// 判断当前路由是否是当前页面
+const isActive = (path) => {
+  return router.currentRoute.value.path === path;
+};
+// 跳转页面
 const pageTo = (to) => {
   router.push({ path: to });
+};
+// 退出登录
+const logout = () => {
+  localStorage.removeItem('token');
+  router.replace({ path: '/login' });
 };
 </script>
 
 <template>
-  <div class="navbar bg-base-100 text-base-content sticky top-0 z-30 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
-  shadow-sm">
+  <div
+    class="navbar bg-base-100 text-base-content sticky top-0 z-30 flex w-full bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] shadow-sm"
+  >
     <!-- 移动端布局 -->
     <div class="navbar-start">
       <div class="dropdown">
@@ -18,7 +29,7 @@ const pageTo = (to) => {
           </svg>
         </div>
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-          <li v-for="(item, index) in routesList" :key="index">
+          <li v-for="(item, index) in routesList" :key="index" :class="isActive(item.path) ? 'active' : ''">
             <a @click="pageTo(item.path || '/')">{{ item.meta.title }}</a>
             <ul class="p-2">
               <li v-for="(subItem, subIndex) in item.children" :key="subIndex">
@@ -28,12 +39,12 @@ const pageTo = (to) => {
           </li>
         </ul>
       </div>
-      <a class="btn btn-ghost text-xl">Leelaa-admin</a>
+      <a class="btn btn-ghost text-xl normal-case font-bold">{{ name }}</a>
     </div>
     <!-- pc端布局 -->
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal px-1">
-        <li v-for="(item, index) in routesList" :key="index">
+        <li v-for="(item, index) in routesList" :key="index" :class="isActive(item.path) ? 'active' : ''">
           <a @click="pageTo(item.path || '/')" v-if="!item.children">{{ item.meta.title }}</a>
           <details v-else>
             <summary>{{ item.meta.title }}</summary>
@@ -64,9 +75,15 @@ const pageTo = (to) => {
             </a>
           </li>
           <li><a>设置</a></li>
-          <li><a>退出登录</a></li>
+          <li><a @click="logout">退出登录</a></li>
         </ul>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.active {
+  @apply text-primary;
+}
+</style>
