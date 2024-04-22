@@ -75,7 +75,7 @@ const logout = () => {
         >
           <div class="grid grid-cols-1 gap-3 p-3">
             <button
-              class="outline-base-content text-start outline-offset-4"
+              class="outline-base-content text-start outline-offset-4 btn glass"
               v-for="theme in THEME_LIST"
               :key="theme"
               data-choose-theme
@@ -97,7 +97,7 @@ const logout = () => {
         >
           <ul class="menu menu-sm gap-1">
             <li v-for="(_, index) in messages" :key="index">
-              <button @click="setLanguage(index)">
+              <button class="btn glass" @click="setLanguage(index)">
                 <span
                   class="badge badge-sm badge-outline !pl-1.5 !pr-1 pt-px font-mono !text-[.6rem] font-bold tracking-widest opacity-50"
                 ></span>
