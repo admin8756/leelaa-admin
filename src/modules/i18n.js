@@ -14,7 +14,6 @@ const localesMap = Object.fromEntries(
 );
 
 export const availableLocales = Object.keys(localesMap);
-
 const loadedLanguages = [];
 
 function setI18nLanguage(lang) {
@@ -36,7 +35,8 @@ export async function loadLanguageAsync(lang) {
   loadedLanguages.push(lang);
   return setI18nLanguage(lang);
 }
+
 export const install = ({ app }) => {
   app.use(i18n);
-  loadLanguageAsync('zh-CN');
+  availableLocales.map(lang => loadLanguageAsync(lang));
 };

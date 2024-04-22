@@ -3,7 +3,7 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 import router from '@/router/index.js';
 const goHome = () => {
-  router.push('/');
+  router.replace('/');
 };
 </script>
 <template>

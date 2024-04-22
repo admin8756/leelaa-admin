@@ -34,6 +34,7 @@ export default defineConfig({
       },
     }),
     VueI18n({
+      locale: 'zh-CN',
       runtimeOnly: true,
       compositionOnly: true,
       fullInstall: true,

@@ -1,6 +1,15 @@
 <script setup>
-import router, { routesList } from '@/router/index.js';
 import { name } from '../../../package.json';
+import router, { routesList } from '@/router/index.js';
+import { THEME_LIST } from '../../../enums/theme.js';
+import { themeChange } from 'theme-change';
+// 引入i18n
+import { useI18n } from 'vue-i18n';
+const { locale, messages, t } = useI18n();
+// 设置语言
+const setLanguage = (lang) => {
+  locale.value = lang;
+};
 // 判断当前路由是否是当前页面
 const isActive = (path) => {
   return router.currentRoute.value.path === path;
@@ -58,6 +67,46 @@ const logout = () => {
       </ul>
     </div>
     <div class="navbar-end">
+      <!-- 控制主题 -->
+      <div class="dropdown">
+        <div tabindex="0" role="button" class="btn m-1">{{ t('nav-bar.tab-theme') }}</div>
+        <div
+          class="dropdown-content bg-base-200 text-base-content rounded-box top-px h-[28.6rem] max-h-[calc(100vh-10rem)] w-56 overflow-y-auto border border-white/5 shadow-2xl outline outline-1 outline-black/5 mt-16"
+        >
+          <div class="grid grid-cols-1 gap-3 p-3">
+            <button
+              class="outline-base-content text-start outline-offset-4"
+              v-for="theme in THEME_LIST"
+              :key="theme"
+              data-choose-theme
+              data-key="theme"
+              :data-set-theme="theme"
+              @click="themeChange(theme)"
+            >
+              {{ theme }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- 控制语言 -->
+      <div class="dropdown">
+        <div tabindex="0" role="button" class="btn m-1">{{ t('nav-bar.tab-lang') }}</div>
+        <div
+          tabindex="0"
+          class="dropdown-content bg-base-200 text-base-content rounded-box top-px mt-16 max-h-[calc(100vh-10rem)] w-56 overflow-y-auto border border-white/5 shadow-2xl outline outline-1 outline-black/5"
+        >
+          <ul class="menu menu-sm gap-1">
+            <li v-for="(_, index) in messages" :key="index">
+              <button @click="setLanguage(index)">
+                <span
+                  class="badge badge-sm badge-outline !pl-1.5 !pr-1 pt-px font-mono !text-[.6rem] font-bold tracking-widest opacity-50"
+                ></span>
+                <span class="font-[sans-serif]"> {{ index }}</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
       <div class="dropdown dropdown-end">
         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
           <div class="w-10 rounded-full">

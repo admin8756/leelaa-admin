@@ -1,3 +1,7 @@
+nav-bar:
+  lang: English
+  tab-lang: Language
+  tab-theme: Themes
 internal-error:
   button: Return to Home
   description: Bad things happen from time to time, and the server experiences errors.
