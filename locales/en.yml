@@ -1,7 +1,3 @@
-nav-bar:
-  lang: English
-  tab-lang: Language
-  tab-theme: Themes
 internal-error:
   button: Return to Home
   description: Bad things happen from time to time, and the server experiences errors.
@@ -10,6 +6,10 @@ internal-overload:
   button: Return to Home
   description: I think I am too tired now to provide service.
   title: Service unavailable
+nav-bar:
+  lang: English
+  tab-lang: Language
+  tab-theme: Themes
 not-accessed:
   button: Return to Home
   description: Not all doors are open to you, please contact your administrator.
@@ -20,3 +20,13 @@ not-found:
     You have wandered to an unknown page. Please check if the URL you entered is
     correct.
   title: Page not found
+route:
+  error: Error page
+  internal-error: Server error
+  internal-overload: Under maintenance
+  not-accessed: Unauthorized access
+  not-found: Page not found
+user:
+  login: Login
+  logout: Log out
+  title: user
