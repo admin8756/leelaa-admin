@@ -11,12 +11,12 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "vue": "^3.4.23",
     "axios": "^1.6.8",
-    "pinia": "^2.1.7",
     "nprogress": "^0.2.0",
-    "vue-i18n": "^9.13.1",
+    "pinia": "^2.1.7",
     "theme-change": "^2.5.0",
+    "vue": "^3.4.24",
+    "vue-i18n": "^9.13.1",
     "vue-router": "^4.3.2"
   },
   "devDependencies": {
