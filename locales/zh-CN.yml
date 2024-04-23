@@ -18,3 +18,13 @@ internal-overload:
   title: 服务不可用
   description: 我想我现在太累了，没有办法提供服务。
   button: 返回主页
+route:
+  error: 错误页面
+  not-found: 页面未找到
+  not-accessed: 未授权访问
+  internal-error: 服务器错误
+  internal-overload: 维护中
+user:
+  title: 用户
+  login: 登录
+  logout: 退出登录
