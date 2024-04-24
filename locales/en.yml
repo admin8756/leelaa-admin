@@ -1,3 +1,5 @@
+__lang: English
+__code: "EN"
 internal-error:
   button: Return to Home
   description: Bad things happen from time to time, and the server experiences errors.
@@ -7,7 +9,6 @@ internal-overload:
   description: I think I am too tired now to provide service.
   title: Service unavailable
 nav-bar:
-  lang: English
   tab-lang: Language
   tab-theme: Themes
 not-accessed:

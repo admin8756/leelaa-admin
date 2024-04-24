@@ -49,9 +49,9 @@ const pageTo = (to) => {
         <li v-for="(item, index) in routesList" :key="index" :class="isActive(item.path) ? 'active' : ''">
           <a @click="pageTo(item.path || '/')" v-if="!item.children">{{ item.meta.title }}</a>
           <details v-else>
-            <summary>{{ item.meta.title }}</summary>
+            <summary tabindex="0">{{ item.meta.title }}</summary>
             <ul class="p-2 w-40">
-              <li v-for="(subItem, subIndex) in item.children" :key="subIndex">
+              <li tabindex="0" v-for="(subItem, subIndex) in item.children" :key="subIndex">
                 <a @click="pageTo(subItem.path || '/')">{{ subItem.meta.title }}</a>
               </li>
             </ul>
