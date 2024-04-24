@@ -3,9 +3,9 @@
     <nav class="p-4">
       <nav-bar></nav-bar>
     </nav>
-    <section class="container">
+    <div class="p-4">
       <RouterView></RouterView>
-    </section>
+    </div>
   </main>
 </template>
 
