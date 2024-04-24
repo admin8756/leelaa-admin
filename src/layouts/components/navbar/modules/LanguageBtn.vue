@@ -17,6 +17,7 @@ const setLanguage = (lang) => {
           <button class="btn glass flex justify-between w-full" @click="setLanguage(index)">
             <span
               class="badge badge-sm badge-outline !pl-1.5 !pr-1 pt-px font-mono !text-[.6rem] font-bold tracking-widest opacity-50"
+              :class="{ 'badge-primary': index === locale }"
             >{{ _.__code.source }}</span>
             <span class="font-[sans-serif]">{{ _.__lang.source }}</span>
           </button>
