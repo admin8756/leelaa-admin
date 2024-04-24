@@ -6,7 +6,7 @@ const setLanguage = (lang) => {
 };
 </script>
 <template>
-  <div class="dropdown">
+  <div class="dropdown dropdown-end">
     <div tabindex="0" role="button" class="btn m-1">{{ t('nav-bar.tab-lang') }}</div>
     <div
       tabindex="0"
@@ -14,11 +14,11 @@ const setLanguage = (lang) => {
     >
       <ul class="menu menu-sm gap-1">
         <li v-for="(_, index) in messages" :key="index">
-          <button class="btn glass" @click="setLanguage(index)">
+          <button class="btn glass flex justify-between w-full" @click="setLanguage(index)">
             <span
               class="badge badge-sm badge-outline !pl-1.5 !pr-1 pt-px font-mono !text-[.6rem] font-bold tracking-widest opacity-50"
-            ></span>
-            <span class="font-[sans-serif]"> {{ index }}</span>
+            >{{ _.__code.source }}</span>
+            <span class="font-[sans-serif]">{{ _.__lang.source }}</span>
           </button>
         </li>
       </ul>

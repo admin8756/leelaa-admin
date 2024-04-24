@@ -1,5 +1,6 @@
+__lang: 中文
+__code: "ZH"
 nav-bar:
-  lang: 中文
   tab-lang: 切换语言
   tab-theme: 切换主题
 not-found:
