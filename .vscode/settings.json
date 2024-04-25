@@ -12,5 +12,6 @@
     "vueuse"
   ],
   "i18n-ally.keystyle": "nested",
-  "css.lint.unknownAtRules": "ignore"
+  "css.lint.unknownAtRules": "ignore",
+  "vue3snippets.enable-compile-vue-file-on-did-save-code": true
 }
