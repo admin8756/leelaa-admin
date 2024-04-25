@@ -3,6 +3,7 @@ import error from './modules/error';
 import results from './modules/results';
 import other from './modules/other';
 import charts from './modules/charts';
+
 import { name } from '../../package.json';
 // 默认布局
 const DefaultLayout = () => import('../layouts/DefaultLayout.vue');
