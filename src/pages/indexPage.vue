@@ -1,7 +1,7 @@
 <script setup></script>
 <template>
   <div class="p-3 bg-base-200 w-full">
-    <h1 class="m-2 text-3xl font-bold">早上好，系统超级管理员</h1>
+    <h1 class="m-2 text-3xl font-bold">道友，今天也不要忘记修炼呀</h1>
     <div class="flex mt-2 pt-2">
       <div class="stats shadow flex-1">
         <div class="stat">
@@ -55,7 +55,7 @@
             </div>
           </div>
           <div class="stat-value">86%</div>
-          <div class="stat-title">工作进度</div>
+          <div class="stat-title">修炼进度</div>
           <div class="stat-desc text-secondary mt-1">加油胜利就在前方</div>
         </div>
       </div>
