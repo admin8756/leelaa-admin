@@ -34,9 +34,11 @@ export default defineConfig({
       },
     }),
     VueI18n({
-      locale: 'zh-CN',
       runtimeOnly: true,
-      compositionOnly: true,
+      defaultSFCLang:'yml',
+      compositionOnly: false, 
+      fallbackLocale: 'en',
+      locale: 'zh-CN',
       fullInstall: true,
       include: [path.resolve(__dirname, 'locales/**')],
     }),

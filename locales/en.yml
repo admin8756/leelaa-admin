@@ -1,5 +1,5 @@
-__lang: English
-__code: "EN"
+lang: English
+code: EN
 internal-error:
   button: Return to Home
   description: Bad things happen from time to time, and the server experiences errors.
