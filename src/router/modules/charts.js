@@ -4,7 +4,7 @@ export default [
     path: '/charts',
     component: DefaultLayout,
     meta: {
-      title: '福录大全',
+      title: '符箓大全',
     },
     children: [
       {

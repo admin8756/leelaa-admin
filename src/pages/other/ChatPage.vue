@@ -1,30 +1,38 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from "vue";
+import { chat } from "@/api/index";
 const leftMsg = ref([]);
 const rightMsg = ref([]);
-const message = ref('');
+const message = ref("");
+
+const baseMsg = {
+  type: "text",
+  content: "",
+  time: new Date().toLocaleString(),
+  avatar: "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg",
+  name: "我",
+  id: 1,
+};
+onMounted(() => {
+  leftMsg.value.push(baseMsg);
+});
+
 const sendMsg = (msg) => {
+  msg = msg.trim();
   if (msg.length > 0) {
     leftMsg.value.push(msg);
-    message.value = '';
-    // 使用原生请求
-    fetch('/api/ai', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        text: msg,
-      }),
-    })
-      .then((res) => res.json())
+    chat(msg)
       .then((res) => {
         rightMsg.value.push(res);
-      }).catch(() => {
-        alert('请求失败');
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        message.value = "";
       });
-  }else{
-    alert('请输入内容');
+  } else {
+    alert("请输入内容");
   }
 };
 </script>
