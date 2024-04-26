@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    DropdownView: typeof import('./components/DropdownView.vue')['default']
     MessageBox: typeof import('./components/MsgBox/MessageBox.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
