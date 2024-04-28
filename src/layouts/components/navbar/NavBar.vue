@@ -43,12 +43,12 @@ const pageTo = (to) => {
         </div>
         <ul
           tabindex="0"
-          class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+          class="dropdown-content menu menu-sm mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
         >
           <li
             v-for="(item, index) in routesList"
             :key="index"
-            :class="isActive(item.path) ? 'text-primary' : ''"
+            :class="isActive(item.path) ? 'active' : ''"
           >
             <a @click="pageTo(item.path || '/')">{{ item.meta.title }}</a>
             <ul class="p-2">
@@ -67,19 +67,15 @@ const pageTo = (to) => {
         <li
           v-for="(item, index) in routesList"
           :key="index"
-          :class="isActive(item.path) ? 'text-primary' : ''"
+          :class="isActive(item.path) ? 'active' : ''"
         >
           <a @click="pageTo(item.path || '/')" v-if="!item.children">{{
             item.meta.title
           }}</a>
           <details v-else>
-            <summary tabindex="0">{{ item.meta.title }}</summary>
-            <ul class="p-2 w-40">
-              <li
-                tabindex="0"
-                v-for="(subItem, subIndex) in item.children"
-                :key="subIndex"
-              >
+            <summary tabindex="0" role="button">{{ item.meta.title }}</summary>
+            <ul tabindex="0" class="p-2 w-40">
+              <li v-for="(subItem, subIndex) in item.children" :key="subIndex">
                 <a @click="pageTo(subItem.path || '/')">{{ subItem.meta.title }}</a>
               </li>
             </ul>
