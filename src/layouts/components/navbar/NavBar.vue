@@ -94,8 +94,4 @@ const pageTo = (to) => {
   </div>
 </template>
 
-<style scoped>
-.active {
-  @apply text-primary;
-}
-</style>
+<style scoped></style>
