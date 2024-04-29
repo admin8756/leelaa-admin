@@ -10,7 +10,37 @@ import MineBtn from "./modules/MineBtn.vue";
 
 // 判断当前路由是否是当前页面
 const isActive = (path) => {
-  return router.currentRoute.value.path === path;
+  const currentPath = router.currentRoute.value.path;
+  // 如果当前选中的路径和当前路由的路径相同，则返回true
+  if (currentPath === path) {
+    return true;
+  }
+  // 如果查找路径在路由列表中，则返回false(因为是一级路由，不需要判断二级路由)
+  if (~routesList.findIndex((item) => item.path === currentPath) || path == "/") {
+    return false;
+  }
+  // 如果当前路由的路径不在路由列表中，则过滤包含二级路由的选项
+  const parentRoutes = routesList.filter((route) => route.children);
+  // 循环父路由
+  for (const parentRoute of parentRoutes) {
+    // 只过滤有path的二级路由
+    const childPaths = parentRoute.children.map((child) => child.path) || [];
+    const currentPathIndex = childPaths.indexOf(currentPath);
+    if (~currentPathIndex) {
+      return parentRoute.path === path;
+    }
+  }
+  return false;
+};
+
+// 判断子路由是否是当前页面
+const childrenIsActive = (path) => {
+  const currentPath = router.currentRoute.value.path;
+  if (currentPath === path) {
+    return true;
+  } else {
+    return false;
+  }
 };
 // 跳转页面
 const pageTo = (to) => {
@@ -48,7 +78,7 @@ const pageTo = (to) => {
           <li
             v-for="(item, index) in routesList"
             :key="index"
-            :class="isActive(item.path) ? 'active' : ''"
+            :class="isActive(item.path) ? 'text-primary' : ''"
           >
             <a @click="pageTo(item.path || '/')">{{ item.meta.title }}</a>
             <ul class="p-2">
@@ -67,7 +97,7 @@ const pageTo = (to) => {
         <li
           v-for="(item, index) in routesList"
           :key="index"
-          :class="isActive(item.path) ? 'active' : ''"
+          :class="isActive(item.path) ? 'text-primary' : ''"
         >
           <a @click="pageTo(item.path || '/')" v-if="!item.children">{{
             item.meta.title
@@ -76,7 +106,13 @@ const pageTo = (to) => {
             <summary tabindex="0" role="button">{{ item.meta.title }}</summary>
             <ul tabindex="0" class="p-2 w-40">
               <li v-for="(subItem, subIndex) in item.children" :key="subIndex">
-                <a @click="pageTo(subItem.path || '/')">{{ subItem.meta.title }}</a>
+                <a
+                  :class="
+                    childrenIsActive(subItem.path) ? 'text-primary' : 'text-base-content'
+                  "
+                  @click="pageTo(subItem.path || '/')"
+                  >{{ subItem.meta.title }}</a
+                >
               </li>
             </ul>
           </details>
