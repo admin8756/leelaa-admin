@@ -18,3 +18,13 @@ export const request = async (url, options = {}) => {
 };
 
 export const chat = (text) => request(`api/ai?text=${text}`);
+
+export const login = (postData) => {
+  return request(`api/user`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(postData),
+  });
+};

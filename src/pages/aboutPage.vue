@@ -1,43 +1,37 @@
 <script setup>
-import { dependencies, devDependencies } from '../../package.json';
+import { dependencies, devDependencies } from "../../package.json";
+const goToPage = (url) => {
+  window.open(`https://www.npmjs.com/package/${url}`, "_blank");
+};
 </script>
 
 <template>
-  <div class="overflow-x-auto p-4 flex mt-4">
-    <div class="card w-96 bg-base-100 shadow-xl mr-4">
-      <h1 class="m-2">运行依赖</h1>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>依赖库</th>
-            <th>版本</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in dependencies" :key="index">
-            <th>{{ index }}</th>
-            <td>{{ item }}</td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="card glass card-body">
+    <div class="card-title">运行依赖</div>
+    <div class="flex flex-wrap">
+      <button
+        class="btn mt-3 mr-3 btn-accent"
+        v-for="(item, index) in dependencies"
+        @click="goToPage(index)"
+        :key="index"
+      >
+        {{ index }}
+        <div class="badge">{{ item }}</div>
+      </button>
     </div>
-
-    <div class="card w-96 bg-base-100 shadow-xl">
-      <h1 class="m-2">开发依赖</h1>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>依赖库</th>
-            <th>版本</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in devDependencies" :key="index">
-            <th>{{ index }}</th>
-            <td>{{ item }}</td>
-          </tr>
-        </tbody>
-      </table>
+  </div>
+  <div class="card glass card-body mt-5">
+    <div class="card-title">开发依赖</div>
+    <div class="flex flex-wrap">
+      <button
+        class="btn mt-3 mr-3"
+        @click="goToPage(index)"
+        v-for="(item, index) in devDependencies"
+        :key="index"
+      >
+        {{ index }}
+        <div class="badge">{{ item }}</div>
+      </button>
     </div>
   </div>
 </template>

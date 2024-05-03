@@ -55,8 +55,8 @@ importers:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
       daisyui:
-        specifier: ^4.10.4
-        version: 4.10.4(postcss@8.4.38)
+        specifier: ^4.10.5
+        version: 4.10.5(postcss@8.4.38)
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -1413,8 +1413,8 @@ packages:
     resolution: {integrity: sha512-pHJg+jbuFsCjz9iclQBqyL3B2HLCBF71BwVNujUYEvCeQMvV97R59MNK3R2+jgJ3a1fcZgI9B3vYgz8lzr/BFQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  daisyui@4.10.4:
-    resolution: {integrity: sha512-B2zCnUPL96aO0GJUWNCIKotmM9n6aFw7F+2kuhd+D3piOIJGH7tgXJX84Jsfkl8pfftK+iOnlKxNv35EYil4VQ==}
+  daisyui@4.10.5:
+    resolution: {integrity: sha512-eOFUo5yEg0WV+3VK2C/+/XN1WH/OhFV4HzrMG5etAzcnB2hPg3aoR7gF1ZUpIv+b5MglLuAVMgub0rv660EgZg==}
     engines: {node: '>=16.9.0'}
 
   data-view-buffer@1.0.1:
@@ -1475,8 +1475,8 @@ packages:
     engines: {node: '>=0.10.0'}
     hasBin: true
 
-  electron-to-chromium@1.4.754:
-    resolution: {integrity: sha512-7Kr5jUdns5rL/M9wFFmMZAgFDuL2YOnanFH4OI4iFzUqyh3XOL7nAGbSlSMZdzKMIyyTpNSbqZsWG9odwLeKvA==}
+  electron-to-chromium@1.4.755:
+    resolution: {integrity: sha512-9nop+3jZxSHIxe1EzEUcjDXzK+3qOv3fY5w0sE88nIZUntbv1aXWmoxGWlklX5XSO4txCpLssWkUSh8RQPovBg==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -4178,7 +4178,7 @@ snapshots:
   browserslist@4.23.0:
     dependencies:
       caniuse-lite: 1.0.30001615
-      electron-to-chromium: 1.4.754
+      electron-to-chromium: 1.4.755
       node-releases: 2.0.14
       update-browserslist-db: 1.0.14(browserslist@4.23.0)
 
@@ -4276,7 +4276,7 @@ snapshots:
 
   culori@3.3.0: {}
 
-  daisyui@4.10.4(postcss@8.4.38):
+  daisyui@4.10.5(postcss@8.4.38):
     dependencies:
       css-selector-tokenizer: 0.8.0
       culori: 3.3.0
@@ -4339,7 +4339,7 @@ snapshots:
     dependencies:
       jake: 10.8.7
 
-  electron-to-chromium@1.4.754: {}
+  electron-to-chromium@1.4.755: {}
 
   emoji-regex@8.0.0: {}
 
