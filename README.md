@@ -34,18 +34,6 @@ pnpm build
 pnpm lint
 ```
 
-### 依赖列表
-
-vue3 + vite + i18n + pwa + pinia
-
-### 其他
-
-[daisyUI](https://daisyui.com/)
-
-[vue-i18n](https://vue-i18n.intlify.dev/)
-
-[vue-router](https://router.vuejs.org/)
-
 ### 参与者
 <a href="https://github.com/admin8756/leelaa-admin/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=admin8756/leelaa-admin" />
