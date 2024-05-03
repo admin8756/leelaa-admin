@@ -1,5 +1,5 @@
 // 判断是否是生产环境
-const baseURl = 'https://leelaa-admin.vercel.app'
+const baseURl = 'https://admin.leelaa.cn';
 /**
  * @name request 封装请求
  * @param {string} url 请求地址
@@ -13,7 +13,7 @@ export const request = async (url, options = {}) => {
       return data;
     })
     .catch((error) => {
-        console.error(error)
+      console.error(error);
     });
 };
 
