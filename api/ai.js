@@ -1,5 +1,5 @@
 export default function handler(request, response) {
-  let { text } = request.body;
+  let { text } = request.query
   text = text.replace(/\?/g, '！');
   text = text.replace('吗', '');
   text = text.replace('你','我')
