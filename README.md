@@ -4,6 +4,8 @@
 
 线上地址:[https://leelaa-admin.vercel.app/](https://leelaa-admin.vercel.app/)
 
+备用地址:[https://admin.leelaa.cn](https://admin.leelaa.cn)
+
 ## 前置条件
 
 请使用pnpm作为包管理器
@@ -31,18 +33,6 @@ pnpm build
 ```sh
 pnpm lint
 ```
-
-### 依赖列表
-
-vue3 + vite + i18n + pwa + pinia
-
-### 其他
-
-[daisyUI](https://daisyui.com/)
-
-[vue-i18n](https://vue-i18n.intlify.dev/)
-
-[vue-router](https://router.vuejs.org/)
 
 ### 参与者
 <a href="https://github.com/admin8756/leelaa-admin/graphs/contributors">

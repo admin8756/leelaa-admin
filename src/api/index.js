@@ -17,14 +17,4 @@ export const request = async (url, options = {}) => {
     });
 };
 
-export const chat = (text) => {
-  return request('api/ai', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      text,
-    }),
-  });
-};
+export const chat = (text) => request(`api/ai?text=${text}`);
