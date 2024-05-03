@@ -1,6 +1,6 @@
 {
   "name": "leelaa-admin",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,6 +10,8 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "format": "prettier --write src/"
   },
+  "author": "leedaisen",
+  "license": "ISC",
   "dependencies": {
     "axios": "^1.6.8",
     "nprogress": "^0.2.0",

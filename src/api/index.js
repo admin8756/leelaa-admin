@@ -1,5 +1,5 @@
-const baseURl = 'https://leelaa-admin.vercel.app/';
-
+// 判断是否是生产环境
+const baseURl = 'https://leelaa-admin.vercel.app'
 /**
  * @name request 封装请求
  * @param {string} url 请求地址
@@ -18,7 +18,7 @@ export const request = async (url, options = {}) => {
 };
 
 export const chat = (text) => {
-  return request('/api/ai', {
+  return request('api/ai', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
