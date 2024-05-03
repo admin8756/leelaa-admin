@@ -37,7 +37,7 @@ const routes = [
       show: false,
       title: '登录',
     },
-    component: import('../pages/loginPage.vue'),
+    component: () => import('../pages/loginPage.vue'),
   },
   ...charts,
   ...results,

@@ -38,21 +38,23 @@ export default [
         meta: {
           title: '数据集',
         },
-      },{
-        path:'/radar',
-        name:'ChartRadar',
-        component:()=>import('@/pages/charts/ChartRadar.vue'),
-        meta:{
-          title:'雷达图'
-        }
-      },{
-        path:'/scatter',
-        name:'ChartScatter',
-        component:()=>import('@/pages/charts/ChartScatter.vue'),
-        meta:{
-          title:'散点图'
-        }
-      }
+      },
+      {
+        path: '/radar',
+        name: 'ChartRadar',
+        component: () => import('@/pages/charts/ChartRadar.vue'),
+        meta: {
+          title: '雷达图',
+        },
+      },
+      {
+        path: '/scatter',
+        name: 'ChartScatter',
+        component: () => import('@/pages/charts/ChartScatter.vue'),
+        meta: {
+          title: '散点图',
+        },
+      },
     ],
   },
 ];
