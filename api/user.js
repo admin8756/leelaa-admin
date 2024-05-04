@@ -19,7 +19,7 @@ export default function handler(request, response) {
         message: '账号或密码错误',
       });
     }
-  }else {
+  } else {
     response.status(200).json({
       code: 500,
       message: '请求方法错误',

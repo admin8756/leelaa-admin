@@ -6,7 +6,7 @@
         <p class="py-6">欢迎来使用，拥抱开源。</p>
       </div>
       <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100 max-w-sm">
-        <form class="card-body">
+        <div class="card-body">
           <div class="form-control">
             <label class="label">
               <span class="label-text">用户名</span>
@@ -36,7 +36,7 @@
           <div class="form-control mt-6">
             <button class="btn btn-primary" @click="loginFun">登录</button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>

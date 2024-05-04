@@ -12,6 +12,14 @@
         {
           "key": "Access-Control-Allow-Origin",
           "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
         }
       ]
     },
@@ -27,7 +35,9 @@
   ],
   "functions": {
     "api/*.js": {
-      "maxDuration": 10
+      "maxDuration": 10,
+      "memory": 1024
+
     }
   }
 }
