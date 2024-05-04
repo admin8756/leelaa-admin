@@ -1,6 +1,7 @@
 export default function handler(request, response) {
   let { text } = request.query;
   text = text.replace(/\?/g, '！');
+  text = text.replace(/？/g, '！');
   text = text.replace('吗', '');
   if (text.includes('你')) {
     text = text.replace('你', '我');

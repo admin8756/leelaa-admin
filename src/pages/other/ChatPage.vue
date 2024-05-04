@@ -16,17 +16,17 @@ const baseMsg = (self, msg) => {
   };
 };
 onMounted(() => {
-  msgList.value.push(baseMsg(true));
   msgList.value.push(baseMsg(false));
+  msgList.value.push(baseMsg(true));
 });
 
 const sendMsg = (msg) => {
   msg = msg.trim();
   if (msg.length > 0) {
-    msgList.value.push(baseMsg(true, msg));
+    msgList.value.push(baseMsg(false, msg));
     chat(msg)
       .then((res) => {
-        msgList.value.push(baseMsg(false, res));
+        msgList.value.push(baseMsg(true, res));
       })
       .catch((err) => {
         console.log(err);
