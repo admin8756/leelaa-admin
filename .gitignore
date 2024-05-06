@@ -24,3 +24,6 @@ coverage
 
 *.tsbuildinfo
 .vercel
+
+.src/components.d.ts
+.src/auto-imports.d.ts
