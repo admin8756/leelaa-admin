@@ -83,11 +83,8 @@ onMounted(() => {
 // 监听数据发生变化
 
 watch(
-  () => ({
-    xData: props.xData,
-    yData: props.yData,
-  }),
-  (newValues, oldValues) => {
+  [props.xData, props.yData],
+  () => {
     updateChart();
   },
   { deep: true }
