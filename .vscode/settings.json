@@ -2,6 +2,7 @@
   "i18n-ally.localesPaths": ["locales"],
   "cSpell.words": [
     "daisyui",
+    "echarts",
     "intlify",
     "leelaa",
     "nprogress",
@@ -9,7 +10,8 @@
     "rushstack",
     "tailwindcss",
     "unplugin",
-    "vueuse"
+    "vueuse",
+    "Xdata"
   ],
   "i18n-ally.keystyle": "nested",
   "css.lint.unknownAtRules": "ignore",
