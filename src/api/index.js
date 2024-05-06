@@ -17,8 +17,10 @@ export const request = async (url, options = {}) => {
     });
 };
 
+// 聊天接口
 export const chat = (text) => request(`api/ai?text=${text}`);
 
+// 登录接口
 export const login = (postData) => {
   return request(`api/user`, {
     method: 'POST',
