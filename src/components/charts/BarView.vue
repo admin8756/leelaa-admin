@@ -7,10 +7,11 @@ import { GridComponent } from "echarts/components";
 import { BarChart } from "echarts/charts";
 import { TitleComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useWindowSize } from "@vueuse/core";
 import { watchThrottled } from "@vueuse/core";
 const chartBar = ref(null);
+let myChart = "";
 const props = defineProps({
   // x轴数据
   xData: {
@@ -38,8 +39,8 @@ const props = defineProps({
     default: "",
   },
 });
-
-onMounted(() => {
+// 更新图表
+const updateChart = () => {
   const option = {
     title: {
       text: props.title,
@@ -58,13 +59,17 @@ onMounted(() => {
       },
     ],
   };
+  myChart.setOption(option);
+};
+// 组件加载
+onMounted(() => {
   const window = computed(() => {
     const { width, height } = useWindowSize();
     return width.value * height.value;
   });
   echarts.use([GridComponent, BarChart, CanvasRenderer, TitleComponent]);
-  const myChart = echarts.init(chartBar.value);
-  myChart.setOption(option);
+  myChart = echarts.init(chartBar.value);
+  updateChart();
 
   watchThrottled(
     window,
@@ -74,6 +79,19 @@ onMounted(() => {
     { throttle: 800 }
   );
 });
+
+// 监听数据发生变化
+
+watch(
+  () => ({
+    xData: props.xData,
+    yData: props.yData,
+  }),
+  (newValues, oldValues) => {
+    updateChart();
+  },
+  { deep: true }
+);
 </script>
 
 <style scoped>
