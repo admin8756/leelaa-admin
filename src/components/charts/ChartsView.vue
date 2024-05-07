@@ -3,8 +3,14 @@
 </template>
 
 <script setup>
-import { useSlots, useAttrs } from "vue";
+import { useSlots, useAttrs, inject, watch } from "vue";
 
+const chartsUpdate = inject("chartsUpdate");
+console.log(chartsUpdate);
+watch(() => {
+  console.log("chartsUpdate", chartsUpdate);
+  chartsUpdate();
+});
 const slots = useSlots();
 const attrs = useAttrs();
 console.log(slots.default(), attrs);
