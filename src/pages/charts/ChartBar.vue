@@ -1,8 +1,13 @@
 <template>
   <div>
     <BarView title="简单柱状图" :xData="xData" :yData="yData"></BarView>
-    <div class="btn" @click="addData">添加一个数据</div>
+    <LineView title="简单折线图" :xData="xData" :yData="yData"></LineView>
   </div>
+  <div class="btn" @click="addData">添加一个数据</div>
+  <ChartsView class="className">
+    <BarView title="简单柱状图" :xData="xData" :yData="yData"></BarView>
+    <LineView title="简单折线图" :xData="xData" :yData="yData"></LineView>
+  </ChartsView>
 </template>
 <script setup>
 import { ref } from "vue";
@@ -13,11 +18,13 @@ const addXData = () => {
   const randomStr = Math.random().toString(36).substring(2, 7);
   xData.value.push(randomStr);
 };
+
 const addYData = () => {
   // 随机生成一个数字
   const randomNum = Math.floor(Math.random() * 1000);
   yData.value.push(randomNum);
 };
+
 const addData = () => {
   addXData();
   addYData();
