@@ -1,16 +1,24 @@
 <template>
-  <div class="charts-view"></div>
+  <div class="charts-view"><slot></slot></div>
 </template>
 
 <script setup>
-import { useSlots, useAttrs, inject, watch } from "vue";
+import { useSlots, useAttrs, inject, watchEffect } from "vue";
 
-const chartsUpdate = inject("chartsUpdate");
+const chartsUpdate = inject(
+  "chartsUpdate",
+  (msg) => {
+    console.log(msg);
+  },
+  true
+);
 console.log(chartsUpdate);
-watch(() => {
-  console.log("chartsUpdate", chartsUpdate);
-  chartsUpdate();
-});
+watchEffect(
+  () => chartsUpdate,
+  () => {
+    console.log(chartsUpdate);
+  }
+);
 const slots = useSlots();
 const attrs = useAttrs();
 console.log(slots.default(), attrs);

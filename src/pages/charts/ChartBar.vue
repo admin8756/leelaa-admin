@@ -1,8 +1,4 @@
 <template>
-  <div>
-    <BarView title="简单柱状图" :xData="xData" :yData="yData"></BarView>
-    <LineView title="简单折线图" :xData="xData" :yData="yData"></LineView>
-  </div>
   <div class="btn" @click="addData">添加一个数据</div>
   <ChartsView class="className">
     <BarView title="简单柱状图" :xData="xData" :yData="yData"></BarView>
