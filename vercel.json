@@ -33,6 +33,7 @@
       ]
     }
   ],
+  "rewrites":[{"source":"/:path*","destination":"/index.html"}],
   "functions": {
     "api/*.js": {
       "maxDuration": 10,
