@@ -80,7 +80,6 @@ onMounted(() => {
 });
 
 // 监听数据发生变化
-
 watch(
   [props.xData, props.yData],
   () => {

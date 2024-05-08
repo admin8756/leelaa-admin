@@ -1,11 +1,11 @@
 <script setup>
-import router from '@/router/index.js';
-import { useI18n } from 'vue-i18n';
+import router from "@/router/index.js";
+import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 // 退出登录
 const logout = () => {
-  localStorage.removeItem('token');
-  router.replace({ path: '/login' });
+  localStorage.removeItem("token");
+  router.replace({ path: "/login" });
 };
 </script>
 <template>
@@ -14,11 +14,14 @@ const logout = () => {
       <div class="w-10 rounded-full">
         <img
           alt="Tailwind CSS Navbar component"
-          src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+          src="https://api.vvhan.com/api/avatar/niche"
         />
       </div>
     </div>
-    <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+    <ul
+      tabindex="0"
+      class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+    >
       <li>
         <a class="justify-between">
           个人洞府
@@ -27,7 +30,7 @@ const logout = () => {
       </li>
       <li><a>设置</a></li>
       <li>
-        <a @click="logout">{{ t('user.logout') }}</a>
+        <a @click="logout">{{ t("user.logout") }}</a>
       </li>
     </ul>
   </div>

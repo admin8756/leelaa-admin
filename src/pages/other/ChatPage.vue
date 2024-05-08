@@ -11,7 +11,7 @@ const baseMsg = (self, msg) => {
     content: msg || "我强吗？",
     state: true,
     time: new Date().toLocaleString(),
-    avatar: "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg",
+    avatar: "https://api.vvhan.com/api/avatar/niche",
     name: self ? "天道" : "我",
   };
 };
