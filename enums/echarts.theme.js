@@ -2,7 +2,7 @@ export default {
   version: 1,
   themeName: "xianxia-light",
   seriesCnt: "5",
-  backgroundColor: "rgba(242, 241, 231, 1)",
+  backgroundColor: "rgba(242, 241, 231, 0.5)",
   titleColor: "#8e6542",
   subtitleColor: "#a08055",
   textColorShow: false,

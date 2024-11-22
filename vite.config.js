@@ -103,6 +103,8 @@ export default defineConfig({
       '@hooks': path.resolve(__dirname, './hooks'),
       '@locales': path.resolve(__dirname, './locales'),
       '@utils': path.resolve(__dirname, './src/utils'),
+      '@mock': path.resolve(__dirname, './mock'),
+      '@test': path.resolve(__dirname, './test')
     }
   },
   appType: 'spa',
