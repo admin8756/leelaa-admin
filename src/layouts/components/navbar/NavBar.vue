@@ -114,12 +114,39 @@ onUnmounted(() => {
             :key="index"
             :class="isActive(item.path) ? 'text-primary' : ''"
           >
-            <a @click="handleMenuClick(item.path || '/')">{{ item.meta.title }}</a>
-            <ul v-if="item.children?.length" class="p-2">
-              <li v-for="(subItem, subIndex) in item.children" :key="subIndex">
-                <a @click="handleMenuClick(subItem.path || '/')">{{ subItem.meta.title }}</a>
-              </li>
-            </ul>
+            <a v-if="!item.children" @click="handleMenuClick(item.path || '/')">{{ item.meta.title }}</a>
+            <template v-else>
+              <a @click="item.children[0]?.meta?.isGroup ? null : handleMenuClick(item.path || '/')">
+                {{ item.meta.title }}
+              </a>
+              <ul v-if="item.children?.length" class="p-2">
+                <template v-for="(subItem, subIndex) in item.children" :key="subIndex">
+                  <!-- 如果是分组 -->
+                  <li v-if="subItem.meta?.isGroup" class="menu-title">
+                    <span>{{ subItem.meta.title }}</span>
+                    <ul class="pl-2">
+                      <li v-for="(groupItem, groupIndex) in subItem.children" :key="groupIndex">
+                        <a 
+                          :class="childrenIsActive(groupItem.path) ? 'text-primary' : ''"
+                          @click="handleMenuClick(groupItem.path)"
+                        >
+                          {{ groupItem.meta.title }}
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <!-- 如果不是分组 -->
+                  <li v-else>
+                    <a 
+                      :class="childrenIsActive(subItem.path) ? 'text-primary' : ''"
+                      @click="handleMenuClick(subItem.path)"
+                    >
+                      {{ subItem.meta.title }}
+                    </a>
+                  </li>
+                </template>
+              </ul>
+            </template>
           </li>
         </ul>
       </div>
@@ -133,19 +160,35 @@ onUnmounted(() => {
           :key="index"
           :class="isActive(item.path) ? 'text-primary' : ''"
         >
-          <a @click="pageTo(item.path || '/')" v-if="!item.children">{{ item.meta.title }}</a>
+          <a v-if="!item.children" @click="pageTo(item.path || '/')">{{ item.meta.title }}</a>
           <details v-else>
             <summary tabindex="0" role="button">{{ item.meta.title }}</summary>
-            <ul tabindex="0" class="p-2 w-40">
-              <li v-for="(subItem, subIndex) in item.children" :key="subIndex">
-                <a
-                  :class="
-                    childrenIsActive(subItem.path) ? 'text-primary' : 'text-base-content'
-                  "
-                  @click="pageTo(subItem.path || '/')"
-                  >{{ subItem.meta.title }}</a
-                >
-              </li>
+            <ul tabindex="0" class="p-2 bg-base-100 rounded-box w-52">
+              <template v-for="(subItem, subIndex) in item.children" :key="subIndex">
+                <!-- 如果是分组 -->
+                <li v-if="subItem.meta?.isGroup" class="menu-title pt-2 first:pt-0">
+                  <span class="text-sm opacity-50">{{ subItem.meta.title }}</span>
+                  <ul class="pl-2">
+                    <li v-for="(groupItem, groupIndex) in subItem.children" :key="groupIndex">
+                      <a 
+                        :class="childrenIsActive(groupItem.path) ? 'text-primary' : ''"
+                        @click="pageTo(groupItem.path)"
+                      >
+                        {{ groupItem.meta.title }}
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!-- 如果不是分组 -->
+                <li v-else>
+                  <a 
+                    :class="childrenIsActive(subItem.path) ? 'text-primary' : ''"
+                    @click="pageTo(subItem.path)"
+                  >
+                    {{ subItem.meta.title }}
+                  </a>
+                </li>
+              </template>
             </ul>
           </details>
         </li>
