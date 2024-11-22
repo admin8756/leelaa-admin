@@ -1,10 +1,11 @@
 <script setup>
 import { THEME_LIST, THEME_DEFAULT } from "../../../../../enums/theme.js";
-import { themeChange } from "theme-change";
 import { useI18n } from "vue-i18n";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import DropdownView from "@/components/DropdownView.vue";
+
 const { t } = useI18n();
+
 // 传入主题名，返回style对象
 const getThemeStyle = (themeName) => {
   const themeDetail = THEME_DEFAULT[themeName];
@@ -18,6 +19,7 @@ const getThemeStyle = (themeName) => {
     };
   }
 };
+
 // 获取主题颜色
 const getThemeColor = (themeName) => {
   const themeDetail = THEME_DEFAULT[themeName];
@@ -28,22 +30,35 @@ const getThemeColor = (themeName) => {
     return [accent, primary, warning, neutral];
   }
 };
+
 // 获取当前主题
 const nowTheme = ref(localStorage.getItem("theme") || "light");
+
+// 切换主题
 const saveTheme = (themeName) => {
-  themeChange(themeName);
+  // 保存到 localStorage
+  localStorage.setItem("theme", themeName);
+  // 更新当前主题
   nowTheme.value = themeName;
+  // 更新 HTML 的 data-theme 属性
+  document.documentElement.setAttribute("data-theme", themeName);
 };
+
+// 初始化主题
+onMounted(() => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme) {
+    saveTheme(savedTheme);
+  }
+});
 </script>
+
 <template>
   <DropdownView :list="THEME_LIST" :title="t('nav-bar.tab-theme')">
     <template #default="{ item }">
       <button
         class="outline-base-content text-start flex items-center outline-offset-4 btn glass mt-2"
         :style="getThemeStyle(item)"
-        data-choose-theme
-        data-key="theme"
-        :data-set-theme="item"
         @click="saveTheme(item)"
       >
         <div class="flex items-center justify-between w-full">
