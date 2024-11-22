@@ -72,37 +72,12 @@
 <script setup>
 import { Icon } from '@iconify/vue'
 
-const actions = [
-  {
-    id: 'openFormation',
-    title: '开启护山大阵',
-    desc: '激活门派防护阵法',
-    icon: 'mdi:shield-check',
-    color: 'primary',
-    primary: true
-  },
-  {
-    id: 'distributeElixir',
-    title: '分发丹药',
-    desc: '向突破弟子分发丹药',
-    icon: 'game-icons:magic-potion',
-    color: 'success'
-  },
-  {
-    id: 'checkSpirit',
-    title: '检查灵脉',
-    desc: '查看灵气浓度变化',
-    icon: 'mdi:chart-bell-curve-cumulative',
-    color: 'info'
-  },
-  {
-    id: 'gatherDisciples',
-    title: '召集弟子',
-    desc: '紧急召集门下弟子',
-    icon: 'mdi:account-group',
-    color: 'warning'
+defineProps({
+  actions: {
+    type: Array,
+    required: true
   }
-]
+})
 
 defineEmits(['action'])
 </script>

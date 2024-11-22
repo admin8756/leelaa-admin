@@ -7,8 +7,22 @@ import dashboard from './modules/dashboard';
 
 import { name } from '../../package.json';
 
+// 添加路由重定向规则
 const routes = [
-  ...dashboard, // 使用仪表盘作为首页
+  {
+    path: '/',
+    component: () => import('../layouts/DefaultLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'dashboard',
+        meta: {
+          title: '宗门总览',
+        },
+        component: () => import('../pages/dashboard/DashboardView.vue'),
+      }
+    ]
+  },
   {
     path: '/login',
     name: 'login',
@@ -18,16 +32,41 @@ const routes = [
     },
     component: () => import('../pages/loginPage.vue'),
   },
+  // 添加重定向路由
+  {
+    path: '/line',
+    redirect: '/charts/line'
+  },
+  {
+    path: '/bar',
+    redirect: '/charts/bar'
+  },
+  {
+    path: '/pie',
+    redirect: '/charts/pie'
+  },
+  {
+    path: '/dataset',
+    redirect: '/charts/dataset'
+  },
+  {
+    path: '/radar',
+    redirect: '/charts/radar'
+  },
+  {
+    path: '/scatter',
+    redirect: '/charts/scatter'
+  },
   ...charts,
   ...results,
   ...other,
   ...error,
   {
     path: '/about',
+    component: () => import('../layouts/DefaultLayout.vue'),
     meta: {
       title: '关于',
     },
-    component: () => import('../layouts/DefaultLayout.vue'),
     children: [
       {
         path: '',
@@ -36,9 +75,14 @@ const routes = [
           title: '关于',
         },
         component: () => import('../pages/aboutPage.vue'),
-      },
-    ],
+      }
+    ]
   },
+  // 捕获所有未匹配的路由
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/'
+  }
 ];
 
 const router = createRouter({

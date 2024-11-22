@@ -138,7 +138,8 @@ export const useSectStore = defineStore('sect', {
             trend: rankChange > 0 ? 'up' : rankChange < 0 ? 'down' : 'stable',
             stats: sect.stats,
             specialties: sect.specialties,
-            description: sect.description
+            description: sect.description,
+            historicalRanks: sect.historicalRanks || [] // 添加历史排名数据
           }
         })
         .sort((a, b) => a.currentRank - b.currentRank)

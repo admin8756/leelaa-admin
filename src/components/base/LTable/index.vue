@@ -56,7 +56,7 @@
           <td :colspan="columns.length" class="text-center py-8">
             <slot name="empty">
               <div class="flex flex-col items-center text-base-content/50">
-                <v-icon icon="mdi-database-off" size="32" />
+                <Icon icon="mdi-database-off" size="32" />
                 <span class="mt-2">暂无数据</span>
               </div>
             </slot>
@@ -98,6 +98,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { Icon } from '@iconify/vue'
 
 interface Column {
   key: string

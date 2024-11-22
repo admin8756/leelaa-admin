@@ -14,26 +14,13 @@ const dropdownRef = ref(null)
 // 判断当前路由是否是当前页面
 const isActive = (path) => {
   const currentPath = router.currentRoute.value.path;
-  // 如果当前选中的路径和当前路由的路径相同，则返回true
   if (currentPath === path) {
     return true;
   }
-  // 如果查找路径在路由列表中，则返回false(因为是一级路由，不需要判断二级路由)
-  if (~routesList.findIndex((item) => item.path === currentPath) || path == "/") {
+  if (path === '/') {
     return false;
   }
-  // 如果当前路由的路径不在路由列表中，则过滤包含二级路由的选项
-  const parentRoutes = routesList.filter((route) => route.children);
-  // 循环父路由
-  for (const parentRoute of parentRoutes) {
-    // 只过滤有path的二级路由
-    const childPaths = parentRoute.children.map((child) => child.path) || [];
-    const currentPathIndex = childPaths.indexOf(currentPath);
-    if (~currentPathIndex) {
-      return parentRoute.path === path;
-    }
-  }
-  return false;
+  return currentPath.startsWith(path);
 };
 
 // 判断子路由是否是当前页面
@@ -44,18 +31,39 @@ const childrenIsActive = (path) => {
 
 // 跳转页面
 const pageTo = (to) => {
-  router.push({ path: to });
+  if (!to) return;
+  
+  // 规范化路径，移除多余的斜杠
+  const normalizedPath = to.replace(/\/+/g, '/');
+  
+  // 如果是主页，使用replace
+  if (normalizedPath === '/') {
+    router.replace('/');
+  } else {
+    router.push(normalizedPath);
+  }
 };
 
 // 处理菜单点击
 const handleMenuClick = (path) => {
-  router.push({ path });
+  if (!path) return;
+  
+  // 规范化路径，移除多余的斜杠
+  const normalizedPath = path.replace(/\/+/g, '/');
+  
+  // 如果是主页，使用replace
+  if (normalizedPath === '/') {
+    router.replace('/');
+  } else {
+    router.push(normalizedPath);
+  }
+  
   // 关闭下拉菜单
   const dropdown = dropdownRef.value?.querySelector('.dropdown-content');
   if (dropdown) {
     dropdown.style.display = 'none';
     setTimeout(() => {
-      dropdown.style.display = '';
+      dropdown.removeAttribute('style');
     }, 100);
   }
 };
@@ -67,7 +75,7 @@ const handleClickOutside = (event) => {
     if (dropdown) {
       dropdown.style.display = 'none';
       setTimeout(() => {
-        dropdown.style.display = '';
+        dropdown.removeAttribute('style');
       }, 100);
     }
   }
@@ -84,7 +92,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="navbar bg-base-100 text-base-content flex w-full bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] shadow-sm"
+    class="navbar bg-base-100 text-base-content flex w-full bg-opacity-95 backdrop-blur transition-all duration-100 [transform:translate3d(0,0,0)] shadow-lg sticky top-0 z-30"
   >
     <!-- 移动端布局 -->
     <div class="navbar-start">
@@ -107,16 +115,19 @@ onUnmounted(() => {
         </label>
         <ul
           tabindex="0"
-          class="dropdown-content menu menu-sm mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+          class="dropdown-content menu menu-sm mt-3 z-[999] p-2 shadow bg-base-100 rounded-box w-52"
         >
           <li
             v-for="(item, index) in routesList"
             :key="index"
-            :class="isActive(item.path) ? 'text-primary' : ''"
+            :class="[
+              isActive(item.path) ? 'text-primary font-bold' : '',
+              'hover:text-primary transition-colors duration-200'
+            ]"
           >
-            <a v-if="!item.children" @click="handleMenuClick(item.path || '/')">{{ item.meta.title }}</a>
+            <a v-if="!item.children" @click="handleMenuClick(item.path)">{{ item.meta.title }}</a>
             <template v-else>
-              <a @click="item.children[0]?.meta?.isGroup ? null : handleMenuClick(item.path || '/')">
+              <a @click="item.children[0]?.meta?.isGroup ? null : handleMenuClick(item.path)">
                 {{ item.meta.title }}
               </a>
               <ul v-if="item.children?.length" class="p-2">
@@ -127,7 +138,10 @@ onUnmounted(() => {
                     <ul class="pl-2">
                       <li v-for="(groupItem, groupIndex) in subItem.children" :key="groupIndex">
                         <a 
-                          :class="childrenIsActive(groupItem.path) ? 'text-primary' : ''"
+                          :class="[
+                            childrenIsActive(groupItem.path) ? 'text-primary font-bold active' : '',
+                            'hover:text-primary transition-colors duration-200'
+                          ]"
                           @click="handleMenuClick(groupItem.path)"
                         >
                           {{ groupItem.meta.title }}
@@ -138,7 +152,10 @@ onUnmounted(() => {
                   <!-- 如果不是分组 -->
                   <li v-else>
                     <a 
-                      :class="childrenIsActive(subItem.path) ? 'text-primary' : ''"
+                      :class="[
+                        childrenIsActive(subItem.path) ? 'text-primary font-bold active' : '',
+                        'hover:text-primary transition-colors duration-200'
+                      ]"
                       @click="handleMenuClick(subItem.path)"
                     >
                       {{ subItem.meta.title }}
@@ -158,12 +175,15 @@ onUnmounted(() => {
         <li
           v-for="(item, index) in routesList"
           :key="index"
-          :class="isActive(item.path) ? 'text-primary' : ''"
+          :class="[
+            isActive(item.path) ? 'text-primary font-bold' : '',
+            'hover:text-primary transition-colors duration-200'
+          ]"
         >
-          <a v-if="!item.children" @click="pageTo(item.path || '/')">{{ item.meta.title }}</a>
-          <details v-else>
+          <a v-if="!item.children" @click="pageTo(item.path)">{{ item.meta.title }}</a>
+          <details v-else class="dropdown">
             <summary tabindex="0" role="button">{{ item.meta.title }}</summary>
-            <ul tabindex="0" class="p-2 bg-base-100 rounded-box w-52">
+            <ul tabindex="0" class="p-2 bg-base-100 rounded-box w-52 shadow-lg dropdown-content z-[999] menu">
               <template v-for="(subItem, subIndex) in item.children" :key="subIndex">
                 <!-- 如果是分组 -->
                 <li v-if="subItem.meta?.isGroup" class="menu-title pt-2 first:pt-0">
@@ -171,7 +191,10 @@ onUnmounted(() => {
                   <ul class="pl-2">
                     <li v-for="(groupItem, groupIndex) in subItem.children" :key="groupIndex">
                       <a 
-                        :class="childrenIsActive(groupItem.path) ? 'text-primary' : ''"
+                        :class="[
+                          childrenIsActive(groupItem.path) ? 'text-primary font-bold active' : '',
+                          'hover:text-primary transition-colors duration-200'
+                        ]"
                         @click="pageTo(groupItem.path)"
                       >
                         {{ groupItem.meta.title }}
@@ -182,7 +205,10 @@ onUnmounted(() => {
                 <!-- 如果不是分组 -->
                 <li v-else>
                   <a 
-                    :class="childrenIsActive(subItem.path) ? 'text-primary' : ''"
+                    :class="[
+                      childrenIsActive(subItem.path) ? 'text-primary font-bold active' : '',
+                      'hover:text-primary transition-colors duration-200'
+                    ]"
                     @click="pageTo(subItem.path)"
                   >
                     {{ subItem.meta.title }}

@@ -5,7 +5,7 @@ export default [
     path: '/other',
     component: DefaultLayout,
     meta: {
-      title: '其他页',
+      title: '修仙杂务',
     },
     children: [
       {
@@ -13,14 +13,14 @@ export default [
         name: 'ChatPage',
         component: () => import('@/pages/other/ChatPage.vue'),
         meta: {
-          title: '问道！',
+          title: '问道解惑',
         },
       },{
         path:'/report',
         name:'ReportPage',
         component:()=>import('@/pages/other/ReportPage.vue'),
         meta:{
-          title:'报告页'
+          title:'宗门报告'
         }
       }
     ],

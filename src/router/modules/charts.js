@@ -1,66 +1,66 @@
 const DefaultLayout = () => import('@/layouts/DefaultLayout.vue');
-export default [
-  {
-    path: '/charts',
-    component: DefaultLayout,
-    meta: {
-      title: '符箓大全',
-    },
-    children: [
-      {
-        path: 'bar',
-        name: 'ChartBar',
-        component: () => import('@/pages/charts/ChartBar.vue'),
-        meta: {
-          title: '柱状图',
-          group: '基础图表'
-        },
-      },
-      {
-        path: 'line',
-        name: 'ChartLine',
-        component: () => import('@/pages/charts/ChartLine.vue'),
-        meta: {
-          title: '折线图',
-          group: '基础图表'
-        },
-      },
-      {
-        path: 'pie',
-        name: 'ChartPie',
-        component: () => import('@/pages/charts/ChartPie.vue'),
-        meta: {
-          title: '饼图',
-          group: '基础图表'
-        },
-      },
-      {
-        path: 'dataset',
-        name: 'ChartDataset',
-        component: () => import('@/pages/charts/ChartDataset.vue'),
-        meta: {
-          title: '数据集',
-          group: '高级图表'
-        },
-      },
-      {
-        path: 'radar',
-        name: 'ChartRadar',
-        component: () => import('@/pages/charts/ChartRadar.vue'),
-        meta: {
-          title: '雷达图',
-          group: '高级图表'
-        },
-      },
-      {
-        path: 'scatter',
-        name: 'ChartScatter',
-        component: () => import('@/pages/charts/ChartScatter.vue'),
-        meta: {
-          title: '散点图',
-          group: '高级图表'
-        },
-      },
-    ],
+
+export default [{
+  path: '/charts',
+  name: 'charts',
+  component: DefaultLayout,
+  meta: {
+    title: '符箓大全',
   },
-];
+  children: [
+    {
+      path: 'bar',
+      name: 'chartBar',
+      component: () => import('@/pages/charts/ChartBar.vue'),
+      meta: {
+        title: '灵气分布',
+        group: '基础符箓'
+      },
+    },
+    {
+      path: 'line',
+      name: 'chartLine',
+      component: () => import('@/pages/charts/ChartLine.vue'),
+      meta: {
+        title: '修为变化',
+        group: '基础符箓'
+      },
+    },
+    {
+      path: 'pie',
+      name: 'chartPie',
+      component: () => import('@/pages/charts/ChartPie.vue'),
+      meta: {
+        title: '资源占比',
+        group: '基础符箓'
+      },
+    },
+    {
+      path: 'dataset',
+      name: 'chartDataset',
+      component: () => import('@/pages/charts/ChartDataset.vue'),
+      meta: {
+        title: '灵宝档案',
+        group: '进阶符箓'
+      },
+    },
+    {
+      path: 'radar',
+      name: 'chartRadar',
+      component: () => import('@/pages/charts/ChartRadar.vue'),
+      meta: {
+        title: '五行属性',
+        group: '进阶符箓'
+      },
+    },
+    {
+      path: 'scatter',
+      name: 'chartScatter',
+      component: () => import('@/pages/charts/ChartScatter.vue'),
+      meta: {
+        title: '灵根分布',
+        group: '进阶符箓'
+      },
+    }
+  ]
+}];

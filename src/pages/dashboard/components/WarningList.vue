@@ -12,10 +12,10 @@
     <template #header-actions>
       <div class="flex gap-2">
         <button class="btn btn-ghost btn-sm" @click="refresh">
-          <v-icon icon="mdi-refresh" />
+          <Icon icon="mdi-refresh" />
         </button>
         <button class="btn btn-ghost btn-sm" @click="showAll">
-          <v-icon icon="mdi-arrow-right" />
+          <Icon icon="mdi-arrow-right" />
         </button>
       </div>
     </template>
@@ -55,13 +55,13 @@
       <template #actions="{ row }">
         <div class="flex gap-1">
           <button class="btn btn-ghost btn-xs" @click.stop="handleWarning(row)">
-            <v-icon icon="mdi-hand" size="small"/>
+            <Icon icon="mdi-hand" size="small"/>
           </button>
           <button class="btn btn-ghost btn-xs" @click.stop="viewDetail(row)">
-            <v-icon icon="mdi-eye" size="small"/>
+            <Icon icon="mdi-eye" size="small"/>
           </button>
           <button class="btn btn-ghost btn-xs" @click.stop="assignWarning(row)">
-            <v-icon icon="mdi-account-plus" size="small"/>
+            <Icon icon="mdi-account-plus" size="small"/>
           </button>
         </div>
       </template>
@@ -71,6 +71,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { Icon } from '@iconify/vue'
 import LCard from '@/components/base/LCard/index.vue'
 import LTable from '@/components/base/LTable/index.vue'
 

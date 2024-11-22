@@ -4,7 +4,7 @@ export default [
     path: '/results',
     component: DefaultLayout,
     meta: {
-      title: '结果页',
+      title: '修炼结果',
     },
     children: [
       // 失败页
@@ -12,7 +12,7 @@ export default [
         path: '/results/fail',
         name: 'FailPage',
         meta: {
-          title: '进行失败',
+          title: '走火入魔',
         },
         component: () => import('@/pages/results/FailPage.vue'),
       },
@@ -21,7 +21,7 @@ export default [
         path: '/results/success',
         name: 'SuccessPage',
         meta: {
-          title: '进行成功',
+          title: '修炼成功',
         },
         component: () => import('@/pages/results/SuccessPage.vue'),
       },
@@ -30,7 +30,7 @@ export default [
         path: '/results/progress',
         name: 'ProgressPage',
         meta: {
-          title: '进行中',
+          title: '闭关修炼',
         },
         component: () => import('@/pages/results/InProgress.vue'),
       },

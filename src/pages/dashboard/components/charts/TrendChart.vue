@@ -9,7 +9,8 @@ import { useECharts } from '@/hooks/useECharts'
 const props = defineProps({
   data: {
     type: Array,
-    required: true
+    required: true,
+    default: () => []
   },
   color: {
     type: String,
@@ -21,6 +22,9 @@ const chartRef = ref(null)
 const { initChart, updateOptions, resize, dispose } = useECharts(chartRef)
 
 const updateChart = () => {
+  // 确保数据是有效的数组
+  const chartData = Array.isArray(props.data) ? props.data : [];
+  
   const option = {
     animation: false,
     grid: {
@@ -32,7 +36,7 @@ const updateChart = () => {
     xAxis: {
       type: 'category',
       show: false,
-      data: Array.from({ length: props.data.length }, (_, i) => i + 1)
+      data: Array.from({ length: chartData.length }, (_, i) => i + 1)
     },
     yAxis: {
       type: 'value',
@@ -43,7 +47,7 @@ const updateChart = () => {
     },
     series: [
       {
-        data: props.data,
+        data: chartData,
         type: 'line',
         smooth: true,
         symbol: 'none',
@@ -69,12 +73,13 @@ const updateChart = () => {
         }
       }
     ]
-  }
-  
-  updateOptions(option)
-}
+  };
 
-watch(() => [props.data, props.color], updateChart, { deep: true })
+  updateOptions(option);
+};
+
+// 监听数据变化
+watch(() => [props.data, props.color], updateChart, { deep: true, immediate: true })
 
 onMounted(() => {
   initChart()
