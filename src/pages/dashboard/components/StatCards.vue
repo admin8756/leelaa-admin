@@ -2,7 +2,10 @@
   <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
     <div v-for="(stat, key) in stats" :key="key" class="card bg-base-100 shadow-xl">
       <div class="card-body">
-        <h2 class="card-title capitalize">{{ key }}</h2>
+        <div class="card-title flex items-center gap-2">
+          <v-icon :icon="stat.icon" />
+          <span class="capitalize">{{ stat.label }}</span>
+        </div>
         <div class="flex items-center justify-between">
           <p class="text-2xl font-bold">{{ stat.value }}</p>
           <div :class="[

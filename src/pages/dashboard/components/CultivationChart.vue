@@ -11,7 +11,7 @@
 
 <script setup>
 import { ref, onMounted, watch, onUnmounted } from 'vue'
-import { useECharts } from '@/hooks/useECharts'
+import { useECharts } from '@hooks/useECharts.js'
 
 const props = defineProps({
   data: {
@@ -31,12 +31,14 @@ const updateChart = () => {
     },
     legend: {
       orient: 'vertical',
-      left: 'left'
+      left: 'left',
+      top: 'center'
     },
     series: [
       {
         type: 'pie',
         radius: ['40%', '70%'],
+        center: ['60%', '50%'],
         avoidLabelOverlap: false,
         itemStyle: {
           borderRadius: 10,
@@ -71,10 +73,12 @@ const updateChart = () => {
   updateOptions(option)
 }
 
-watch(() => props.data, updateChart, { deep: true })
+// 监听数据变化
+watch(() => props.data, updateChart, { deep: true, immediate: true })
 
 onMounted(() => {
   initChart()
+  updateChart()
   window.addEventListener('resize', resize)
 })
 
