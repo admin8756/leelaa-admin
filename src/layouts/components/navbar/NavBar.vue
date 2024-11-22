@@ -1,10 +1,13 @@
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
 import { name } from "../../../../package.json";
 import router, { routesList } from "@/router/index.js";
 
 import LanguageBtn from "./modules/LanguageBtn.vue";
 import ThemeBtn from "./modules/ThemeBtn.vue";
 import MineBtn from "./modules/MineBtn.vue";
+
+const dropdownRef = ref(null)
 
 // 设置语言
 
@@ -36,16 +39,47 @@ const isActive = (path) => {
 // 判断子路由是否是当前页面
 const childrenIsActive = (path) => {
   const currentPath = router.currentRoute.value.path;
-  if (currentPath === path) {
-    return true;
-  } else {
-    return false;
-  }
+  return currentPath === path;
 };
+
 // 跳转页面
 const pageTo = (to) => {
   router.push({ path: to });
 };
+
+// 处理菜单点击
+const handleMenuClick = (path) => {
+  router.push({ path });
+  // 关闭下拉菜单
+  const dropdown = dropdownRef.value?.querySelector('.dropdown-content');
+  if (dropdown) {
+    dropdown.style.display = 'none';
+    setTimeout(() => {
+      dropdown.style.display = '';
+    }, 100);
+  }
+};
+
+// 点击外部关闭下拉菜单
+const handleClickOutside = (event) => {
+  if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
+    const dropdown = dropdownRef.value.querySelector('.dropdown-content');
+    if (dropdown) {
+      dropdown.style.display = 'none';
+      setTimeout(() => {
+        dropdown.style.display = '';
+      }, 100);
+    }
+  }
+};
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
 </script>
 
 <template>
@@ -54,8 +88,8 @@ const pageTo = (to) => {
   >
     <!-- 移动端布局 -->
     <div class="navbar-start">
-      <div class="dropdown">
-        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+      <div class="dropdown" ref="dropdownRef">
+        <label tabindex="0" class="btn btn-ghost lg:hidden">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5"
@@ -70,7 +104,7 @@ const pageTo = (to) => {
               d="M4 6h16M4 12h8m-8 6h16"
             />
           </svg>
-        </div>
+        </label>
         <ul
           tabindex="0"
           class="dropdown-content menu menu-sm mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
@@ -80,10 +114,10 @@ const pageTo = (to) => {
             :key="index"
             :class="isActive(item.path) ? 'text-primary' : ''"
           >
-            <a @click="pageTo(item.path || '/')">{{ item.meta.title }}</a>
-            <ul class="p-2">
+            <a @click="handleMenuClick(item.path || '/')">{{ item.meta.title }}</a>
+            <ul v-if="item.children?.length" class="p-2">
               <li v-for="(subItem, subIndex) in item.children" :key="subIndex">
-                <a @click="pageTo(subItem.path || '/')">{{ subItem.meta.title }}</a>
+                <a @click="handleMenuClick(subItem.path || '/')">{{ subItem.meta.title }}</a>
               </li>
             </ul>
           </li>
@@ -99,9 +133,7 @@ const pageTo = (to) => {
           :key="index"
           :class="isActive(item.path) ? 'text-primary' : ''"
         >
-          <a @click="pageTo(item.path || '/')" v-if="!item.children">{{
-            item.meta.title
-          }}</a>
+          <a @click="pageTo(item.path || '/')" v-if="!item.children">{{ item.meta.title }}</a>
           <details v-else>
             <summary tabindex="0" role="button">{{ item.meta.title }}</summary>
             <ul tabindex="0" class="p-2 w-40">

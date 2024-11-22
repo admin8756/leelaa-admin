@@ -93,8 +93,17 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-    },
+      '@': path.resolve(__dirname, './src'),
+      '@components': path.resolve(__dirname, './src/components'),
+      '@pages': path.resolve(__dirname, './src/pages'),
+      '@layouts': path.resolve(__dirname, './src/layouts'),
+      '@stores': path.resolve(__dirname, './src/stores'),
+      '@assets': path.resolve(__dirname, './src/assets'),
+      '@enums': path.resolve(__dirname, './enums'),
+      '@hooks': path.resolve(__dirname, './hooks'),
+      '@locales': path.resolve(__dirname, './locales'),
+      '@utils': path.resolve(__dirname, './src/utils'),
+    }
   },
   appType: 'spa',
 });

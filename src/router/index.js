@@ -3,33 +3,12 @@ import error from './modules/error';
 import results from './modules/results';
 import other from './modules/other';
 import charts from './modules/charts';
+import dashboard from './modules/dashboard';
 
 import { name } from '../../package.json';
-// 默认布局
-const DefaultLayout = () => import('../layouts/DefaultLayout.vue');
-// 阅读布局
-// const ReadLayout = () => import('../layouts/ReadLayout.vue');
-// 干净的布局
-// const CleanLayout = () => import('../layouts/CleanLayout.vue');
 
 const routes = [
-  {
-    path: '/',
-    meta: {
-      title: '首页',
-    },
-    component: DefaultLayout,
-    children: [
-      {
-        path: '',
-        name: 'home',
-        meta: {
-          title: '首页',
-        },
-        component: () => import('../pages/indexPage.vue'),
-      },
-    ],
-  },
+  ...dashboard, // 使用仪表盘作为首页
   {
     path: '/login',
     name: 'login',
@@ -48,7 +27,7 @@ const routes = [
     meta: {
       title: '关于',
     },
-    component: DefaultLayout,
+    component: () => import('../layouts/DefaultLayout.vue'),
     children: [
       {
         path: '',

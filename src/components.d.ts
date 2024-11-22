@@ -8,11 +8,21 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BarView: typeof import('./components/charts/BarView.vue')['default']
+    BaseCard: typeof import('./components/common/BaseCard.vue')['default']
+    BaseEChart: typeof import('./components/common/BaseEChart.vue')['default']
     ChartsView: typeof import('./components/charts/ChartsView.vue')['default']
+    CultivationChart: typeof import('./components/business/dashboard/CultivationChart.vue')['default']
+    CultivationLevelTag: typeof import('./components/business/CultivationLevelTag.vue')['default']
     DropdownView: typeof import('./components/DropdownView.vue')['default']
     LineView: typeof import('./components/charts/LineView.vue')['default']
     MessageBox: typeof import('./components/MsgBox/MessageBox.vue')['default']
+    QuickActions: typeof import('./components/business/dashboard/QuickActions.vue')['default']
+    ResourceTrendChart: typeof import('./components/business/dashboard/ResourceTrendChart.vue')['default']
+    ResourceTypeIcon: typeof import('./components/business/ResourceTypeIcon.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SectRanking: typeof import('./components/business/dashboard/SectRanking.vue')['default']
+    StatCards: typeof import('./components/business/dashboard/StatCards.vue')['default']
+    WarningList: typeof import('./components/business/dashboard/WarningList.vue')['default']
   }
 }

@@ -13,7 +13,6 @@ declare global {
   const customRef: typeof import('vue')['customRef']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
-  const definePage: typeof import('unplugin-vue-router/runtime')['definePage']
   const defineStore: typeof import('pinia')['defineStore']
   const effectScope: typeof import('vue')['effectScope']
   const getActivePinia: typeof import('pinia')['getActivePinia']
