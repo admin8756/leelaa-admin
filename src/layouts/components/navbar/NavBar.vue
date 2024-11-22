@@ -8,8 +8,7 @@ import ThemeBtn from "./modules/ThemeBtn.vue";
 import MineBtn from "./modules/MineBtn.vue";
 
 const dropdownRef = ref(null)
-
-// 设置语言
+const openedDetails = ref(null)
 
 // 判断当前路由是否是当前页面
 const isActive = (path) => {
@@ -68,8 +67,25 @@ const handleMenuClick = (path) => {
   }
 };
 
-// 点击外部关闭下拉菜单
+// 处理 details 元素的点击事件
+const handleDetailsClick = (event) => {
+  const details = event.currentTarget;
+  
+  // 如果点击的是当前打开的 details，不做处理
+  if (details === openedDetails.value) return;
+  
+  // 关闭之前打开的 details
+  if (openedDetails.value && openedDetails.value !== details) {
+    openedDetails.value.removeAttribute('open');
+  }
+  
+  // 更新当前打开的 details
+  openedDetails.value = details;
+};
+
+// 点击外部关闭所有下拉菜单
 const handleClickOutside = (event) => {
+  // 移动端下拉菜单
   if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
     const dropdown = dropdownRef.value.querySelector('.dropdown-content');
     if (dropdown) {
@@ -78,6 +94,12 @@ const handleClickOutside = (event) => {
         dropdown.removeAttribute('style');
       }, 100);
     }
+  }
+  
+  // PC端下拉菜单
+  if (openedDetails.value && !openedDetails.value.contains(event.target)) {
+    openedDetails.value.removeAttribute('open');
+    openedDetails.value = null;
   }
 };
 
@@ -181,7 +203,7 @@ onUnmounted(() => {
           ]"
         >
           <a v-if="!item.children" @click="pageTo(item.path)">{{ item.meta.title }}</a>
-          <details v-else class="dropdown">
+          <details v-else class="dropdown" @click="handleDetailsClick">
             <summary tabindex="0" role="button">{{ item.meta.title }}</summary>
             <ul tabindex="0" class="p-2 bg-base-100 rounded-box w-52 shadow-lg dropdown-content z-[999] menu">
               <template v-for="(subItem, subIndex) in item.children" :key="subIndex">
@@ -221,12 +243,9 @@ onUnmounted(() => {
       </ul>
     </div>
     <div class="navbar-end">
-      <!-- 控制主题 -->
-      <ThemeBtn></ThemeBtn>
-      <!-- 控制语言 -->
-      <LanguageBtn></LanguageBtn>
-      <!-- 个人信息 -->
-      <MineBtn></MineBtn>
+      <LanguageBtn />
+      <ThemeBtn />
+      <MineBtn />
     </div>
   </div>
 </template>
