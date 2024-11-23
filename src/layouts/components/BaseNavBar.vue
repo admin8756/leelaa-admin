@@ -269,15 +269,13 @@ const childrenIsActive = (path) => {
 }
 
 const pageTo = (to) => {
-  if (to) {
-    router.push(to)
-  }
+  if (!to) return
+  router.push(to.replace('//', '/'))
 }
 
 const handleMenuClick = (path) => {
-  if (path) {
-    router.push(path)
-  }
+  if (!path) return
+  router.push(path.replace('//', '/'))
 }
 
 const handleDetailsClick = (event) => {
