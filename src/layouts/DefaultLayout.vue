@@ -1,23 +1,16 @@
 <template>
-  <div class="flex h-screen flex-col">
-    <!-- 导航栏 -->
-    <nav-bar class="flex-none"></nav-bar>
-
-    <!-- 主要内容区域 -->
-    <div class="flex-1 overflow-auto">
-      <main class="min-h-full p-4">
-        <RouterView></RouterView>
-      </main>
-
-      <!-- 页尾 -->
-      <app-footer class="flex-none"></app-footer>
+  <div class="min-h-full flex flex-col">
+    <BaseNavBar />
+    <div class="flex-1 flex flex-col">
+      <router-view></router-view>
     </div>
+    <BaseFooter />
   </div>
 </template>
 
 <script setup>
-import NavBar from "./components/navbar/NavBar.vue";
-import AppFooter from "./components/BaseFooter.vue";
+import BaseNavBar from "./components/BaseNavBar.vue";
+import BaseFooter from "./components/BaseFooter.vue";
 </script>
 
 <style>
