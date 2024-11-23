@@ -26,14 +26,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
-import * as echarts from 'echarts'
+import { ref, onMounted, watch, onUnmounted } from 'vue'
+import { useECharts } from '@/hooks/useECharts'
 
 // 数据
 const timeRange = ref('day')
 const location = ref('all')
 const chartRef = ref(null)
-let chart = null
 
 // 模拟数据
 const generateData = () => {
@@ -44,17 +43,10 @@ const generateData = () => {
   }))
 }
 
-// 初始化图表
-const initChart = () => {
-  const chartDom = chartRef.value
-  chart = echarts.init(chartDom)
-  updateChart()
-}
-
-// 更新图表
-const updateChart = () => {
+// 获取图表配置
+const getChartOptions = () => {
   const data = generateData()
-  const option = {
+  return {
     tooltip: {
       trigger: 'axis',
       axisPointer: {
@@ -70,44 +62,30 @@ const updateChart = () => {
     xAxis: {
       type: 'category',
       data: data.map(item => item.name),
-      axisLabel: {
-        interval: 0,
-        rotate: 30
+      axisTick: {
+        alignWithLabel: true
       }
     },
     yAxis: {
       type: 'value',
-      name: '灵气浓度',
-      nameTextStyle: {
-        padding: [0, 0, 0, 40]
-      }
+      name: '灵气浓度'
     },
     series: [
       {
         name: '灵气浓度',
         type: 'bar',
-        data: data.map(item => item.value),
-        itemStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            { offset: 0, color: '#83bff6' },
-            { offset: 0.5, color: '#188df0' },
-            { offset: 1, color: '#188df0' }
-          ])
-        },
-        emphasis: {
-          itemStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: '#2378f7' },
-              { offset: 0.7, color: '#2378f7' },
-              { offset: 1, color: '#83bff6' }
-            ])
-          }
-        }
+        data: data.map(item => item.value)
       }
     ]
   }
-  
-  chart?.setOption(option)
+}
+
+// 使用 ECharts hook
+const { initChart, updateOptions, resize, dispose } = useECharts(chartRef)
+
+// 更新图表
+const updateChart = () => {
+  updateOptions(getChartOptions())
 }
 
 // 监听数据变化
@@ -116,11 +94,15 @@ watch([timeRange, location], () => {
 })
 
 // 监听窗口大小变化
-window.addEventListener('resize', () => {
-  chart?.resize()
-})
+window.addEventListener('resize', resize)
 
 onMounted(() => {
   initChart()
+  updateChart()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', resize)
+  dispose()
 })
 </script>

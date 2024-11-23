@@ -24,7 +24,7 @@
 import { defineProps, defineEmits } from 'vue'
 import { Icon } from '@iconify/vue'
 
-defineProps({
+const props = defineProps({
   content: {
     type: Object,
     required: true
@@ -35,7 +35,7 @@ const emit = defineEmits(['preview'])
 
 const handleImageClick = (event) => {
   event.preventDefault()
-  emit('preview', content.url)
+  emit('preview', props.content.url)
 }
 </script>
 

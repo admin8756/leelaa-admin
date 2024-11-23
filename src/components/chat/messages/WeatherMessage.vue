@@ -58,26 +58,27 @@
 <script setup>
 import { Icon } from '@iconify/vue'
 
-const props = defineProps({
+defineProps({
   content: {
     type: Object,
     required: true
   }
 })
 
+// 根据天气状况返回对应的图标
 const getWeatherIcon = (weather) => {
   const iconMap = {
-    '晴': 'mingcute:sun-fill',
-    '多云': 'mingcute:cloudy-fill',
-    '阴': 'mingcute:cloud-fill',
-    '小雨': 'mingcute:drizzle-fill',
-    '中雨': 'mingcute:heavy-rain-fill',
-    '大雨': 'mingcute:rainstorm-fill',
-    '雷雨': 'mingcute:thunderstorm-fill',
-    '雪': 'mingcute:snowy-fill',
-    '雾': 'mingcute:fog-fill'
+    '晴': 'ep:sunny',
+    '多云': 'ep:cloudy',
+    '阴': 'ep:partly-cloudy',
+    '小雨': 'ep:light-rain',
+    '中雨': 'ep:moderate-rain',
+    '大雨': 'ep:heavy-rain',
+    '雷阵雨': 'ep:lightning',
+    '雪': 'ep:snow',
+    '雾': 'ep:fog'
   }
-  return iconMap[weather] || 'mingcute:question-fill'
+  return iconMap[weather] || 'ep:question'
 }
 </script>
 

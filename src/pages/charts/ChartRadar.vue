@@ -21,7 +21,7 @@
         
         <!-- 详细信息 -->
         <div class="space-y-4">
-          <div class="stats stats-vertical shadow">
+          <div class="stats stats-vertical shadow flex">
             <div class="stat">
               <div class="stat-title">主属性</div>
               <div class="stat-value text-primary">{{ currentDisciple.mainAttribute }}</div>

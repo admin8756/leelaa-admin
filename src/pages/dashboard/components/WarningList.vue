@@ -69,34 +69,26 @@
   </l-card>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 import { Icon } from '@iconify/vue'
 import LCard from '@/components/base/LCard/index.vue'
 import LTable from '@/components/base/LTable/index.vue'
 
-interface Warning {
-  id: number
-  type: 'danger' | 'warning' | 'info'
-  message: string
-  location: string
-  time: string
-  status: string
-  priority: string
-  handler: string
-}
+const props = defineProps({
+  warnings: {
+    type: Array,
+    default: () => []
+  }
+})
 
-const props = defineProps<{
-  warnings: Warning[]
-}>()
-
-const emit = defineEmits<{
-  (e: 'refresh'): void
-  (e: 'showAll'): void
-  (e: 'handle', warning: Warning): void
-  (e: 'view', warning: Warning): void
-  (e: 'assign', warning: Warning): void
-}>()
+const emit = defineEmits({
+  'refresh': null,
+  'showAll': null,
+  'handle': null,
+  'view': null,
+  'assign': null
+})
 
 // 表格列配置
 const columns = [
@@ -110,14 +102,14 @@ const columns = [
 
 // 分页相关
 const currentPage = ref(1)
-const handlePageChange = (page: number) => {
+const handlePageChange = (page) => {
   currentPage.value = page
 }
 
 // 操作方法
 const refresh = () => emit('refresh')
 const showAll = () => emit('showAll')
-const handleWarning = (warning: Warning) => emit('handle', warning)
-const viewDetail = (warning: Warning) => emit('view', warning)
-const assignWarning = (warning: Warning) => emit('assign', warning)
+const handleWarning = (warning) => emit('handle', warning)
+const viewDetail = (warning) => emit('view', warning)
+const assignWarning = (warning) => emit('assign', warning)
 </script>

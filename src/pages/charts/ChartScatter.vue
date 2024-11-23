@@ -87,7 +87,7 @@ const generateData = (type = 'all') => {
   const data = []
   
   // 为每种类型生成数据
-  types.forEach((elementType, index) => {
+  types.forEach((elementType) => {
     if (type === 'all' || type === elementType) {
       const count = 20 + Math.floor(Math.random() * 30)
       for (let i = 0; i < count; i++) {

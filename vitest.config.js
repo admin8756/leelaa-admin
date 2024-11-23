@@ -1,6 +1,10 @@
 import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
-import path from 'path'
+import { fileURLToPath } from 'url'
+import { dirname, resolve } from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 export default defineConfig({
   plugins: [vue()],
@@ -17,14 +21,14 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@pages': path.resolve(__dirname, './src/pages'),
-      '@layouts': path.resolve(__dirname, './src/layouts'),
-      '@stores': path.resolve(__dirname, './src/stores'),
-      '@assets': path.resolve(__dirname, './src/assets'),
-      '@mock': path.resolve(__dirname, './mock'),
-      '@test': path.resolve(__dirname, './test')
+      '@': resolve(__dirname, './src'),
+      '@components': resolve(__dirname, './src/components'),
+      '@pages': resolve(__dirname, './src/pages'),
+      '@layouts': resolve(__dirname, './src/layouts'),
+      '@stores': resolve(__dirname, './src/stores'),
+      '@assets': resolve(__dirname, './src/assets'),
+      '@mock': resolve(__dirname, './mock'),
+      '@test': resolve(__dirname, './test')
     }
   }
 })

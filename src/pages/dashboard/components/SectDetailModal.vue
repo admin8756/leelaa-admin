@@ -98,7 +98,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed } from 'vue'
 import TrendChart from './charts/TrendChart.vue'
 import RadarChart from './charts/RadarChart.vue'
 
@@ -113,5 +113,15 @@ const props = defineProps({
   }
 })
 
-defineEmits(['update:show'])
+const emit = defineEmits(['update:show'])
+
+// 计算属性
+const modalClass = computed(() => ({
+  'modal-open': props.show
+}))
+
+// 关闭模态框
+const closeModal = () => {
+  emit('update:show', false)
+}
 </script>

@@ -77,8 +77,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { Icon } from '@iconify/vue'
-import { chat } from '@/api/index'
-import { users, chatHistory, quickReplies, emojiCategories, MessageType } from '@/mock/chat'
+import { users, chatHistory, MessageType } from '@/mock/chat'
 import ChatSidebar from '@/components/chat/ChatSidebar.vue'
 import ChatMessage from '@/components/chat/ChatMessage.vue'
 import ChatInput from '@/components/chat/ChatInput.vue'
@@ -89,8 +88,6 @@ import VoiceMessage from '@/components/chat/messages/VoiceMessage.vue'
 import WeatherMessage from '@/components/chat/messages/WeatherMessage.vue'
 import VideoMessage from '@/components/chat/messages/VideoMessage.vue'
 import MusicMessage from '@/components/chat/messages/MusicMessage.vue'
-import ContactMessage from '@/components/chat/messages/ContactMessage.vue'
-import QuoteMessage from '@/components/chat/messages/QuoteMessage.vue'
 
 // 消息组件映射
 const messageComponents = {
@@ -100,9 +97,7 @@ const messageComponents = {
   [MessageType.VOICE]: VoiceMessage,
   [MessageType.WEATHER]: WeatherMessage,
   [MessageType.VIDEO]: VideoMessage,
-  [MessageType.MUSIC]: MusicMessage,
-  [MessageType.CONTACT]: ContactMessage,
-  [MessageType.QUOTE]: QuoteMessage
+  [MessageType.MUSIC]: MusicMessage
 }
 
 // 状态
@@ -206,17 +201,6 @@ const sendMessage = async (data) => {
         break
       case MessageType.MUSIC:
         replyContent = '此曲有道韵，不错不错。'
-        break
-      case MessageType.CONTACT:
-        replyContent = '多谢道友引荐，他日必当拜访。'
-        break
-      case MessageType.QUOTE:
-        replyContent = {
-          text: '大道五十，天衍四九，遁去其一。',
-          author: '太上老君',
-          source: '太上演道经'
-        }
-        replyType = MessageType.QUOTE
         break
       default:
         replyContent = '贫道收到道友的传讯了。'

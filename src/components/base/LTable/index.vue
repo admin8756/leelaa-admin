@@ -17,9 +17,9 @@
 
       <!-- 表格内容 -->
       <tbody>
-        <template v-if="data.length">
+        <template v-if="displayData.length">
           <tr 
-            v-for="(row, index) in data" 
+            v-for="(row, index) in displayData" 
             :key="row[rowKey] || index"
             :class="[
               rowClass,
@@ -96,53 +96,88 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Icon } from '@iconify/vue'
 
-interface Column {
-  key: string
-  title: string
-  width?: string
-  slot?: string
-  ellipsis?: boolean
-  thClass?: string
-  tdClass?: string
-}
-
-interface Props {
-  columns: Column[]
-  data: any[]
-  rowKey?: string
-  tableClass?: string
-  rowClass?: string
-  clickable?: boolean
-  showPagination?: boolean
-  currentPage?: number
-  pageSize?: number
-  total?: number
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  rowKey: 'id',
-  tableClass: '',
-  rowClass: '',
-  clickable: false,
-  showPagination: false,
-  currentPage: 1,
-  pageSize: 10,
-  total: 0
+const props = defineProps({
+  data: {
+    type: Array,
+    default: () => []
+  },
+  columns: {
+    type: Array,
+    default: () => [],
+    validator: (columns) => {
+      return columns.every(col => {
+        return typeof col.key === 'string' && 
+               typeof col.title === 'string' &&
+               (!col.width || typeof col.width === 'string') &&
+               (!col.slot || typeof col.slot === 'string') &&
+               (!col.ellipsis || typeof col.ellipsis === 'boolean') &&
+               (!col.thClass || typeof col.thClass === 'string') &&
+               (!col.tdClass || typeof col.tdClass === 'string')
+      })
+    }
+  },
+  rowKey: {
+    type: String,
+    default: 'id'
+  },
+  tableClass: {
+    type: String,
+    default: ''
+  },
+  rowClass: {
+    type: String,
+    default: ''
+  },
+  clickable: {
+    type: Boolean,
+    default: false
+  },
+  showPagination: {
+    type: Boolean,
+    default: false
+  },
+  currentPage: {
+    type: Number,
+    default: 1
+  },
+  pageSize: {
+    type: Number,
+    default: 10
+  },
+  total: {
+    type: Number,
+    default: 0
+  },
+  bordered: {
+    type: Boolean,
+    default: true
+  },
+  hoverable: {
+    type: Boolean,
+    default: true
+  }
 })
 
-const emit = defineEmits<{
-  (e: 'row-click', row: any): void
-  (e: 'page-change', page: number): void
-}>()
+const emit = defineEmits(['row-click', 'page-change'])
 
-// 计算总页数
+// 计算属性
+const tableClass = computed(() => ({
+  'table-bordered': props.bordered,
+  'table-hover': props.hoverable
+}))
+
+const displayData = computed(() => {
+  if (!props.showPagination) return props.data
+  const start = (props.currentPage - 1) * props.pageSize
+  return props.data.slice(start, start + props.pageSize)
+})
+
 const totalPages = computed(() => Math.ceil(props.total / props.pageSize))
 
-// 计算显示的页码
 const displayPages = computed(() => {
   const pages = []
   const maxPages = 5 // 最多显示5个页码
@@ -163,14 +198,14 @@ const displayPages = computed(() => {
 })
 
 // 行点击事件
-const handleRowClick = (row: any) => {
+const handleRowClick = (row) => {
   if (props.clickable) {
     emit('row-click', row)
   }
 }
 
-// 页码改变事件
-const handlePageChange = (page: number) => {
+// 分页方法
+const handlePageChange = (page) => {
   if (page >= 1 && page <= totalPages.value) {
     emit('page-change', page)
   }

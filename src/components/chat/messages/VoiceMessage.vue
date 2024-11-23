@@ -56,7 +56,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref } from 'vue'
 import { Icon } from '@iconify/vue'
 
 const props = defineProps({
