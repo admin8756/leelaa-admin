@@ -42,7 +42,7 @@ export default defineConfig({
       fallbackLocale: 'en',
       locale: 'zh-CN',
       fullInstall: true,
-      include: [path.resolve(__dirname, 'locales/**')],
+      include: [path.resolve(__dirname, 'src/locales/**')],
     }),
     VitePWA({
       registerType: 'autoUpdate',
@@ -125,10 +125,10 @@ export default defineConfig({
       '@stores': path.resolve(__dirname, './src/stores'),
       '@assets': path.resolve(__dirname, './src/assets'),
       '@enums': path.resolve(__dirname, './src/enums'),
-      '@hooks': path.resolve(__dirname, './hooks'),
-      '@locales': path.resolve(__dirname, './locales'),
+      '@hooks': path.resolve(__dirname, './src/hooks'),
+      '@locales': path.resolve(__dirname, './src/locales'),
       '@utils': path.resolve(__dirname, './src/utils'),
-      '@mock': path.resolve(__dirname, './mock'),
+      '@mock': path.resolve(__dirname, './src/mock'),
       '@test': path.resolve(__dirname, './test')
     }
   },

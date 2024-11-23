@@ -11,7 +11,7 @@
 
 <script setup>
 import { ref, onMounted, watch, onUnmounted } from 'vue'
-import { useECharts } from '@hooks/useECharts.js'
+import { useECharts } from '@/hooks/useECharts.js'
 
 const props = defineProps({
   data: {
