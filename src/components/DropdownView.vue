@@ -24,7 +24,7 @@ const hover = computed(() => props.openType === "hover");
     <div v-if="title" tabindex="0" role="button" class="btn m-1">{{ title }}</div>
     <ul
       tabindex="0"
-      class="dropdown-content bg-base-200 text-base-content rounded-box top-px mt-16 max-h-[calc(100vh-10rem)] w-56 overflow-y-auto border border-white/5 shadow-2xl outline outline-1 outline-black/5 menu menu-sm gap-1"
+      class="dropdown-content bg-base-200 text-base-content rounded-box top-px mt-16 max-h-[calc(100vh-10rem)] w-56 overflow-y-auto border border-white/5 shadow-2xl outline outline-1 outline-black/5 menu menu-sm gap-1 z-[999]"
     >
       <li v-for="(item, index) in list" :key="index">
         <slot :item="item"></slot>

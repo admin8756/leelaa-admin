@@ -1,14 +1,17 @@
+const DefaultLayout = () => import('@/layouts/DefaultLayout.vue');
+
 // 错误页面路由定义
 export default [
   {
     path: '/error',
+    component: DefaultLayout,
     meta: {
       title: '错误页面',
     },
     children: [
       // 403
       {
-        path: '/403',
+        path: '403',
         name: 'Forbidden',
         meta: {
           title: '权限不足',
@@ -17,7 +20,7 @@ export default [
       },
       // 500
       {
-        path: '/500',
+        path: '500',
         name: 'ServerError',
         meta: {
           title: '服务器错误',
@@ -26,7 +29,7 @@ export default [
       },
       //   503
       {
-        path: '/503',
+        path: '503',
         name: 'ServiceUnavailable',
         meta: {
           title: '服务器过载',

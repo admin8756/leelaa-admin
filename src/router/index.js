@@ -5,30 +5,23 @@ import other from './modules/other';
 import charts from './modules/charts';
 
 import { name } from '../../package.json';
-// 默认布局
-const DefaultLayout = () => import('../layouts/DefaultLayout.vue');
-// 阅读布局
-// const ReadLayout = () => import('../layouts/ReadLayout.vue');
-// 干净的布局
-// const CleanLayout = () => import('../layouts/CleanLayout.vue');
 
+// 添加路由重定向规则
 const routes = [
   {
     path: '/',
-    meta: {
-      title: '首页',
-    },
-    component: DefaultLayout,
+    component: () => import('../layouts/DefaultLayout.vue'),
+    redirect: '/dashboard',
     children: [
       {
-        path: '',
-        name: 'home',
+        path: 'dashboard',
+        name: 'dashboard',
         meta: {
-          title: '首页',
+          title: '宗门总览',
         },
-        component: () => import('../pages/indexPage.vue'),
-      },
-    ],
+        component: () => import('../pages/dashboard/DashboardView.vue'),
+      }
+    ]
   },
   {
     path: '/login',
@@ -39,16 +32,41 @@ const routes = [
     },
     component: () => import('../pages/loginPage.vue'),
   },
+  // 添加重定向路由
+  {
+    path: '/line',
+    redirect: '/charts/line'
+  },
+  {
+    path: '/bar',
+    redirect: '/charts/bar'
+  },
+  {
+    path: '/pie',
+    redirect: '/charts/pie'
+  },
+  {
+    path: '/dataset',
+    redirect: '/charts/dataset'
+  },
+  {
+    path: '/radar',
+    redirect: '/charts/radar'
+  },
+  {
+    path: '/scatter',
+    redirect: '/charts/scatter'
+  },
   ...charts,
   ...results,
   ...other,
   ...error,
   {
     path: '/about',
+    component: () => import('../layouts/DefaultLayout.vue'),
     meta: {
       title: '关于',
     },
-    component: DefaultLayout,
     children: [
       {
         path: '',
@@ -57,13 +75,18 @@ const routes = [
           title: '关于',
         },
         component: () => import('../pages/aboutPage.vue'),
-      },
-    ],
+      }
+    ]
   },
+  // 捕获所有未匹配的路由
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/'
+  }
 ];
 
 const router = createRouter({
-  history: createWebHistory('/'),
+  history: createWebHistory(),
   routes: routes,
 });
 
@@ -71,25 +94,55 @@ const router = createRouter({
 const getStructure = (item) => {
   const { meta, name, path } = item;
   const newItem = { name, path, meta };
-  // 如果meta中show 为false，则不显示
-  if (meta && meta.show === false) {
+
+  // 如果meta中show为false，则不显示
+  if (meta?.show === false) {
     return null;
   }
+
   // 如果name为空，且children为空，则不显示
-  if (!name && !item.children) {
+  if (!name && !item.children?.length) {
     return null;
   }
-  // 如果name为空，但是children只有一个，则直接返回children
-  if (!name && item.children.length === 1) {
-    item.children[0].path = path;
-    return getStructure(item.children[0]);
-  }
-  if (item.children) {
-    newItem.children = item.children.map((child) => getStructure(child));
+
+  if (item.children?.length > 0) {
+    // 按group分组处理children
+    const groupedChildren = item.children.reduce((acc, child) => {
+      const group = child.meta?.group || '默认';
+      if (!acc[group]) {
+        acc[group] = [];
+      }
+      const structure = getStructure(child);
+      if (structure) {
+        acc[group].push(structure);
+      }
+      return acc;
+    }, {});
+
+    // 如果有分组，则转换为children数组
+    const hasGroups = Object.keys(groupedChildren).length > 1;
+    if (hasGroups) {
+      newItem.children = Object.entries(groupedChildren).map(([group, items]) => ({
+        name: `${group}Group`,
+        meta: { title: group, isGroup: true },
+        children: items
+      }));
+    } else {
+      // 如果只有一个分组，直接使用其中的items
+      newItem.children = Object.values(groupedChildren)[0] || [];
+    }
+
+    // 如果没有name但只有一个非分组的child，则返回该child
+    if (!name && newItem.children.length === 1 && !newItem.children[0].meta?.isGroup) {
+      const child = newItem.children[0];
+      child.path = path + '/' + child.path;
+      return child;
+    }
+
     return newItem;
-  } else {
-    return newItem;
   }
+
+  return newItem;
 };
 
 // 导出路由列表，用于生成导航菜单

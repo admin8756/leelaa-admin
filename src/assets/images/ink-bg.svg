@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="ink-blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="30" />
+    </filter>
+    <filter id="noise" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="5" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend mode="multiply" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  
+  <!-- 水墨背景层 -->
+  <g opacity="0.1">
+    <!-- 主要水墨块 -->
+    <path d="M800 300 Q1000 100, 1200 400 T1600 600 T1200 800 T800 700 T400 500 T800 300" fill="currentColor" filter="url(#ink-blur)">
+      <animate attributeName="d" dur="30s" repeatCount="indefinite"
+        values="
+          M800 300 Q1000 100, 1200 400 T1600 600 T1200 800 T800 700 T400 500 T800 300;
+          M800 350 Q1050 150, 1250 450 T1650 650 T1250 850 T850 750 T450 550 T800 350;
+          M800 300 Q1000 100, 1200 400 T1600 600 T1200 800 T800 700 T400 500 T800 300"
+        calcMode="spline"
+        keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
+      />
+    </path>
+    
+    <!-- 装饰性水墨点 -->
+    <circle cx="500" cy="400" r="100" fill="currentColor" filter="url(#ink-blur)" opacity="0.3">
+      <animate attributeName="r" dur="15s" repeatCount="indefinite"
+        values="100;120;100"
+        calcMode="spline"
+        keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
+      />
+    </circle>
+    
+    <circle cx="1400" cy="700" r="80" fill="currentColor" filter="url(#ink-blur)" opacity="0.2">
+      <animate attributeName="r" dur="20s" repeatCount="indefinite"
+        values="80;100;80"
+        calcMode="spline"
+        keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
+      />
+    </circle>
+  </g>
+  
+  <!-- 纹理叠加 -->
+  <rect width="100%" height="100%" filter="url(#noise)" opacity="0.05"/>
+</svg>

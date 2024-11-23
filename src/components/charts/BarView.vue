@@ -3,13 +3,11 @@
 </template>
 <script setup>
 import * as echarts from "echarts/core";
-import { GridComponent } from "echarts/components";
 import { BarChart } from "echarts/charts";
-import { TitleComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
-import { ref, onMounted, computed, watch } from "vue";
-import { useWindowSize } from "@vueuse/core";
-import { watchThrottled } from "@vueuse/core";
+import { GridComponent, TitleComponent } from "echarts/components";
+import { ref, onMounted, computed, watch, provide } from "vue";
+import { useWindowSize, watchThrottled } from "@vueuse/core";
 const chartBar = ref(null);
 let myChart = "";
 const props = defineProps({
@@ -59,6 +57,7 @@ const updateChart = () => {
       },
     ],
   };
+  provide("chartsUpdate", option);
   myChart.setOption(option);
 };
 // 组件加载
@@ -81,7 +80,6 @@ onMounted(() => {
 });
 
 // 监听数据发生变化
-
 watch(
   [props.xData, props.yData],
   () => {
