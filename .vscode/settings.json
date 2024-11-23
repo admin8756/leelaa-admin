@@ -3,6 +3,8 @@
   "cSpell.words": [
     "daisyui",
     "echarts",
+    "heroicons",
+    "iconify",
     "intlify",
     "leedaisen",
     "leelaa",
@@ -10,8 +12,10 @@
     "pinia",
     "rushstack",
     "tailwindcss",
+    "twemoji",
     "unplugin",
     "vueuse",
+    "wuxia",
     "Xdata"
   ],
   "i18n-ally.keystyle": "nested",

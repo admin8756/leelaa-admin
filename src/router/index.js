@@ -3,7 +3,6 @@ import error from './modules/error';
 import results from './modules/results';
 import other from './modules/other';
 import charts from './modules/charts';
-import dashboard from './modules/dashboard';
 
 import { name } from '../../package.json';
 
@@ -86,7 +85,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory('/'),
+  history: createWebHistory(),
   routes: routes,
 });
 

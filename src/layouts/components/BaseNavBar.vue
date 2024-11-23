@@ -243,9 +243,9 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useI18n } from "vue-i18n"
-import { useRoute } from "vue-router"
+import { useRouter, useRoute } from "vue-router"
 import { THEME_LIST, THEME_DEFAULT } from "@enums"
-import router, { routesList } from "@/router/index.js"
+import { routesList } from "@/router/index.js"
 import { name } from "../../../package.json"
 import { Icon } from '@iconify/vue';
 
@@ -254,26 +254,30 @@ defineOptions({
 })
 
 const route = useRoute()
+const router = useRouter()
 const { locale } = useI18n()
 const dropdownRef = ref(null)
 const nowTheme = ref(localStorage.getItem('theme') || THEME_DEFAULT)
 
 // 导航相关
 const isActive = (path) => {
-  return route.path === path
+  return route.path === path || route.path.startsWith(path + '/')
 }
 
 const childrenIsActive = (path) => {
-  return route.path.startsWith(path)
+  return route.path === path || route.path.startsWith(path + '/')
 }
 
 const pageTo = (to) => {
-  if (route.path === to) return
-  router.push(to)
+  if (to) {
+    router.push(to)
+  }
 }
 
 const handleMenuClick = (path) => {
-  pageTo(path)
+  if (path) {
+    router.push(path)
+  }
 }
 
 const handleDetailsClick = (event) => {
