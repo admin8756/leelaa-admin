@@ -7,7 +7,7 @@
       ref="audioRef"
       @timeupdate="onTimeUpdate"
       @loadedmetadata="onLoadedMetadata"
-      @ended="isPlaying = false"
+      @ended="handleEnded"
     ></audio>
     
     <!-- 主要内容区域 -->
@@ -22,7 +22,7 @@
       <div class="relative flex items-center gap-3 p-2">
         <button 
           class="btn btn-circle btn-xs bg-transparent hover:bg-transparent border-0"
-          @click="togglePlay"
+          @click="handlePlayClick"
         >
           <Icon 
             :icon="isPlaying ? 'solar:pause-bold' : 'solar:play-bold'" 
@@ -56,27 +56,24 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onBeforeUnmount } from 'vue'
 import { Icon } from '@iconify/vue'
 
-const props = defineProps({
+defineProps({
   content: {
     type: Object,
-    required: true,
-    validator: (obj) => {
-      return obj.url != null
-    }
+    required: true
   }
 })
 
-const audioRef = ref(null)
 const isPlaying = ref(false)
+const audioRef = ref(null)
 const currentTime = ref(0)
 const duration = ref(0)
 const progress = ref(0)
 
-// 播放/暂停
-const togglePlay = () => {
+// 播放控制
+const handlePlayClick = () => {
   if (!audioRef.value) return
   
   if (isPlaying.value) {
@@ -84,8 +81,12 @@ const togglePlay = () => {
   } else {
     audioRef.value.play()
   }
-  
   isPlaying.value = !isPlaying.value
+}
+
+// 监听音频播放结束
+const handleEnded = () => {
+  isPlaying.value = false
 }
 
 // 更新进度
@@ -108,9 +109,9 @@ const formatTime = (seconds) => {
   return `${mins}:${secs.toString().padStart(2, '0')}`
 }
 
-// 组件销毁时停止播放
+// 组件销毁前停止播放
 onBeforeUnmount(() => {
-  if (audioRef.value) {
+  if (audioRef.value && !audioRef.value.paused) {
     audioRef.value.pause()
   }
 })

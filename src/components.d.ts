@@ -10,6 +10,7 @@ declare module 'vue' {
     BarView: typeof import('./components/charts/BarView.vue')['default']
     BaseCard: typeof import('./components/common/BaseCard.vue')['default']
     BaseEChart: typeof import('./components/common/BaseEChart.vue')['default']
+    BaseTable: typeof import('./components/base/LTable/BaseTable.vue')['default']
     ChartsView: typeof import('./components/charts/ChartsView.vue')['default']
     ChatInput: typeof import('./components/chat/ChatInput.vue')['default']
     ChatMessage: typeof import('./components/chat/ChatMessage.vue')['default']

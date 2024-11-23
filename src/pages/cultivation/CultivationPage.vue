@@ -133,7 +133,7 @@
 <script setup>
 import { ref } from 'vue'
 import { Icon } from '@iconify/vue'
-import LCard from '@/components/base/LCard/index.vue'
+import LCard from '@/components/base/LCard/BaseCard.vue'
 import CultivationLevelTag from '@/components/business/CultivationLevelTag.vue'
 import CultivationPieChart from './components/CultivationPieChart.vue'
 import ResourceTrendChart from './components/ResourceTrendChart.vue'

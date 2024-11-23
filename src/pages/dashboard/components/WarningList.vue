@@ -22,7 +22,7 @@
 
     <l-table
       :columns="columns"
-      :data="warnings"
+      :data="paginatedWarnings"
       :show-pagination="true"
       :current-page="currentPage"
       :total="warnings.length"
@@ -70,16 +70,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { Icon } from '@iconify/vue'
-import LCard from '@/components/base/LCard/index.vue'
-import LTable from '@/components/base/LTable/index.vue'
+import LCard from '@/components/base/LCard/BaseCard.vue'
+import LTable from '@/components/base/LTable/BaseTable.vue'
 
 const props = defineProps({
   warnings: {
     type: Array,
     default: () => []
   }
+})
+
+// 计算属性：分页后的警告列表
+const paginatedWarnings = computed(() => {
+  const startIndex = (currentPage.value - 1) * 10
+  return props.warnings.slice(startIndex, startIndex + 10)
 })
 
 const emit = defineEmits({

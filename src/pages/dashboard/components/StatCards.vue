@@ -25,7 +25,7 @@
 
 <script setup>
 import { Icon } from '@iconify/vue'
-import LCard from '@/components/base/LCard/index.vue'
+import LCard from '@/components/base/LCard/BaseCard.vue'
 
 const stats = [
   {
