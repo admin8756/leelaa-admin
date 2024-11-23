@@ -1,4 +1,3 @@
-import { CULTIVATION_LEVELS } from '../enums/cultivation'
 import dayjs from 'dayjs'
 
 // 生成过去30天的日期数组

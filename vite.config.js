@@ -11,6 +11,8 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import { VitePWA } from 'vite-plugin-pwa';
 import Components from 'unplugin-vue-components/vite';
 import AutoImport from 'unplugin-auto-import/vite';
+import { visualizer } from 'rollup-plugin-visualizer';
+import viteCompression from 'vite-plugin-compression';
 import manifest from './src/manifest.json';
 
 // https://vitejs.dev/config/
@@ -47,6 +49,20 @@ export default defineConfig({
       includeAssets: ['favicon.ico', 'safari-pinned-tab.svg'],
       manifest,
     }),
+    visualizer({
+      open: true,
+      gzipSize: true,
+      brotliSize: true,
+      filename: 'dist/stats.html'
+    }),
+    viteCompression({
+      verbose: true,
+      disable: false,
+      threshold: 10240,
+      algorithm: 'gzip',
+      ext: '.gz',
+      deleteOriginFile: false
+    })
   ],
   // 服务设置
   server: {
@@ -62,18 +78,27 @@ export default defineConfig({
     // 启用/禁用 gzip 压缩大小报告
     reportCompressedSize: false,
     // 消除打包大小超过500kb警告
-    chunkSizeWarningLimit: 2000,
+    chunkSizeWarningLimit: 500,
     minify: 'esbuild',
     assetsDir: 'static/assets',
     // 静态资源打包到dist下的不同目录
     rollupOptions: {
       external: ['workbox-window'],
       output: {
+        manualChunks: {
+          'vue-vendor': ['vue', 'vue-router', 'pinia'],
+          'echarts-vendor': ['echarts'],
+          'ui-vendor': ['@iconify/vue'],
+        },
         chunkFileNames: 'static/js/[name]-[hash].js',
         entryFileNames: 'static/js/[name]-[hash].js',
         assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
       },
     },
+    // 启用 CSS 代码分割
+    cssCodeSplit: true,
+    // 启用源码映射
+    sourcemap: false
   },
   css: {
     preprocessorOptions: {},
@@ -99,7 +124,7 @@ export default defineConfig({
       '@layouts': path.resolve(__dirname, './src/layouts'),
       '@stores': path.resolve(__dirname, './src/stores'),
       '@assets': path.resolve(__dirname, './src/assets'),
-      '@enums': path.resolve(__dirname, './enums'),
+      '@enums': path.resolve(__dirname, './src/enums'),
       '@hooks': path.resolve(__dirname, './hooks'),
       '@locales': path.resolve(__dirname, './locales'),
       '@utils': path.resolve(__dirname, './src/utils'),

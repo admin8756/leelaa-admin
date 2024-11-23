@@ -10,7 +10,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { CULTIVATION_LEVELS } from '../../enums/cultivation'
+import { CULTIVATION_LEVELS } from '@enums'
 
 const props = defineProps({
   level: {

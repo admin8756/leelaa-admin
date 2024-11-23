@@ -5,7 +5,7 @@
 <script setup>
 import { onMounted, onBeforeUnmount, ref, watch } from 'vue'
 import * as echarts from 'echarts'
-import xianxiaLight from '../../../enums/echarts.theme'
+import { xianxiaLight } from '@/enums'
 
 echarts.registerTheme('xianxia-light', xianxiaLight)
 

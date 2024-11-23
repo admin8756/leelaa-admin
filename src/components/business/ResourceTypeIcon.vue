@@ -10,7 +10,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { RESOURCE_TYPES } from '../../enums/cultivation'
+import { RESOURCE_TYPES } from '@enums'
 
 const props = defineProps({
   type: {

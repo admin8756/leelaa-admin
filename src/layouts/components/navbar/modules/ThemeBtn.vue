@@ -1,5 +1,5 @@
 <script setup>
-import { THEME_LIST, THEME_DEFAULT } from "../../../../../enums/theme.js";
+import { THEME_LIST, THEME_DEFAULT } from "@enums";
 import { useI18n } from "vue-i18n";
 import { ref, onMounted } from "vue";
 import DropdownView from "@/components/DropdownView.vue";
