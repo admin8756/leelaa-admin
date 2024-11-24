@@ -1,19 +1,90 @@
 import dayjs from 'dayjs'
 
-// 生成过去30天的日期数组
-const generateDates = () => {
-  const dates = []
-  for (let i = 29; i >= 0; i--) {
-    dates.push(dayjs().subtract(i, 'day').format('MM-DD'))
-  }
-  return dates
+// 生成随机时间（最近24小时内）
+const generateRandomTime = () => {
+  const now = dayjs()
+  const hoursAgo = Math.floor(Math.random() * 24)
+  const minutesAgo = Math.floor(Math.random() * 60)
+  return now.subtract(hoursAgo, 'hour').subtract(minutesAgo, 'minute').format('YYYY-MM-DD HH:mm')
 }
 
-// 生成随机数据
-const generateRandomData = (min, max, length) => {
-  return Array.from({ length }, () => 
-    Math.floor(Math.random() * (max - min + 1)) + min
+// 生成随机状态
+const generateRandomStatus = () => {
+  const statuses = ['未处理', '处理中', '已处理']
+  return statuses[Math.floor(Math.random() * statuses.length)]
+}
+
+// 生成随机优先级和类型
+const generateRandomPriority = () => {
+  const priorities = [
+    { priority: '紧急', type: 'danger' },
+    { priority: '高', type: 'warning' },
+    { priority: '中', type: 'warning' },
+    { priority: '普通', type: 'info' }
+  ]
+  return priorities[Math.floor(Math.random() * priorities.length)]
+}
+
+// 生成随机处理人
+const generateRandomHandler = () => {
+  const handlers = [
+    '执法堂', '阵法堂', '内门执事', '巡山队', 
+    '药园管理处', '后勤部', '藏经阁守阁人', 
+    '比武组委会', '器物堂', '考核组'
+  ]
+  return handlers[Math.floor(Math.random() * handlers.length)]
+}
+
+// 生成随机地点
+const generateRandomLocation = () => {
+  const locations = [
+    '东南角护山大阵', '主峰灵脉', '丹元峰', '后山禁地',
+    '灵药园', '外门广场', '藏经阁', '中央广场',
+    '丹房', '迎仙殿', '演武场', '藏宝阁'
+  ]
+  return locations[Math.floor(Math.random() * locations.length)]
+}
+
+// 生成随机消息
+const generateRandomMessage = () => {
+  const messages = [
+    '发现魔修入侵护山大阵，请速速查探',
+    '灵脉灵气浓度异常，需及时查看',
+    '弟子即将突破瓶颈，需准备结丹室',
+    '发现疑似邪修踪迹，需立即调查',
+    '新培育的千年灵芝即将成熟',
+    '斗法场地出现裂痕，需维修',
+    '禁制有异常波动，疑似有人触碰',
+    '门派大比即将开始，场地需要准备',
+    '炉鼎出现裂纹，需要修复',
+    '新一批弟子入门考核即将开始',
+    '灵兽园有异兽暴动迹象',
+    '阵法能量不稳，需要维护'
+  ]
+  return messages[Math.floor(Math.random() * messages.length)]
+}
+
+// 生成随机预警
+const generateRandomAlert = (id) => {
+  const { priority, type } = generateRandomPriority()
+  return {
+    id,
+    type,
+    message: generateRandomMessage(),
+    location: generateRandomLocation(),
+    time: generateRandomTime(),
+    status: generateRandomStatus(),
+    priority,
+    handler: generateRandomHandler()
+  }
+}
+
+// 生成一组新的预警数据
+export const generateNewAlerts = (count = 10) => {
+  const alerts = Array.from({ length: count }, (_, index) => 
+    generateRandomAlert(index + 1)
   )
+  return alerts.sort((a, b) => dayjs(b.time).valueOf() - dayjs(a.time).valueOf())
 }
 
 // 修炼统计数据
@@ -62,84 +133,43 @@ export const realmDistribution = [
   { name: '炼虚期', value: 10 }
 ]
 
-// 突破记录
-export const breakthroughRecords = [
-  {
-    id: 1,
-    name: '张三',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=1',
-    level: '金丹期',
-    time: '2024-02-20 15:30',
-    status: 'success',
-    statusText: '突破成功'
+// 初始预警列表数据
+export const warningList = generateNewAlerts()
+
+// 快捷操作数据
+export const actionList = [
+  { 
+    id: 'openFormation',
+    title: '开启护山大阵',
+    icon: 'mdi-shield-outline',
+    color: 'primary'
   },
-  {
-    id: 2,
-    name: '李四',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=2',
-    level: '筑基期',
-    time: '2024-02-19 09:15',
-    status: 'failed',
-    statusText: '突破失败'
+  { 
+    id: 'distributeElixir',
+    title: '分发丹药',
+    icon: 'mdi-pill',
+    color: 'success'
   },
-  {
-    id: 3,
-    name: '王五',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=3',
-    level: '元婴期',
-    time: '2024-02-18 20:45',
-    status: 'success',
-    statusText: '突破成功'
+  { 
+    id: 'checkSpirit',
+    title: '检查灵脉',
+    icon: 'mdi-pulse',
+    color: 'info'
   },
-  {
-    id: 4,
-    name: '赵六',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=4',
-    level: '练气期',
-    time: '2024-02-18 16:20',
-    status: 'inProgress',
-    statusText: '突破中'
+  { 
+    id: 'gatherDisciples',
+    title: '召集弟子',
+    icon: 'mdi-account-group',
+    color: 'warning'
   }
 ]
 
-// 修炼排行
-export const cultivationRanks = [
-  {
-    id: 1,
-    name: '叶凡',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=5',
-    level: '化神期',
-    duration: '168h',
-    ranking: 1,
-    efficiency: 98
-  },
-  {
-    id: 2,
-    name: '萧炎',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=6',
-    level: '元婴期',
-    duration: '152h',
-    ranking: 2,
-    efficiency: 95
-  },
-  {
-    id: 3,
-    name: '韩立',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=7',
-    level: '金丹期',
-    duration: '143h',
-    ranking: 3,
-    efficiency: 92
-  }
+// 资源趋势数据
+export const resourceTrend = [
+  { date: '正月', spiritStone: 12800, elixir: 2200, magicWeapon: 150, talisman: 1800 },
+  { date: '二月', spiritStone: 13200, elixir: 1820, magicWeapon: 232, talisman: 1850 },
+  { date: '三月', spiritStone: 10100, elixir: 1910, magicWeapon: 201, talisman: 1950 },
+  { date: '四月', spiritStone: 13400, elixir: 2340, magicWeapon: 154, talisman: 2050 },
+  { date: '五月', spiritStone: 9000, elixir: 2900, magicWeapon: 190, talisman: 2200 },
+  { date: '六月', spiritStone: 23000, elixir: 3300, magicWeapon: 330, talisman: 2500 }
 ]
-
-// 资源消耗趋势数据
-export const resourceTrendData = {
-  dates: generateDates(),
-  spirit: generateRandomData(100, 500, 30),
-  elixir: generateRandomData(10, 50, 30),
-  talisman: generateRandomData(5, 25, 30)
-}
-
-// 灵气浓度数据
-export const qiDensityValue = 78.5

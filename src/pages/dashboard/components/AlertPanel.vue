@@ -6,26 +6,16 @@
     no-padding
   >
     <template #header-badge>
-      <div class="badge badge-warning">{{ warnings.length }}</div>
-    </template>
-
-    <template #header-actions>
-      <div class="flex gap-2">
-        <button class="btn btn-ghost btn-sm" @click="refresh">
-          <Icon icon="mdi-refresh" />
-        </button>
-        <button class="btn btn-ghost btn-sm" @click="showAll">
-          <Icon icon="mdi-arrow-right" />
-        </button>
-      </div>
+      <div class="badge badge-warning">{{ alerts.length }}</div>
     </template>
 
     <l-table
       :columns="columns"
-      :data="paginatedWarnings"
+      :data="alerts"
       :show-pagination="true"
-      :current-page="currentPage"
-      :total="warnings.length"
+      v-model:current-page="currentPage"
+      :total="alerts.length"
+      :page-size="pageSize"
       table-class="table-fixed"
       @page-change="handlePageChange"
     >
@@ -54,47 +44,58 @@
       <!-- 操作列 -->
       <template #actions="{ row }">
         <div class="flex gap-1">
-          <button class="btn btn-ghost btn-xs" @click.stop="handleWarning(row)">
+          <button class="btn btn-ghost btn-xs" @click.stop="handleAlert(row)">
             <Icon icon="mdi-hand" size="small"/>
           </button>
           <button class="btn btn-ghost btn-xs" @click.stop="viewDetail(row)">
             <Icon icon="mdi-eye" size="small"/>
           </button>
-          <button class="btn btn-ghost btn-xs" @click.stop="assignWarning(row)">
+          <button class="btn btn-ghost btn-xs" @click.stop="assignAlert(row)">
             <Icon icon="mdi-account-plus" size="small"/>
           </button>
         </div>
       </template>
     </l-table>
+
+    <template #header-actions>
+      <div class="flex gap-2">
+        <button 
+          class="btn btn-ghost btn-sm" 
+          :class="{ 'animate-spin': isRefreshing }"
+          @click="refresh"
+        >
+          <Icon icon="mdi-refresh" />
+        </button>
+        <button class="btn btn-ghost btn-sm" @click="showAll">
+          <Icon icon="mdi-arrow-right" />
+        </button>
+      </div>
+    </template>
   </CustomCard>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { Icon } from '@iconify/vue'
+import { ref } from 'vue'
 import CustomCard from '@/components/base/LCard/CustomCard.vue'
 import LTable from '@/components/base/LTable/BaseTable.vue'
+import { Icon } from '@iconify/vue'
+import { generateNewAlerts } from '@/mock/cultivation'
 
 const props = defineProps({
-  warnings: {
+  alerts: {
     type: Array,
-    default: () => []
+    required: true,
+    default() {
+      return []
+    }
   }
 })
 
-// 计算属性：分页后的警告列表
-const paginatedWarnings = computed(() => {
-  const startIndex = (currentPage.value - 1) * 10
-  return props.warnings.slice(startIndex, startIndex + 10)
-})
+const emit = defineEmits(['update:alerts'])
 
-const emit = defineEmits({
-  'refresh': null,
-  'showAll': null,
-  'handle': null,
-  'view': null,
-  'assign': null
-})
+const currentPage = ref(1)
+const pageSize = 5
+const isRefreshing = ref(false)
 
 // 表格列配置
 const columns = [
@@ -106,16 +107,62 @@ const columns = [
   { key: 'actions', title: '操作', width: '120px', slot: 'actions' }
 ]
 
-// 分页相关
-const currentPage = ref(1)
+// 页码变更
 const handlePageChange = (page) => {
   currentPage.value = page
 }
 
 // 操作方法
-const refresh = () => emit('refresh')
-const showAll = () => emit('showAll')
-const handleWarning = (warning) => emit('handle', warning)
-const viewDetail = (warning) => emit('view', warning)
-const assignWarning = (warning) => emit('assign', warning)
+const refresh = async () => {
+  isRefreshing.value = true
+  try {
+    await new Promise(resolve => setTimeout(resolve, 1000)) // 模拟网络延迟
+    
+    // 生成新的预警列表
+    const newAlerts = generateNewAlerts(props.alerts.length)
+    
+    // 更新数据
+    emit('update:alerts', newAlerts)
+    
+    // 重置到第一页
+    currentPage.value = 1
+  } finally {
+    isRefreshing.value = false
+  }
+}
+
+const showAll = () => {
+  // TODO: 实现查看全部逻辑
+  console.log('查看全部预警')
+}
+
+const handleAlert = (alert) => {
+  // TODO: 实现处理警告逻辑
+  console.log('处理预警:', alert)
+}
+
+const viewDetail = (alert) => {
+  // TODO: 实现查看详情逻辑
+  console.log('查看预警详情:', alert)
+}
+
+const assignAlert = (alert) => {
+  // TODO: 实现分配警告逻辑
+  console.log('分配预警:', alert)
+}
 </script>
+
+<style scoped>
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

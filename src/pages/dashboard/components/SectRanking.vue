@@ -6,9 +6,18 @@
           <Icon icon="game-icons:holy-symbol" class="text-2xl text-primary" />
           <h2 class="card-title m-0">宗门排名</h2>
         </div>
-        <div class="flex items-center gap-2 text-sm opacity-75">
-          <Icon icon="mdi:clock-outline" />
-          <span>{{ lastUpdate }}</span>
+        <div class="flex items-center gap-2">
+          <button
+            class="btn btn-ghost btn-sm btn-circle"
+            :class="{ 'loading': isRefreshing }"
+            @click="refresh"
+          >
+            <Icon icon="mdi:refresh" class="text-lg" />
+          </button>
+          <div class="text-sm opacity-75">
+            <Icon icon="mdi:clock-outline" class="inline-block" />
+            <span>{{ lastUpdate }}</span>
+          </div>
         </div>
       </div>
 
@@ -49,9 +58,9 @@
               <!-- 宗门名称 -->
               <td>
                 <div class="flex items-center gap-3">
-                  <div class="avatar placeholder">
-                    <div class="w-8 rounded-lg bg-neutral-focus text-neutral-content">
-                      <span class="text-xs">{{ sect.name.slice(0, 2) }}</span>
+                  <div class="avatar">
+                    <div class="w-8 rounded-lg bg-neutral-focus">
+                      <img :src="sect.avatar" :alt="sect.name" />
                     </div>
                   </div>
                   <div>
@@ -78,15 +87,8 @@
 
               <!-- 特长 -->
               <td>
-                <div class="flex gap-1">
-                  <div 
-                    v-for="specialty in sect.specialties" 
-                    :key="specialty"
-                    class="badge badge-sm"
-                    :class="getSpecialtyClass(specialty)"
-                  >
-                    {{ specialty }}
-                  </div>
+                <div class="badge" :class="getSpecialtyClass(sect.specialty)">
+                  {{ sect.specialty }}
                 </div>
               </td>
 
@@ -95,13 +97,13 @@
                 <div 
                   class="badge"
                   :class="[
-                    sect.rankChange > 0 ? 'badge-success' :
-                    sect.rankChange < 0 ? 'badge-error' :
+                    sect.trend === 'up' ? 'badge-success' :
+                    sect.trend === 'down' ? 'badge-error' :
                     'badge-ghost'
                   ]"
                 >
-                  {{ sect.rankChange > 0 ? '↑' : sect.rankChange < 0 ? '↓' : '-' }}
-                  {{ Math.abs(sect.rankChange) }}
+                  {{ sect.trend === 'up' ? '↑' : sect.trend === 'down' ? '↓' : '-' }}
+                  {{ sect.change }}
                 </div>
               </td>
 
@@ -109,7 +111,7 @@
               <td>
                 <div class="w-24 h-8">
                   <TrendChart 
-                    :data="sect.historicalRanks" 
+                    :data="sect.rankHistory" 
                     :color="sect.trend === 'up' ? '#36D399' : sect.trend === 'down' ? '#F87272' : '#71717A'"
                   />
                 </div>
@@ -129,22 +131,61 @@
           <!-- 基本信息 -->
           <div class="grid grid-cols-3 gap-4">
             <div class="stat bg-base-200/50 rounded-box">
-              <div class="stat-title">门派驻地</div>
-              <div class="stat-value text-lg">{{ selectedSect.location }}</div>
+              <div class="stat-title">规模</div>
+              <div class="stat-value text-lg">{{ selectedSect.size }}</div>
             </div>
             <div class="stat bg-base-200/50 rounded-box">
-              <div class="stat-title">掌门人</div>
-              <div class="stat-value text-lg">{{ selectedSect.leader }}</div>
+              <div class="stat-title">特长</div>
+              <div class="stat-value text-lg">{{ selectedSect.specialty }}</div>
             </div>
             <div class="stat bg-base-200/50 rounded-box">
-              <div class="stat-title">创建时间</div>
-              <div class="stat-value text-lg">{{ selectedSect.foundingYear }}</div>
+              <div class="stat-title">综合评分</div>
+              <div class="stat-value text-lg">{{ selectedSect.score }}</div>
             </div>
           </div>
 
           <!-- 能力雷达图 -->
           <div class="h-64">
-            <RadarChart :data="selectedSect.stats" />
+            <RadarChart 
+              :data="[
+                selectedSect.power,
+                selectedSect.influence,
+                selectedSect.resources,
+                selectedSect.cultivation,
+                selectedSect.reputation
+              ]"
+              :indicators="[
+                { name: '战斗力', max: 100 },
+                { name: '影响力', max: 100 },
+                { name: '资源', max: 100 },
+                { name: '修炼', max: 100 },
+                { name: '声望', max: 100 }
+              ]"
+              :color="selectedSect.color"
+            />
+          </div>
+
+          <!-- 最近事件 -->
+          <div class="space-y-2">
+            <h4 class="font-medium">最近事件</h4>
+            <div class="space-y-2">
+              <div 
+                v-for="event in selectedSect.events" 
+                :key="event.title"
+                class="alert"
+                :class="{
+                  'alert-success': event.type === 'success',
+                  'alert-warning': event.type === 'warning',
+                  'alert-info': event.type === 'info'
+                }"
+              >
+                <div>
+                  <h3 class="font-bold">{{ event.title }}</h3>
+                  <div class="text-xs">{{ event.content }}</div>
+                </div>
+                <div class="text-xs opacity-75">{{ event.time }}</div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -154,6 +195,7 @@
           </form>
         </div>
       </div>
+
       <form method="dialog" class="modal-backdrop">
         <button>关闭</button>
       </form>
@@ -164,24 +206,47 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { Icon } from '@iconify/vue'
-import { useSectStore } from '@/stores/sect'
+import dayjs from 'dayjs'
 import TrendChart from './charts/TrendChart.vue'
 import RadarChart from './charts/RadarChart.vue'
+import { sects, generateRankingList } from '@/mock/sect'
 
-const sectStore = useSectStore()
-const rankings = computed(() => sectStore.rankings)
-const lastUpdate = computed(() => {
-  if (!sectStore.lastUpdateTime) return '实时数据'
-  const date = new Date(sectStore.lastUpdateTime)
-  return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')} 更新`
-})
-
-// 宗门详情相关
+// 使用 ref 包装数据，使其成为响应式
+const rankingData = ref(generateRankingList())
+const lastUpdate = ref(dayjs().format('HH:mm'))
+const isRefreshing = ref(false)
 const sectDetailsModal = ref(null)
 const selectedSect = ref(null)
 
+// 合并 sects 和 rankingData 的数据
+const rankings = computed(() => {
+  return rankingData.value.map(ranking => {
+    const sect = sects.find(s => s.name === ranking.name)
+    return {
+      ...sect,
+      currentRank: ranking.rank,
+      score: ranking.score,
+      trend: ranking.trend,
+      change: ranking.change
+    }
+  })
+})
+
+// 刷新排名数据
+const refresh = async () => {
+  isRefreshing.value = true
+  try {
+    await new Promise(resolve => setTimeout(resolve, 1000)) // 模拟网络延迟
+    rankingData.value = generateRankingList() // 重新生成数据
+    lastUpdate.value = dayjs().format('HH:mm')
+  } finally {
+    isRefreshing.value = false
+  }
+}
+
+// 显示宗门详情
 const showSectDetails = (sect) => {
-  selectedSect.value = sectStore.sects.find(s => s.id === sect.id)
+  selectedSect.value = sect
   sectDetailsModal.value?.showModal()
 }
 
@@ -197,20 +262,12 @@ const getScoreLevel = (score) => {
 // 特长标签样式
 const getSpecialtyClass = (specialty) => {
   const classMap = {
-    '丹道': 'badge-primary',
-    '符箓': 'badge-secondary',
-    '阵法': 'badge-accent',
-    '剑道': 'badge-info',
-    '御剑术': 'badge-info',
-    '剑阵': 'badge-info',
-    '道法': 'badge-warning',
-    '炼器': 'badge-warning',
-    '符咒': 'badge-warning',
-    '佛法': 'badge-success',
-    '医术': 'badge-success',
-    '禅修': 'badge-success',
-    '驱邪': 'badge-error',
-    '炼丹': 'badge-error'
+    '丹修': 'badge-primary',
+    '符修': 'badge-secondary',
+    '阵修': 'badge-accent',
+    '剑修': 'badge-info',
+    '音修': 'badge-warning',
+    '驭兽': 'badge-success'
   }
   return classMap[specialty] || 'badge-neutral'
 }
@@ -231,10 +288,6 @@ const getSpecialtyClass = (specialty) => {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-base-content/20 rounded-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-base-content/30;
+  @apply bg-base-content/10 rounded-full hover:bg-base-content/20;
 }
 </style>

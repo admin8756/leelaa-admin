@@ -28,25 +28,29 @@ const updateChart = () => {
   const option = {
     radar: {
       indicator: props.indicators,
-      splitNumber: 4,
+      splitNumber: 5,
+      radius: '65%',
       axisName: {
         color: '#71717A',
-        fontSize: 12
+        fontSize: 12,
+        padding: [3, 5]
       },
       splitLine: {
         lineStyle: {
-          color: ['#E4E4E7', '#A1A1AA', '#71717A']
+          color: ['#E4E4E7', '#A1A1AA', '#71717A'].reverse(),
+          opacity: 0.5
         }
       },
       splitArea: {
         show: true,
         areaStyle: {
-          color: ['rgba(255,255,255,0.1)', 'rgba(255,255,255,0.05)']
+          color: ['rgba(255,255,255,0.05)', 'rgba(255,255,255,0.02)']
         }
       },
       axisLine: {
         lineStyle: {
-          color: '#71717A'
+          color: '#71717A',
+          opacity: 0.5
         }
       }
     },
@@ -56,8 +60,11 @@ const updateChart = () => {
         data: [
           {
             value: props.data,
+            name: '综合评分',
+            symbolSize: 6,
             lineStyle: {
-              color: props.color
+              color: props.color,
+              width: 2
             },
             areaStyle: {
               color: props.color + '40'
