@@ -9,6 +9,15 @@ export default [{
   },
   children: [
     {
+      path: '/other/chart-demo',
+      name: 'chartDemo',
+      component: () => import('@/pages/other/ChartDemo.vue'),
+      meta: {
+        title: '图表示例',
+        group: '修仙杂务'
+      },
+    },
+    {
       path: '/other/chat',
       name: 'chatPage',
       component: () => import('@/pages/other/ChatPage.vue'),
