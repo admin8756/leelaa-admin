@@ -268,14 +268,23 @@ const childrenIsActive = (path) => {
   return route.path === path || route.path.startsWith(path + '/')
 }
 
+// 路由映射配置
 const pageTo = (to) => {
   if (!to) return
-  router.push(to.replace('//', '/'))
+  // 如果是相对路径，需要添加父路由的路径
+  if (!to.startsWith('/')) {
+    to = `/charts/${to}`
+  }
+  router.push(to)
 }
 
 const handleMenuClick = (path) => {
   if (!path) return
-  router.push(path.replace('//', '/'))
+  // 如果是相对路径，需要添加父路由的路径
+  if (!path.startsWith('/')) {
+    path = `/charts/${path}`
+  }
+  router.push(path)
 }
 
 const handleDetailsClick = (event) => {

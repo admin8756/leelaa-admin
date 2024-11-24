@@ -32,31 +32,6 @@ const routes = [
     },
     component: () => import('../pages/loginPage.vue'),
   },
-  // 添加重定向路由
-  {
-    path: '/line',
-    redirect: '/charts/line'
-  },
-  {
-    path: '/bar',
-    redirect: '/charts/bar'
-  },
-  {
-    path: '/pie',
-    redirect: '/charts/pie'
-  },
-  {
-    path: '/dataset',
-    redirect: '/charts/dataset'
-  },
-  {
-    path: '/radar',
-    redirect: '/charts/radar'
-  },
-  {
-    path: '/scatter',
-    redirect: '/charts/scatter'
-  },
   ...charts,
   ...results,
   ...other,
@@ -135,7 +110,8 @@ const getStructure = (item) => {
     // 如果没有name但只有一个非分组的child，则返回该child
     if (!name && newItem.children.length === 1 && !newItem.children[0].meta?.isGroup) {
       const child = newItem.children[0];
-      child.path = path + '/' + child.path;
+      // 正确处理路径拼接
+      child.path = path === '/' ? '/' + child.path : path + '/' + child.path;
       return child;
     }
 
