@@ -330,7 +330,7 @@ const handleSubmit = async () => {
   try {
     // TODO: 调用API保存数据
     console.log('提交数据:', formData.value)
-    router.push('/other/report/list')
+    router.push('/other/report')
   } catch (error) {
     console.error('保存失败:', error)
   }
@@ -338,7 +338,7 @@ const handleSubmit = async () => {
 
 // 取消
 const handleCancel = () => {
-  router.push('/other/report/list')
+  router.push('/other/report')
 }
 
 onMounted(() => {
