@@ -2,7 +2,7 @@
   <div class="space-y-4 md:space-y-6">
     <!-- 修炼概览卡片 -->
     <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-      <LCard v-for="stat in stats" :key="stat.title" :no-padding="true">
+      <CustomCard v-for="stat in stats" :key="stat.title" :no-padding="true">
         <div class="p-3 md:p-4">
           <div class="flex items-center gap-2 md:gap-3">
             <div :class="`w-10 h-10 md:w-12 md:h-12 rounded-lg bg-${stat.color}/20 flex items-center justify-center`">
@@ -21,20 +21,20 @@
             <span class="text-xs md:text-sm opacity-50">较上月</span>
           </div>
         </div>
-      </LCard>
+      </CustomCard>
     </div>
 
     <!-- 修炼境界分布 -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
       <!-- 境界分布图 -->
-      <LCard title="境界分布" icon="mdi-chart-pie" icon-color="primary">
+      <CustomCard title="境界分布" icon="mdi-chart-pie" icon-color="primary">
         <div class="h-64 md:h-80">
           <CultivationPieChart :data="distribution" />
         </div>
-      </LCard>
+      </CustomCard>
 
       <!-- 突破记录 -->
-      <LCard title="突破记录" icon="mdi-lightning-bolt" icon-color="warning">
+      <CustomCard title="突破记录" icon="mdi-lightning-bolt" icon-color="warning">
         <div 
           ref="tableScrollRef"
           class="overflow-x-auto touch-pan-x"
@@ -78,28 +78,28 @@
             </tbody>
           </table>
         </div>
-      </LCard>
+      </CustomCard>
     </div>
 
     <!-- 资源消耗与收益 -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
       <!-- 资源消耗趋势 -->
-      <LCard title="资源消耗趋势" icon="mdi-chart-line" icon-color="info">
+      <CustomCard title="资源消耗趋势" icon="mdi-chart-line" icon-color="info">
         <div class="h-64 md:h-80">
           <ResourceTrendChart :data="trendData" />
         </div>
-      </LCard>
+      </CustomCard>
 
       <!-- 灵气浓度监测 -->
-      <LCard title="灵气浓度监测" icon="mdi-weather-windy" icon-color="success">
+      <CustomCard title="灵气浓度监测" icon="mdi-weather-windy" icon-color="success">
         <div class="h-64 md:h-80">
           <QiDensityGauge :value="qiDensity" />
         </div>
-      </LCard>
+      </CustomCard>
     </div>
 
     <!-- 修炼排行 -->
-    <LCard title="修炼排行" icon="mdi-podium" icon-color="secondary">
+    <CustomCard title="修炼排行" icon="mdi-podium" icon-color="secondary">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div v-for="rank in ranks" :key="rank.id" class="card bg-base-200">
           <div class="card-body p-4">
@@ -126,14 +126,14 @@
           </div>
         </div>
       </div>
-    </LCard>
+    </CustomCard>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { Icon } from '@iconify/vue'
-import LCard from '@/components/base/LCard/BaseCard.vue'
+import CustomCard from '@/components/base/LCard/CustomCard.vue'
 import CultivationLevelTag from '@/components/business/CultivationLevelTag.vue'
 import CultivationPieChart from './components/CultivationPieChart.vue'
 import ResourceTrendChart from './components/ResourceTrendChart.vue'

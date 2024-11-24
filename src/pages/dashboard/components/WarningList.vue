@@ -1,5 +1,5 @@
 <template>
-  <l-card
+  <CustomCard
     title="预警信息"
     icon="mdi-bell-alert"
     icon-color="warning"
@@ -66,13 +66,13 @@
         </div>
       </template>
     </l-table>
-  </l-card>
+  </CustomCard>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
 import { Icon } from '@iconify/vue'
-import LCard from '@/components/base/LCard/BaseCard.vue'
+import CustomCard from '@/components/base/LCard/CustomCard.vue'
 import LTable from '@/components/base/LTable/BaseTable.vue'
 
 const props = defineProps({

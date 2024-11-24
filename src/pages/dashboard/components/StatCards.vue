@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-    <LCard v-for="stat in stats" :key="stat.title" :no-padding="true">
+    <CustomCard v-for="stat in stats" :key="stat.title" :no-padding="true">
       <div class="p-4">
         <div class="flex items-center gap-3">
           <div :class="`w-12 h-12 rounded-lg bg-${stat.color}/20 flex items-center justify-center`">
@@ -19,13 +19,13 @@
           <span class="text-sm opacity-50">较上月</span>
         </div>
       </div>
-    </LCard>
+    </CustomCard>
   </div>
 </template>
 
 <script setup>
 import { Icon } from '@iconify/vue'
-import LCard from '@/components/base/LCard/BaseCard.vue'
+import CustomCard from '@/components/base/LCard/CustomCard.vue'
 
 const stats = [
   {
