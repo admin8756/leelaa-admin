@@ -2,13 +2,8 @@
   <div class="image-message">
     <div class="image-card">
       <div class="image-container">
-        <img 
-          :src="content.url" 
-          :alt="content.description"
-          class="image-preview"
-          loading="lazy"
-          @click="handleImageClick"
-        />
+        <img :src="content.url" :alt="content.description" class="image-preview" loading="lazy"
+          @click="handleImageClick" />
         <div class="image-overlay">
           <Icon icon="ep:zoom-in" class="zoom-icon" />
         </div>
@@ -21,7 +16,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue'
+import { defineEmits } from 'vue'
 import { Icon } from '@iconify/vue'
 
 const props = defineProps({
@@ -57,8 +52,7 @@ const handleImageClick = (event) => {
 }
 
 .image-overlay {
-  @apply absolute inset-0 bg-black/0 flex items-center justify-center
-         opacity-0 transition-all duration-300 hover:bg-black/30 hover:opacity-100;
+  @apply absolute inset-0 bg-black/0 flex items-center justify-center opacity-0 transition-all duration-300 hover:bg-black/30 hover:opacity-100;
 }
 
 .zoom-icon {

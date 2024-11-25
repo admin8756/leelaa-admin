@@ -1,13 +1,13 @@
 import dayjs from 'dayjs';
 
 // 妖兽类型
-const yokaiTypes = [
+export const yokaiTypes = [
   '九尾狐', '天狗', '河童', '座敷童子', '鬼火', '雪女',
   '山童', '天邪鬼', '百目鬼', '大天狗', '酒吞童子', '妖刀姬'
 ];
 
 // 地点
-const locations = [
+export const locations = [
   '东海龙宫', '昆仑山', '蓬莱仙岛', '方丈山', '瀛洲',
   '花果山', '灵山', '傲来国', '女儿国', '火焰山'
 ];

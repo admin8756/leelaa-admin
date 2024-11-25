@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen flex flex-col">
-    <BaseNavBar />
+  <BaseNavBar />
     <div class="flex-1 overflow-y-auto">
       <div class="min-h-full flex flex-col">
         <div class="flex-1">
@@ -9,7 +9,6 @@
         <BaseFooter />
       </div>
     </div>
-    <BaseFooter />
   </div>
 </template>
 

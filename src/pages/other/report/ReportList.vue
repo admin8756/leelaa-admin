@@ -122,177 +122,140 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import LeelaaInput from '@/components/form/basic/leelaa-input.vue'
 import LeelaaSelect from '@/components/form/basic/leelaa-select.vue'
 import LeelaaDatepicker from '@/components/form/advance/leelaa-datepicker.vue'
 import LeelaaConfirm from '@/components/common/leelaa-confirm.vue'
-import LeelaaIcon from '@/components/common/leelaa-icon.vue'
 import { getReportList, getStatusOptions } from '@/mock/report'
 
-export default {
-  name: 'ReportList',
-  
-  components: {
-    LeelaaInput,
-    LeelaaSelect,
-    LeelaaDatepicker,
-    LeelaaConfirm,
-    LeelaaIcon
-  },
+const router = useRouter()
+const currentPage = ref(1)
+const pageSize = ref(10)
+const total = ref(0)
+const tableData = ref([])
+const statusOptions = ref([])
 
-  setup() {
-    const router = useRouter()
-    const currentPage = ref(1)
-    const pageSize = ref(10)
-    const total = ref(0)
-    const tableData = ref([])
-    const statusOptions = ref([])
+// 搜索表单
+const searchForm = reactive({
+  name: '',
+  startDate: '',
+  endDate: '',
+  status: ''
+})
 
-    // 搜索表单
-    const searchForm = reactive({
-      name: '',
-      startDate: '',
-      endDate: '',
-      status: ''
-    })
-
-    // 获取状态选项
-    const fetchStatusOptions = async () => {
-      const res = await getStatusOptions()
-      if (res.code === 200) {
-        statusOptions.value = [{ value: '', label: '全部' }, ...res.data]
-      }
-    }
-
-    // 获取列表数据
-    const fetchData = async () => {
-      const params = {
-        page: currentPage.value,
-        pageSize: pageSize.value,
-        ...searchForm
-      }
-      const res = await getReportList(params)
-      if (res.code === 200) {
-        tableData.value = res.data.list
-        total.value = res.data.pagination.total
-      }
-    }
-
-    // 重置搜索
-    const resetSearch = () => {
-      searchForm.name = ''
-      searchForm.startDate = ''
-      searchForm.endDate = ''
-      searchForm.status = ''
-      currentPage.value = 1
-      handleSearch()
-    }
-
-    // 搜索
-    const handleSearch = () => {
-      currentPage.value = 1
-      fetchData()
-    }
-
-    // 新建
-    const handleCreate = () => {
-      router.push({ name: 'reportCreate' })
-    }
-
-    // 查看
-    const handleView = (item) => {
-      router.push({ name: 'reportEdit', params: { id: item.id }, query: { mode: 'view' } })
-    }
-
-    // 编辑
-    const handleEdit = (item) => {
-      router.push({ name: 'reportEdit', params: { id: item.id } })
-    }
-
-    // 删除确认
-    const showDeleteConfirm = ref(false)
-    const deleteItem = ref(null)
-
-    const handleDelete = (item) => {
-      deleteItem.value = item
-      showDeleteConfirm.value = true
-    }
-
-    const confirmDelete = async () => {
-      try {
-        // TODO: 调用API删除数据
-        await new Promise(resolve => setTimeout(resolve, 1000))
-        fetchData()
-      } catch (error) {
-        console.error('删除失败:', error)
-      }
-    }
-
-    // 打印
-    const handlePrint = (item) => {
-      // TODO: 实现打印功能
-      console.log('打印', item)
-    }
-
-    // 页码变化
-    const handlePageChange = (page) => {
-      currentPage.value = page
-      fetchData()
-    }
-
-    // 获取状态徽章样式
-    const getStatusBadgeClass = (status) => {
-      const classes = {
-        pending: 'badge-warning',
-        processing: 'badge-info',
-        completed: 'badge-success'
-      }
-      return classes[status] || 'badge-ghost'
-    }
-
-    // 获取危险等级样式
-    const getDangerLevelClass = (level) => {
-      const classes = {
-        low: 'badge-info',
-        medium: 'badge-warning',
-        high: 'badge-error',
-        extreme: 'badge-error'
-      }
-      return classes[level] || 'badge-ghost'
-    }
-
-    // 计算总页数
-    const totalPages = computed(() => Math.ceil(total.value / pageSize.value))
-
-    onMounted(() => {
-      fetchStatusOptions()
-      fetchData()
-    })
-
-    return {
-      currentPage,
-      total,
-      tableData,
-      searchForm,
-      statusOptions,
-      resetSearch,
-      handleSearch,
-      handleCreate,
-      handleView,
-      handleEdit,
-      handleDelete,
-      handlePrint,
-      handlePageChange,
-      getStatusBadgeClass,
-      getDangerLevelClass,
-      totalPages,
-      showDeleteConfirm,
-      deleteItem,
-      confirmDelete
-    }
+// 获取状态选项
+const fetchStatusOptions = async () => {
+  const res = await getStatusOptions()
+  if (res.code === 200) {
+    statusOptions.value = [{ value: '', label: '全部' }, ...res.data]
   }
 }
+
+// 获取列表数据
+const fetchData = async () => {
+  const params = {
+    page: currentPage.value,
+    pageSize: pageSize.value,
+    ...searchForm
+  }
+  const res = await getReportList(params)
+  if (res.code === 200) {
+    tableData.value = res.data.list
+    total.value = res.data.pagination.total
+  }
+}
+
+// 重置搜索
+const resetSearch = () => {
+  searchForm.name = ''
+  searchForm.startDate = ''
+  searchForm.endDate = ''
+  searchForm.status = ''
+  currentPage.value = 1
+  handleSearch()
+}
+
+// 搜索
+const handleSearch = () => {
+  currentPage.value = 1
+  fetchData()
+}
+
+// 新建
+const handleCreate = () => {
+  router.push({ name: 'reportCreate' })
+}
+
+// 查看
+const handleView = (item) => {
+  router.push({ name: 'reportEdit', params: { id: item.id }, query: { mode: 'view' } })
+}
+
+// 编辑
+const handleEdit = (item) => {
+  router.push({ name: 'reportEdit', params: { id: item.id } })
+}
+
+// 删除确认
+const showDeleteConfirm = ref(false)
+const deleteItem = ref(null)
+
+const handleDelete = (item) => {
+  deleteItem.value = item
+  showDeleteConfirm.value = true
+}
+
+const confirmDelete = async () => {
+  try {
+    // TODO: 调用API删除数据
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    fetchData()
+  } catch (error) {
+    console.error('删除失败:', error)
+  }
+}
+
+// 打印
+const handlePrint = (item) => {
+  // TODO: 实现打印功能
+  console.log('打印', item)
+}
+
+// 页码变化
+const handlePageChange = (page) => {
+  currentPage.value = page
+  fetchData()
+}
+
+// 获取状态徽章样式
+const getStatusBadgeClass = (status) => {
+  const classes = {
+    pending: 'badge-warning',
+    processing: 'badge-info',
+    completed: 'badge-success'
+  }
+  return classes[status] || 'badge-ghost'
+}
+
+// 获取危险等级样式
+const getDangerLevelClass = (level) => {
+  const classes = {
+    low: 'badge-info',
+    medium: 'badge-warning',
+    high: 'badge-error',
+    extreme: 'badge-error'
+  }
+  return classes[level] || 'badge-ghost'
+}
+
+// 计算总页数
+const totalPages = computed(() => Math.ceil(total.value / pageSize.value))
+
+onMounted(() => {
+  fetchStatusOptions()
+  fetchData()
+})
 </script>

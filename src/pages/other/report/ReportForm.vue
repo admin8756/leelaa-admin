@@ -217,9 +217,9 @@ import {
   getTypeOptions, 
   getLevelOptions, 
   getAreaOptions,
-  getUrgencyOptions,
+  // getUrgencyOptions,
+  // getStatusOptions,
   getTagOptions,
-  getStatusOptions,
   getReportDetail 
 } from '@/mock/report'
 
@@ -267,9 +267,9 @@ const errors = ref({})
 const typeOptions = ref(getTypeOptions())
 const levelOptions = ref(getLevelOptions())
 const areaOptions = ref(getAreaOptions())
-const urgencyOptions = ref(getUrgencyOptions())
+// const urgencyOptions = ref(getUrgencyOptions())
 const tagOptions = ref(getTagOptions())
-const statusOptions = ref(getStatusOptions())
+// const statusOptions = ref(getStatusOptions())
 
 // 加载详情
 const loadDetail = async () => {
