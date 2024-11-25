@@ -29,7 +29,6 @@
         v-if="showPicker"
         class="absolute z-50 mt-1 p-4 bg-base-100 rounded-lg shadow-lg border border-base-300"
         :class="{ 'right-0': align === 'right' }"
-        v-click-outside="closePicker"
       >
         <!-- 年月选择 -->
         <div class="flex justify-between mb-4">
@@ -67,17 +66,16 @@
         <!-- 日期网格 -->
         <div class="grid grid-cols-7 gap-1">
           <button
-            v-for="{ date, type } in calendarDays"
-            :key="date.toISOString()"
+            v-for="day in daysInMonth"
+            :key="day"
             class="btn btn-sm btn-ghost h-8"
             :class="[
-              type === 'prev' || type === 'next' ? 'text-base-300' : '',
-              isSelected(date) ? 'btn-primary' : '',
-              isToday(date) ? 'btn-outline' : ''
+              isSelected(day) ? 'btn-primary' : '',
+              isToday(day) ? 'btn-outline' : ''
             ]"
-            @click="selectDate(date)"
+            @click="selectDate(day)"
           >
-            {{ date.getDate() }}
+            {{ day }}
           </button>
         </div>
 
@@ -95,192 +93,158 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import dayjs from 'dayjs'
-import weekOfYear from 'dayjs/plugin/weekOfYear'
-import 'dayjs/locale/zh-cn'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
-dayjs.extend(weekOfYear)
-dayjs.locale('zh-cn')
-
-export default {
-  name: 'LeelaaFormDatepicker',
-
-  directives: {
-    clickOutside: {
-      mounted(el, { value }) {
-        el.clickOutsideEvent = (event) => {
-          if (!(el === event.target || el.contains(event.target))) {
-            value(event)
-          }
-        }
-        document.addEventListener('click', el.clickOutsideEvent)
-      },
-      unmounted(el) {
-        document.removeEventListener('click', el.clickOutsideEvent)
-      }
+const props = defineProps({
+  modelValue: {
+    type: [Date, String],
+    default: null
+  },
+  label: {
+    type: String,
+    default: ''
+  },
+  required: {
+    type: Boolean,
+    default: false
+  },
+  error: {
+    type: String,
+    default: ''
+  },
+  size: {
+    type: String,
+    validator(value) {
+      return ['lg', 'sm', 'xs'].includes(value)
     }
   },
-
-  props: {
-    modelValue: {
-      type: [Date, String],
-      default: null
-    },
-    label: {
-      type: String,
-      default: ''
-    },
-    placeholder: {
-      type: String,
-      default: '请选择日期'
-    },
-    format: {
-      type: String,
-      default: 'YYYY-MM-DD'
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    required: {
-      type: Boolean,
-      default: false
-    },
-    error: {
-      type: String,
-      default: ''
-    },
-    size: {
-      type: String,
-      default: '',
-      validator: (value) => ['lg', 'sm', 'xs', ''].includes(value)
-    },
-    align: {
-      type: String,
-      default: 'left',
-      validator: (value) => ['left', 'right'].includes(value)
-    }
-  },
-
-  emits: ['update:modelValue', 'change'],
-
-  setup(props, { emit }) {
-    const showPicker = ref(false)
-    const currentDate = ref(props.modelValue ? dayjs(props.modelValue) : dayjs())
-    const selectedDate = ref(props.modelValue ? dayjs(props.modelValue) : null)
-
-    // 计算属性
-    const currentYear = computed({
-      get: () => currentDate.value.year(),
-      set: (year) => {
-        currentDate.value = currentDate.value.year(year)
-      }
-    })
-
-    const currentMonth = computed({
-      get: () => currentDate.value.month() + 1,
-      set: (month) => {
-        currentDate.value = currentDate.value.month(month - 1)
-      }
-    })
-
-    const yearOptions = computed(() => {
-      const currentYear = dayjs().year()
-      return Array.from({ length: 21 }, (_, i) => currentYear - 10 + i)
-    })
-
-    const weekDays = ['日', '一', '二', '三', '四', '五', '六']
-
-    const calendarDays = computed(() => {
-      const start = currentDate.value.startOf('month').startOf('week')
-      const end = currentDate.value.endOf('month').endOf('week')
-      const days = []
-      let current = start
-
-      while (current.isBefore(end) || current.isSame(end, 'day')) {
-        days.push({
-          date: current.toDate(),
-          type: current.month() === currentDate.value.month() ? 'current'
-            : current.month() < currentDate.value.month() ? 'prev' : 'next'
-        })
-        current = current.add(1, 'day')
-      }
-
-      return days
-    })
-
-    const displayValue = computed(() => {
-      if (!selectedDate.value) return ''
-      return selectedDate.value.format(props.format)
-    })
-
-    // 方法
-    const togglePicker = () => {
-      if (!props.disabled) {
-        showPicker.value = !showPicker.value
-      }
-    }
-
-    const closePicker = () => {
-      showPicker.value = false
-    }
-
-    const prevMonth = () => {
-      currentDate.value = currentDate.value.subtract(1, 'month')
-    }
-
-    const nextMonth = () => {
-      currentDate.value = currentDate.value.add(1, 'month')
-    }
-
-    const selectDate = (date) => {
-      selectedDate.value = date
-      emit('update:modelValue', date)
-      emit('change', date)
-      closePicker()
-    }
-
-    const selectToday = () => {
-      const today = dayjs()
-      currentDate.value = today
-      selectDate(today.toDate())
-    }
-
-    const clearDate = () => {
-      selectedDate.value = null
-      emit('update:modelValue', null)
-      emit('change', null)
-      closePicker()
-    }
-
-    const isSelected = (date) => {
-      if (!selectedDate.value) return false
-      return date.toISOString() === selectedDate.value.toISOString()
-    }
-
-    const isToday = (date) => {
-      return dayjs().isSame(date, 'day')
-    }
-
-    return {
-      showPicker,
-      currentYear,
-      currentMonth,
-      yearOptions,
-      weekDays,
-      calendarDays,
-      displayValue,
-      togglePicker,
-      closePicker,
-      prevMonth,
-      nextMonth,
-      selectDate,
-      selectToday,
-      clearDate,
-      isSelected,
-      isToday
+  align: {
+    type: String,
+    default: 'left',
+    validator(value) {
+      return ['left', 'right'].includes(value)
     }
   }
+})
+
+const emit = defineEmits(['update:modelValue', 'change'])
+
+const showPicker = ref(false)
+const currentDate = ref(props.modelValue ? dayjs(props.modelValue) : dayjs())
+const selectedDate = ref(props.modelValue ? dayjs(props.modelValue) : null)
+
+// 计算属性
+const currentYear = computed({
+  get: () => currentDate.value.year(),
+  set: (year) => {
+    currentDate.value = currentDate.value.year(year)
+  }
+})
+
+const currentMonth = computed({
+  get: () => currentDate.value.month() + 1,
+  set: (month) => {
+    currentDate.value = currentDate.value.month(month - 1)
+  }
+})
+
+const displayValue = computed(() => {
+  if (!selectedDate.value) return ''
+  return selectedDate.value.format('YYYY-MM-DD')
+})
+
+const daysInMonth = computed(() => {
+  const year = currentDate.value.year()
+  const month = currentDate.value.month()
+  const daysInMonth = currentDate.value.daysInMonth()
+  const firstDayOfMonth = dayjs().year(year).month(month).date(1).day()
+  
+  const days = []
+  let day = 1
+  
+  for (let i = 0; i < 6; i++) {
+    const week = []
+    for (let j = 0; j < 7; j++) {
+      if (i === 0 && j < firstDayOfMonth) {
+        week.push(null)
+      } else if (day > daysInMonth) {
+        week.push(null)
+      } else {
+        week.push(day)
+        day++
+      }
+    }
+    days.push(week)
+    if (day > daysInMonth) break
+  }
+  
+  return days
+})
+
+const isSelected = computed(() => (day) => {
+  if (!selectedDate.value || !day) return false
+  return selectedDate.value.date() === day &&
+    selectedDate.value.month() === currentDate.value.month() &&
+    selectedDate.value.year() === currentDate.value.year()
+})
+
+const isToday = computed(() => (day) => {
+  return dayjs().date() === day &&
+    dayjs().month() === currentDate.value.month() &&
+    dayjs().year() === currentDate.value.year()
+})
+
+// 方法
+const togglePicker = () => {
+  showPicker.value = !showPicker.value
 }
+
+const selectDate = (day) => {
+  if (!day) return
+  
+  const date = currentDate.value.date(day)
+  selectedDate.value = date
+  emit('update:modelValue', date.format('YYYY-MM-DD'))
+  emit('change', date.format('YYYY-MM-DD'))
+  showPicker.value = false
+}
+
+const selectToday = () => {
+  const today = dayjs()
+  currentDate.value = today
+  selectDate(today.date())
+}
+
+const clearDate = () => {
+  selectedDate.value = null
+  emit('update:modelValue', null)
+  emit('change', null)
+  showPicker.value = false
+}
+
+const prevMonth = () => {
+  currentDate.value = currentDate.value.subtract(1, 'month')
+}
+
+const nextMonth = () => {
+  currentDate.value = currentDate.value.add(1, 'month')
+}
+
+const handleClickOutside = (e) => {
+  const target = e.target
+  if (!target.closest('.datepicker')) {
+    showPicker.value = false
+  }
+}
+
+// 生命周期钩子
+onMounted(() => {
+  window.addEventListener('click', handleClickOutside)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('click', handleClickOutside)
+})
 </script>

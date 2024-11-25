@@ -1,5 +1,5 @@
 <template>
-  <div ref="chartRef" class="w-full">
+  <div ref="chartRef" class="w-full" :style="{ height }">
     <div ref="chartContainer" class="w-full h-full"></div>
     <slot></slot>
   </div>

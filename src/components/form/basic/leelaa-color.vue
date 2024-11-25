@@ -81,8 +81,8 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue'
-import { useEventListener, useDraggable } from '@vueuse/core'
+import { ref, watch } from 'vue'
+import { useEventListener } from '@vueuse/core'
 
 const props = defineProps({
   modelValue: {
