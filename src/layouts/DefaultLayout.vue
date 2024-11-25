@@ -9,6 +9,7 @@
         <BaseFooter />
       </div>
     </div>
+    <BaseFooter />
   </div>
 </template>
 

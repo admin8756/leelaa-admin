@@ -32,6 +32,31 @@ const routes = [
     },
     component: () => import('../pages/loginPage.vue'),
   },
+  // 添加重定向路由
+  {
+    path: '/line',
+    redirect: '/charts/line'
+  },
+  {
+    path: '/bar',
+    redirect: '/charts/bar'
+  },
+  {
+    path: '/pie',
+    redirect: '/charts/pie'
+  },
+  {
+    path: '/dataset',
+    redirect: '/charts/dataset'
+  },
+  {
+    path: '/radar',
+    redirect: '/charts/radar'
+  },
+  {
+    path: '/scatter',
+    redirect: '/charts/scatter'
+  },
   ...charts,
   ...results,
   ...other,
