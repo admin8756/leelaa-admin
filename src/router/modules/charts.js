@@ -2,7 +2,6 @@ const DefaultLayout = () => import('@/layouts/DefaultLayout.vue');
 
 export default [{
   path: '/charts',
-  name: 'charts',
   component: DefaultLayout,
   meta: {
     title: '符箓大全',

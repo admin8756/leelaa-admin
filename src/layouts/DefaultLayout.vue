@@ -1,10 +1,14 @@
 <template>
-  <div class="min-h-full flex flex-col">
-    <BaseNavBar />
-    <div class="flex-1 flex flex-col">
-      <router-view></router-view>
+  <div class="h-screen flex flex-col">
+  <BaseNavBar />
+    <div class="flex-1 overflow-y-auto">
+      <div class="min-h-full flex flex-col">
+        <div class="flex-1">
+          <router-view></router-view>
+        </div>
+        <BaseFooter />
+      </div>
     </div>
-    <BaseFooter />
   </div>
 </template>
 
@@ -14,12 +18,6 @@ import BaseFooter from "./components/BaseFooter.vue";
 </script>
 
 <style>
-html, body, #app {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
 /* 美化滚动条 */
 ::-webkit-scrollbar {
   width: 6px;

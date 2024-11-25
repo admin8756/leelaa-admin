@@ -18,6 +18,7 @@ import manifest from './src/manifest.json';
 // https://vitejs.dev/config/
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 export default defineConfig({
+  base: '/',
   plugins: [
     vue(),
     vueJsx(),

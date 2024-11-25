@@ -1,6 +1,10 @@
 {
   "cleanUrls": true,
   "outputDirectory": "./dist",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" },
+    { "source": "/:path*", "destination": "/index.html" }
+  ],
   "headers": [
     {
       "source": "/api/(.*)",
@@ -33,7 +37,6 @@
       ]
     }
   ],
-  "rewrites":[{"source":"/:path*","destination":"/index.html"}],
   "functions": {
     "api/*.js": {
       "maxDuration": 10,

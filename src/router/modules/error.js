@@ -4,6 +4,7 @@ const DefaultLayout = () => import('@/layouts/DefaultLayout.vue');
 export default [
   {
     path: '/error',
+    name: 'error',
     component: DefaultLayout,
     meta: {
       title: '错误页面',
@@ -12,7 +13,7 @@ export default [
       // 403
       {
         path: '403',
-        name: 'Forbidden',
+        name: 'error.403',
         meta: {
           title: '权限不足',
         },
@@ -21,7 +22,7 @@ export default [
       // 500
       {
         path: '500',
-        name: 'ServerError',
+        name: 'error.500',
         meta: {
           title: '服务器错误',
         },
@@ -30,7 +31,7 @@ export default [
       //   503
       {
         path: '503',
-        name: 'ServiceUnavailable',
+        name: 'error.503',
         meta: {
           title: '服务器过载',
         },
@@ -41,7 +42,7 @@ export default [
   // 404
   {
     path: '/:pathMatch(.*)*',
-    name: 'NotFound',
+    name: 'error.404',
     meta: {
       show: false,
       title: '页面未找到',
