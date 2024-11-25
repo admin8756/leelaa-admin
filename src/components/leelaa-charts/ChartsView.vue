@@ -9,7 +9,7 @@
 import { ref, onMounted, onBeforeUnmount, provide, reactive } from 'vue'
 import * as echarts from 'echarts'
 
-const props = defineProps({
+const { height } = defineProps({
   height: {
     type: String,
     default: '400px'

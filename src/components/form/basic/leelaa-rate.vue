@@ -52,85 +52,72 @@
   </div>
 </template>
 
-<script>
-import { ref, computed } from 'vue'
-import { useEventListener } from '@vueuse/core'
+<script setup>
+import { ref } from 'vue'
 
-export default {
-  name: 'LeelaaRate',
-
-  props: {
-    modelValue: {
-      type: Number,
-      default: 0
-    },
-    maxValue: {
-      type: Number,
-      default: 5
-    },
-    allowHalf: {
-      type: Boolean,
-      default: false
-    },
-    color: {
-      type: String,
-      default: '#FBBF24' // Amber-400
-    },
-    readonly: {
-      type: Boolean,
-      default: false
-    },
-    showScore: {
-      type: Boolean,
-      default: false
-    },
-    label: {
-      type: String,
-      default: ''
-    },
-    required: {
-      type: Boolean,
-      default: false
-    },
-    error: {
-      type: String,
-      default: ''
-    }
+const props = defineProps({
+  modelValue: {
+    type: Number,
+    default: 0
   },
+  maxValue: {
+    type: Number,
+    default: 5
+  },
+  allowHalf: {
+    type: Boolean,
+    default: false
+  },
+  color: {
+    type: String,
+    default: '#FBBF24' // Amber-400
+  },
+  readonly: {
+    type: Boolean,
+    default: false
+  },
+  showScore: {
+    type: Boolean,
+    default: false
+  },
+  label: {
+    type: String,
+    default: ''
+  },
+  required: {
+    type: Boolean,
+    default: false
+  },
+  error: {
+    type: String,
+    default: ''
+  }
+})
 
-  emits: ['update:modelValue'],
+const emit = defineEmits(['update:modelValue'])
 
-  setup(props, { emit }) {
-    const id = `rate-${Math.random().toString(36).substr(2, 9)}`
-    const hoverValue = ref(0)
+const id = `rate-${Math.random().toString(36).substr(2, 9)}`
+const hoverValue = ref(0)
 
-    const updateValue = (index) => {
-      if (props.readonly) return
+const updateValue = (index) => {
+  if (props.readonly) return
 
-      let value = index
-      if (props.allowHalf) {
-        const target = event.target
-        const rect = target.getBoundingClientRect()
-        const mouseX = event.clientX - rect.left
-        if (mouseX < rect.width / 2) {
-          value -= 0.5
-        }
-      }
-      emit('update:modelValue', value)
-    }
-
-    const shouldShowHalf = (index) => {
-      if (!props.allowHalf) return false
-      const value = hoverValue.value || props.modelValue
-      return Math.ceil(value) === index && value % 1 !== 0
-    }
-
-    return {
-      id,
-      hoverValue,
-      updateValue,
-      shouldShowHalf
+  let value = index
+  if (props.allowHalf) {
+    const target = event.target
+    const rect = target.getBoundingClientRect()
+    const mouseX = event.clientX - rect.left
+    if (mouseX < rect.width / 2) {
+      value -= 0.5
     }
   }
+  emit('update:modelValue', value)
 }
+
+const shouldShowHalf = (index) => {
+  if (!props.allowHalf) return false
+  const value = hoverValue.value || props.modelValue
+  return Math.ceil(value) === index && value % 1 !== 0
+}
+
 </script>

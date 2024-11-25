@@ -61,7 +61,6 @@
 
 <script>
 import { ref, computed } from 'vue'
-import { validators } from '../utils'
 
 export default {
   name: 'InputText',
