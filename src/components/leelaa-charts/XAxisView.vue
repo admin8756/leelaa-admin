@@ -1,5 +1,6 @@
 <template>
   <!-- 这是一个虚拟组件，不会渲染实际的DOM -->
+  <slot />
 </template>
 
 <script setup>

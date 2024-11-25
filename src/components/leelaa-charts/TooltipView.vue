@@ -4,7 +4,7 @@
 </template>
 
 <script setup>
-import { inject, onMounted, watch } from 'vue'
+import { inject, onMounted, watch, useSlots } from 'vue'
 
 const props = defineProps({
   trigger: {
