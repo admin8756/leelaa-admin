@@ -106,6 +106,10 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  placeholder: {
+    type: String,
+    default: '请选择日期'
+  },
   required: {
     type: Boolean,
     default: false
@@ -126,6 +130,10 @@ const props = defineProps({
     validator(value) {
       return ['left', 'right'].includes(value)
     }
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 })
 
