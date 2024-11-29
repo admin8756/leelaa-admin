@@ -273,18 +273,30 @@ const childrenIsActive = (path) => {
 // 路由映射配置
 const pageTo = (to) => {
   if (!to) return
-  // 如果是相对路径，需要添加父路由的路径
+  // 如果是相对路径，需要根据当前路由的父路径来添加前缀
   if (!to.startsWith('/')) {
-    to = `/charts/${to}`
+    const currentRoute = router.currentRoute.value
+    const matched = currentRoute.matched
+    // 获取父级路由
+    const parent = matched.length > 1 ? matched[matched.length - 2] : null
+    if (parent && parent.path !== '/') {
+      to = `${parent.path}/${to}`
+    }
   }
   router.push(to)
 }
 
 const handleMenuClick = (path) => {
   if (!path) return
-  // 如果是相对路径，需要添加父路由的路径
+  // 如果是相对路径，需要根据当前路由的父路径来添加前缀
   if (!path.startsWith('/')) {
-    path = `/charts/${path}`
+    const currentRoute = router.currentRoute.value
+    const matched = currentRoute.matched
+    // 获取父级路由
+    const parent = matched.length > 1 ? matched[matched.length - 2] : null
+    if (parent && parent.path !== '/') {
+      path = `${parent.path}/${path}`
+    }
   }
   router.push(path)
 }
