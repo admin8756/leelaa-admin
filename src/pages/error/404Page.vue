@@ -1,9 +1,12 @@
 <script setup>
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+
 const { t } = useI18n();
-import router from '@/router/index.js';
+const router = useRouter();
+
 const goHome = () => {
-  router.replace('/');
+  router.push('/');
 };
 </script>
 <template>

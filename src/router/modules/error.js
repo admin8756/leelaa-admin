@@ -28,7 +28,7 @@ export default [
         },
         component: () => import('@/pages/error/500Page.vue'),
       },
-      //   503
+      // 503
       {
         path: '503',
         name: 'error.503',
@@ -39,7 +39,37 @@ export default [
       },
     ],
   },
-  // 404
+  // 独立的403路由
+  {
+    path: '/:catchAll(.*)/403',
+    name: 'error.403.catch',
+    meta: {
+      show: false,
+      title: '权限不足',
+    },
+    component: () => import('@/pages/error/403Page.vue'),
+  },
+  // 独立的500路由
+  {
+    path: '/:catchAll(.*)/500',
+    name: 'error.500.catch',
+    meta: {
+      show: false,
+      title: '服务器错误',
+    },
+    component: () => import('@/pages/error/500Page.vue'),
+  },
+  // 独立的503路由
+  {
+    path: '/:catchAll(.*)/503',
+    name: 'error.503.catch',
+    meta: {
+      show: false,
+      title: '服务器过载',
+    },
+    component: () => import('@/pages/error/503Page.vue'),
+  },
+  // 404 - 放在最后
   {
     path: '/:pathMatch(.*)*',
     name: 'error.404',

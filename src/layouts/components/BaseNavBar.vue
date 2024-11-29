@@ -45,7 +45,7 @@
                     <span>{{ subItem.meta.title }}</span>
                     <ul class="pl-2">
                       <li v-for="(groupItem, groupIndex) in subItem.children" :key="groupIndex">
-                        <a 
+                        <a
                           :class="[
                             childrenIsActive(groupItem.path) ? 'text-primary font-bold active' : '',
                             'hover:text-primary transition-colors duration-200'
@@ -59,7 +59,7 @@
                   </li>
                   <!-- 如果不是分组 -->
                   <li v-else>
-                    <a 
+                    <a
                       :class="[
                         childrenIsActive(subItem.path) ? 'text-primary font-bold active' : '',
                         'hover:text-primary transition-colors duration-200'
@@ -99,7 +99,7 @@
                   <span class="text-sm opacity-50">{{ subItem.meta.title }}</span>
                   <ul class="pl-2">
                     <li v-for="(groupItem, groupIndex) in subItem.children" :key="groupIndex">
-                      <a 
+                      <a
                         :class="[
                           childrenIsActive(groupItem.path) ? 'text-primary font-bold active' : '',
                           'hover:text-primary transition-colors duration-200'
@@ -113,7 +113,7 @@
                 </li>
                 <!-- 如果不是分组 -->
                 <li v-else>
-                  <a 
+                  <a
                     :class="[
                       childrenIsActive(subItem.path) ? 'text-primary font-bold active' : '',
                       'hover:text-primary transition-colors duration-200'
@@ -140,11 +140,11 @@
       </div>
 
       <!-- 主题切换 -->
-      <div class="dropdown dropdown-end">
-        <div tabindex="0" role="button" class="btn btn-ghost">
+      <div class="dropdown dropdown-end" ref="themeDropdownRef">
+        <div tabindex="0" role="button" class="btn btn-ghost" @click="toggleThemeDropdown">
           <Icon icon="material-symbols:palette-outline" class="h-5 w-5" />
         </div>
-        <div class="dropdown-content z-[999] menu shadow-lg bg-base-200 rounded-box mt-4">
+        <div class="dropdown-content z-[999] menu shadow-lg bg-base-200 rounded-box mt-4" v-show="isThemeDropdownOpen">
           <div class="w-56 p-2">
             <div class="grid grid-cols-1 gap-2">
               <button
@@ -257,7 +257,9 @@ const route = useRoute()
 const router = useRouter()
 const { locale } = useI18n()
 const dropdownRef = ref(null)
+const themeDropdownRef = ref(null)
 const nowTheme = ref(localStorage.getItem('theme') || THEME_DEFAULT)
+const isThemeDropdownOpen = ref(false)
 
 // 导航相关
 const isActive = (path) => {
@@ -309,12 +311,20 @@ const handleClickOutside = (event) => {
   }
 }
 
+const handleThemeClickOutside = (event) => {
+  if (themeDropdownRef.value && !themeDropdownRef.value.contains(event.target)) {
+    isThemeDropdownOpen.value = false
+  }
+}
+
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
+  document.addEventListener('click', handleThemeClickOutside)
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
+  document.removeEventListener('click', handleThemeClickOutside)
 })
 
 // 主题相关
@@ -342,6 +352,10 @@ const saveTheme = (themeName) => {
   nowTheme.value = themeName
   document.documentElement.setAttribute('data-theme', themeName)
   localStorage.setItem('theme', themeName)
+}
+
+const toggleThemeDropdown = () => {
+  isThemeDropdownOpen.value = !isThemeDropdownOpen.value
 }
 
 // 初始化主题
